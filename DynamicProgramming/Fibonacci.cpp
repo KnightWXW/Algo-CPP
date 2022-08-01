@@ -163,8 +163,10 @@ int fibonacci_E(int n)
     }
     vector<vector<int>> base = {{1,1},
                                 {1,0}};
-    vector<vector<int>> ans = digitMatMul(base, n - 2);
-    return ans[0][0] + ans[1][0];
+    vector<vector<int>> tem = digitMatMul(base, n - 2);
+    vector<vector<int>> ori = {{1,1}};
+    vector<vector<int>> ans = matMulMat(ori, tem);
+    return ans[0][0];
 }
 
 vector<vector<int>> digitMatMul(vector<vector<int>> mat, int k)
@@ -184,8 +186,8 @@ vector<vector<int>> digitMatMul(vector<vector<int>> mat, int k)
         {
             ans = matMulMat(ans, tem);
         }
-        k >>= 1;
         tem = matMulMat(tem, tem);
+        k >>= 1;
     }
     return ans;
 }
@@ -197,7 +199,7 @@ vector<vector<int>> matMulMat(vector<vector<int>> mat1, vector<vector<int>> mat2
     vector<vector<int>> mul(row1, vector<int>(col2, 0));
     for (int i = 0; i < row1; i++)
     {
-        for (int j = 0; j < col1; j++)
+        for (int j = 0; j < col2; j++)
         {
             for (int k = 0; k < row2; k++)
             {
