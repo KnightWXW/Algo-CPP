@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "*.tcc": "cpp",
+        "string_view": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "ctime": "cpp",
+        "vector": "cpp",
+        "cstdlib": "cpp",
+        "new": "cpp",
+        "unordered_map": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "system_error": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}
