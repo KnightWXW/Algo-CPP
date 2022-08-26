@@ -148,7 +148,7 @@ int main()
 int findCircleNumMap(vector<vector<int>> &isConnected)
 {
     int n = isConnected.size();
-    UnionFindMap unionfind = UnionFindMap(n);
+    UnionFindMap<int, UnionFindNode<int>> unionfind = UnionFindMap<int, UnionFindNode<int>>::UnionFindMap(n);
     for (int i = 0; i < n; i++)
     {
         for (int j = i + 1; j < n; j++)

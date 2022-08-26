@@ -112,10 +112,12 @@ int dfsZeroLeftOneStringNumber_B(int i, int n, int *arr)
 {
     if (i == n - 1)
     {
+        arr[n - 1] = 2;
         return 2;
     }
     if (i == n)
     {
+        arr[n] = 1;
         return 1;
     }
     if (arr[i] > 0)

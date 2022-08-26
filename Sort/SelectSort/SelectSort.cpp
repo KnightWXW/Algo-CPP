@@ -7,25 +7,23 @@ using namespace std;
 
 vector<int> generateRandomVec(int low, int high, int len);
 void printVecElement(vector<int> vec);
-void bubbleSort_A(vector<int> &vec);
-void bubbleSort_B(vector<int> &vec);
+void selectSort_A(vector<int> &vec);
 
 int main()
 {
     vector<int> vec_A = generateRandomVec(-100, 100, 10);
-    vector<int> vec_B ;
-    vec_B.assign(vec_A.begin(), vec_A.end());
+    // vector<int> vec_B ;
+    // vec_B.assign(vec_A.begin(), vec_A.end());
 
     printf("数组未排序 前为：\n");
     printVecElement(vec_A);
-    printVecElement(vec_B);
+    // printVecElement(vec_B);
 
-    bubbleSort_A(vec_A);
-    bubbleSort_B(vec_B);
+    selectSort_A(vec_A);
 
-    printf("冒泡排序 后为：\n");
+    printf("选择排序 后为：\n");
     printVecElement(vec_A);
-    printVecElement(vec_B);
+    // printVecElement(vec_B);
 }
 
 vector<int> generateRandomVec(int low, int high, int len)
@@ -49,44 +47,46 @@ void printVecElement(vector<int> vec)
     printf("\n");
 }
 
-// 冒泡排序：
+// 选择排序：
 // Time: O(n ^ 2)
 // Space: O(1)
-void bubbleSort_A(vector<int> &vec)
+void selectSort_A(vector<int> &vec)
 {
-    for (int i = vec.size() - 1; i >= 0; i--)
+    for (int i = 0; i < vec.size() - 1; i++)
     {
-        for (int j = 0; j < i; j++)
+        int index = i;
+        for (int j = i + 1; j < vec.size(); j++)
         {
-            if (vec[j] > vec[j + 1])
+            if (vec[j] < vec[index])
             {
-                swap(vec[j], vec[j + 1]);
+                index = j;
             }
         }
+        swap(vec[index], vec[i]);
     }
 }
 
-// 冒泡排序：
 // Time: O(n ^ 2)
 // Space: O(1)
 // 添加 flag 标志位:
 //   flag == true:   数组 已经 有序：
 //   flag == false:  数组 仍然 无序：
-void bubbleSort_B(vector<int> &vec)
-{
-    for (int i = vec.size() - 1; i >= 0; i--)
-    {
-        bool flag = true;
-        for (int j = 0; j < i; j++)
-        {
-            if (vec[j] > vec[j + 1])
-            {
-                swap(vec[j], vec[j + 1]);
-                flag = false;
-            }
-        }
-        if(flag == true){
-            break;
-        }
-    }
-}
+// void bubbleSort_B(vector<int> &vec)
+// {
+//     for (int i = vec.size() - 1; i >= 0; i--)
+//     {
+//         bool flag = true;
+//         for (int j = 0; j < i; j++)
+//         {
+//             if (vec[j] > vec[j + 1])
+//             {
+//                 swap(vec[j], vec[j + 1]);
+//                 flag = false;
+//             }
+//         }
+//         if (flag == true)
+//         {
+//             break;
+//         }
+//     }
+// }

@@ -125,6 +125,7 @@ int dfsSplitClosestSumWithLimit_B(vector<int> vec, int index, int target, int **
     {
         p2 = vec[index] + dfsSplitClosestSumWithLimit_B(vec, index + 1, target - vec[index], arr);
     }
+    arr[index][target] = max(p1, p2);
     return max(p1, p2);
 }
 
