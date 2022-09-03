@@ -9,8 +9,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="631eabfe-c21b-46a6-93b7-8c277ff365e1" name="变更" comment="Algo-CPP">
-      <change beforePath="$PROJECT_DIR$/DynamicProgramming/MaxSubArray.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/DynamicProgramming/MaxSubArray.cpp" afterDir="false" />
+    <list default="true" id="631eabfe-c21b-46a6-93b7-8c277ff365e1" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BinarySearch/BinarySearch.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BinarySearch/BinarySearchLess.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BinarySearch/BinarySearchLessAndEqual.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BinarySearch/BinarySearchMore.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BinarySearch/BinarySearchMoreAndEqual.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DynamicProgramming/CoinChange.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/DynamicProgramming/CoinChange.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DynamicProgramming/LongestPalindromicSubsequence.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/DynamicProgramming/LongestPalindromicSubsequence.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SlidingWindow/MaxAndMinOfWindow/MaxAndMInValOfWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SlidingWindow/MaxAndMinOfWindow/MaxAndMInValOfWindow.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +62,7 @@
       <workItem from="1661606412122" duration="192000" />
       <workItem from="1661612144191" duration="55000" />
       <workItem from="1661652929350" duration="778000" />
-      <workItem from="1661653731476" duration="1000" />
+      <workItem from="1661653731476" duration="91000" />
     </task>
     <task id="LOCAL-00001" summary="Algo-CPP">
       <created>1661073639268</created>
@@ -70,7 +78,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661523366914</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Algo-CPP">
+      <created>1661653745524</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1661653745524</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

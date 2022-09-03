@@ -30,6 +30,7 @@ using namespace std;
 int generateRandomNum(int low, int high);
 string generateRandomString(int n);
 void printString(string s);
+
 int longestPalindromeSubsequence_A(string s);
 int dfsLongestPalindromeSubsequence_A(string s, int start, int end);
 int longestPalindromeSubsequence_B(string s);
