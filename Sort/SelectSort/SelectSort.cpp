@@ -65,28 +65,3 @@ void selectSort_A(vector<int> &vec)
         swap(vec[index], vec[i]);
     }
 }
-
-// Time: O(n ^ 2)
-// Space: O(1)
-// 添加 flag 标志位:
-//   flag == true:   数组 已经 有序：
-//   flag == false:  数组 仍然 无序：
-// void bubbleSort_B(vector<int> &vec)
-// {
-//     for (int i = vec.size() - 1; i >= 0; i--)
-//     {
-//         bool flag = true;
-//         for (int j = 0; j < i; j++)
-//         {
-//             if (vec[j] > vec[j + 1])
-//             {
-//                 swap(vec[j], vec[j + 1]);
-//                 flag = false;
-//             }
-//         }
-//         if (flag == true)
-//         {
-//             break;
-//         }
-//     }
-// }
