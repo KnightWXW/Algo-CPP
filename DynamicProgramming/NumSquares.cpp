@@ -40,8 +40,6 @@ int main()
     printf("暴力递归：%d\n", numSquares_A(n));
     printf("记忆化搜索：%d\n", numSquares_B(n));
     printf("动态规划：%d\n", numSquares_C(n));
-    // printf("动态规划（空间优化）：%d\n", fibonacci_D(num));
-    // printf("矩阵快速幂：%d\n", fibonacci_E(num));
 }
 
 int generateRandomNum(int low, int high)

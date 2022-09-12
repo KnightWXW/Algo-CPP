@@ -56,31 +56,31 @@ public:
 };
 
 template <class V, class UnionFindNode>
-class UnionFindMap
+class UnionFindOfMap
 {
 private:
     unordered_map<V, UnionFindNode> nodes;
-    unordered_map<UnionFindNode, UnionFindNode> parents;
+    unordered_map<UnionFindNode, UnionFindNode> parentsMap;
     unordered_map<UnionFindNode, V> sizeMap;
 
 public:
     // 构造函数：
-    UnionFindMap(int n)
+    UnionFindOfMap(int n)
     {
         for (int i = 0; i < n; i++)
         {
             UnionFindNode node = new UnionFindNode(i);
             nodes.insert({i, node});
-            parents.insert({node, node});
+            parentsMap.insert({node, node});
             sizeMap.insert({node, 1});
         }
     }
 
     // 析构函数：
-    ~UnionFindMap()
+    ~UnionFindOfMap()
     {
         nodes.clear();
-        parents.clear();
+        parentsMap.clear();
         sizeMap.clear();
     }
 
@@ -88,16 +88,16 @@ public:
     {
         stack<UnionFindNode> stack;
         UnionFindNode cur = nodes.find(i);
-        while (parents[cur] != cur)
+        while (parentsMap[cur] != cur)
         {
             stack.push(cur);
-            cur = parents[cur];
+            cur = parentsMap[cur];
         }
 
         while (stack.empty() == false)
         {
             UnionFindNode tem = stack.top();
-            parents[tem] = cur;
+            parentsMap[tem] = cur;
             stack.pop();
         }
         return cur.value;
@@ -126,7 +126,7 @@ public:
             minNode = nodeParentI;
         }
 
-        parents.insert({minNode, maxNode});
+        parentsMap.insert({minNode, maxNode});
         sizeMap.insert({maxNode, sizeI + sizeJ});
         sizeMap.remove(minNode);
     }
@@ -148,7 +148,7 @@ int main()
 int findCircleNumMap(vector<vector<int>> &isConnected)
 {
     int n = isConnected.size();
-    UnionFindMap<int, UnionFindNode<int>> unionfind = UnionFindMap<int, UnionFindNode<int>>::UnionFindMap(n);
+    UnionFindOfMap<int, UnionFindNode<int>> unionfind = UnionFindOfMap<int, UnionFindNode<int>>::UnionFindMap(n);
     for (int i = 0; i < n; i++)
     {
         for (int j = i + 1; j < n; j++)

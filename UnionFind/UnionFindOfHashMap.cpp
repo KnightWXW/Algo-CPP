@@ -10,92 +10,69 @@ using namespace std;
 int findCircleNumArr(vector<vector<int>> &isConnected);
 void print2DVecElement(vector<vector<int>> vec);
 
-template <class V>
-class UnionFindNode
-{
-public:
-    V value;
-    UnionFindNode(V v)
-    {
-        value = v;
-    };
-    ~UnionFindNode(){};
-};
-
-template <class V, class UnionFindNode>
-class UnionFindMap
+template <class data>
+class UnionFindOfMap
 {
 private:
-    unordered_map<V, UnionFindNode> nodes;
-    unordered_map<UnionFindNode, UnionFindNode> parents;
-    unordered_map<UnionFindNode, V> sizeMap;
+    unordered_map<data, data> parentsMap;
+    unordered_map<data, data> sizeMap;
 
 public:
     // 构造函数：
-    UnionFindMap(vector<V> vec)
+    UnionFindOfMap(vector<data> vec)
     {
+        parentsMap.clear();
+        sizeMap.clear();
         for (int i = 0; i < vec.size(); i++)
         {
-            UnionFindNode node = new UnionFindNode(vec[i]);
-            nodes.insert({vec[i], node});
-            parents.insert({node, node});
-            sizeMap.insert({node, 1});
+            parentsMap[vec[i]] = vec[i];
+            sizeMap[vec[i]] = 1;
         }
     }
 
-    // 析构函数：
-    ~UnionFindMap()
+    data findSet(data x)
     {
-        nodes.clear();
-        parents.clear();
-        sizeMap.clear();
-    }
-
-    int findSet(int i)
-    {
-        stack<UnionFindNode> stack;
-        UnionFindNode cur = nodes.find(i);
-        while (parents[cur] != cur)
+        stack<data> stack;
+        while (parentsMap[x] != x)
         {
-            stack.push(cur);
-            cur = parents[cur];
+            stack.push(x);
+            x = parentsMap[x];
         }
 
-        while (stack.empty() == false)
+        while (!stack.empty())
         {
-            UnionFindNode tem = stack.top();
-            parents[tem] = cur;
+            data tem = stack.top();
+            parentsMap[tem] = x;
             stack.pop();
         }
-        return cur.value;
+        return x;
     }
 
-    bool isSameSet(int i, int j)
+    bool isSameSet(int x, int y)
     {
-        return findSet(i) == findSet(j);
+        return findSet(x) == findSet(y);
     }
 
-    void unionSet(int i, int j)
+    void unionSet(int x, int y)
     {
-        int parentI = findSet(i);
-        int parentJ = findSet(j);
-        UnionFindNode nodeParentI = nodes[parentI];
-        UnionFindNode nodeParentJ = nodes[parentJ];
-        int sizeI = sizeMap[nodeParentI];
-        int sizeJ = sizeMap[nodeParentJ];
+        int parentX = findSet(x);
+        int parentY = findSet(y);
 
-        UnionFindNode maxNode = nodeParentI;
-        UnionFindNode minNode = nodeParentJ;
-
-        if (sizeI < sizeJ)
+        if (parentX != parentY)
         {
-            maxNode = nodeParentJ;
-            minNode = nodeParentI;
+            if (sizeMap[parentX] > sizeMap[parentY])
+            {
+                parentsMap[parentY] = parentX;
+                sizeMap[parentX] += sizeMap[parentY];
+                sizeMap.erase(parentY);
+            }
+            else
+            {
+                parentsMap[parentX] = parentY;
+                sizeMap[parentY] += sizeMap[parentX];
+                sizeMap.erase(parentX);
+            }
         }
-
-        parents.insert({minNode, maxNode});
-        sizeMap.insert({maxNode, sizeI + sizeJ});
-        sizeMap.remove(minNode);
     }
 
     int numberofSets()
@@ -104,39 +81,9 @@ public:
     }
 };
 
-int main()
-{
-    vector<vector<int>> isConnected = {{1, 1, 0}, {1, 1, 0}, {0, 0, 1}};
-    print2DVecElement(isConnected);
-    printf("矩阵中 省份 的数量 为 %d 个。", findCircleNumArr(isConnected));
-}
-
-int findCircleNumArr(vector<vector<int>> &isConnected)
-{
-    int n = isConnected.size();
-    UnionFind unionfind = new UnionFind(isConnected);
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = i + 1; j < n; j++)
-        {
-            if (isConnected[i][j] == 1)
-            {
-                unionfind.unionSet(i, j);
-            }
-        }
-    }
-    return unionfind.numberofSets();
-}
-
-void print2DVecElement(vector<vector<int>> vec)
-{
-    for (int i = 0; i < vec.size(); i++)
-    {
-        for (int j = 0; j < vec[0].size(); j++)
-        {
-            printf("%d\t", vec[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
+// int main()
+// {
+//     vector<vector<int>> isConnected = {1, 5, 3};
+//     print2DVecElement(isConnected);
+//     printf("矩阵中 省份 的数量 为 %d 个。", findCircleNumArr(isConnected));
+// }
