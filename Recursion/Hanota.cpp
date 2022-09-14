@@ -19,6 +19,8 @@ using namespace std;
 
 //      A 中盘子的数目不大于14个。
 
+//      若要将 所有 的 盘子 搬完，需要 (2 ^ N - 1) 次
+
 int generateRandomNum(int low, int high);
 void hanota_A(int n);
 void hanotaLeftToRight(int n);
