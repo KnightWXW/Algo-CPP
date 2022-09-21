@@ -36,8 +36,7 @@ void printString(string s);
 int main(){
     int n = generateRandomNum(0, 20);
     string s = generateRandomString(n);
-    printString(s);
-    
+    printString(s); 
 }
 
 int generateRandomNum(int low, int high)
