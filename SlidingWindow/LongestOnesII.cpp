@@ -66,6 +66,9 @@ vector<int> generateRandomVec(int low, int high, int len)
     return vec;
 }
 
+// 滑动窗口：
+// Time: O(n)
+// Space: O(1)
 int longestOnesII(vector<int> &nums)
 {
     int n = nums.size();
