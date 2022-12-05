@@ -5,18 +5,24 @@
 
 using namespace std;
 
-//      LeetCode 487. 最大连续1的个数 II
+//      LeetCode 1004. 最大连续1的个数 III
 
-//      链接：https://leetcode.cn/problems/max-consecutive-ones-ii/
+//      链接：https://leetcode.cn/problems/max-consecutive-ones-iii/
 
-//      给定一个二进制数组，你可以最多将 1 个 0 翻转为 1，找出其中最大连续 1 的个数。
+//      给定一个二进制数组 nums 和一个整数 k，如果可以翻转最多 k 个 0 ，
+//      则返回 数组中连续 1 的最大个数 。
 
 //      示例 1：
+//      输入：nums = [1,1,1,0,0,0,1,1,1,1,0], K = 2
+//      输出：6
+//      解释：[1,1,1,0,0,1,1,1,1,1,1]
+//      粗体数字从 0 翻转到 1，最长的子数组长度为 6。
 
-//      输入：[1,0,1,1,0]
-//      输出：4
-//      解释：翻转第一个 0 可以得到最长的连续 1。
-//      当翻转以后，最大连续 1 的个数为 4。
+//      示例 2：
+//      输入：nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], K = 3
+//      输出：10
+//      解释：[0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1]
+//      粗体数字从 0 翻转到 1，最长的子数组长度为 10。
 
 //      提示：
 //          1 <= nums.length <= 105
@@ -27,16 +33,17 @@ int generateRandomNum(int low, int high);
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
 
-int longestOnesII(vector<int> &nums);
+int longestOnesIII(vector<int> &nums, int k);
 
 int main()
 {
     int n = generateRandomNum(0, 30);
+    int k = generateRandomNum(0, n);
     vector<int> arr = generateRandomVec(0, 1, n);
     printf("arr数组 元素为: ");
     printVecElement(arr);
-    int ans = longestOnesII(arr);
-    printf("数组中连续 1 的最大个数为 %d", ans);
+    int ans = longestOnesIII(arr, k);
+    printf("当 k 为 %d 时, 数组中连续 1 的最大个数为 %d", k, ans);
 }
 
 int generateRandomNum(int low, int high)
@@ -69,7 +76,7 @@ vector<int> generateRandomVec(int low, int high, int len)
 // 滑动窗口：
 // Time: O(n)
 // Space: O(1)
-int longestOnesII(vector<int> &nums)
+int longestOnesIII(vector<int> &nums, int k)
 {
     int n = nums.size();
 
@@ -85,13 +92,12 @@ int longestOnesII(vector<int> &nums)
         {
             cnt++;
         }
-        while (cnt > 1)
+        while (cnt > k)
         {
             if (nums[left] == 0)
             {
                 cnt--;
             }
-
             left++;
         }
         ans = max(ans, right - left + 1);

@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <algorithm>
+#include <numeric>
 
 using namespace std;
 
@@ -25,7 +27,7 @@ using namespace std;
 //          第 3 天：8
 //          第 4 天：9
 //          第 5 天：10
-//      请注意，货物必须按照给定的顺序装运，因此使用载重能力为 14 的船舶并将包装分成 (2, 3, 4, 5), (1, 6, 7), (8), (9), (10) 是不允许的。 
+//      请注意，货物必须按照给定的顺序装运，因此使用载重能力为 14 的船舶并将包装分成 (2, 3, 4, 5), (1, 6, 7), (8), (9), (10) 是不允许的。
 
 //      示例 2：
 //      输入：weights = [3,2,2,4,1,4], days = 3
@@ -44,20 +46,25 @@ using namespace std;
 //          第 2 天：2
 //          第 3 天：3
 //          第 4 天：1, 1
- 
+
 //      提示：
 //          1 <= days <= weights.length <= 5 * 104
 //          1 <= weights[i] <= 500
+
+int shipWithinDays(vector<int> &weights, int days);
+bool judge(vector<int> vec, int days, int loads);
 
 int generateRandomNum(int low, int high);
 vector<int> generateRandomVec(int low, int high, int len);
 void printVec(vector<int> &vec);
 
-int main(){
-    vector<int> vec = generateRandomVec(1, 109, 100);
+int main()
+{
+    vector<int> vec = generateRandomVec(1, 100, 20);
     int days = generateRandomNum(1, vec.size());
     printVec(vec);
-    printf("在 %d 天内将传送带上的所有包裹送达的船的最低运载能力为 %d", days, vec);
+    int loads = shipWithinDays(vec, days);
+    printf("在 %d 天内将传送带上的所有包裹送达的船的最低运载能力为 %d", days, loads);
 }
 
 int generateRandomNum(int low, int high)
@@ -86,4 +93,47 @@ void printVec(vector<int> &vec)
         printf("%d ", vec[i]);
     }
     printf("\n");
+}
+
+int shipWithinDays(vector<int> &weights, int days)
+{
+    int sum = accumulate(weights.begin(), weights.end(), 0);
+    int maxVal = *max_element(weights.begin(), weights.end());
+    int left = maxVal;
+    int right = sum;
+
+    while (left <= right)
+    {
+        int mid = left + (right - left) / 2;
+        if (judge(weights, days, mid))
+        {
+            right = mid - 1;
+        }
+        else
+        {
+            left = mid + 1;
+        }
+    }
+
+    return left;
+}
+
+bool judge(vector<int> vec, int days, int loads)
+{
+    int time = 1;
+    int tem = 0;
+    for (int i = 0; i < vec.size(); i++)
+    {
+        if (tem + vec[i] <= loads)
+        {
+            tem += vec[i];
+        }
+        else
+        {
+            time++;
+            tem = vec[i];
+        }
+    }
+
+    return time <= days;
 }

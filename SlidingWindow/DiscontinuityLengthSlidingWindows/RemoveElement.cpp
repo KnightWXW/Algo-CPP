@@ -50,7 +50,7 @@ using namespace std;
 int generateRandomNum(int low, int high);
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
-vector<int> removeElement(vector<int> vec, int target);
+vector<int> RemoveElement(vector<int> vec, int target);
 
 int main()
 {
@@ -60,7 +60,7 @@ int main()
     int v = (rand() % vec.size());
     int target = vec[v];
     printf("target 为 %d\n", target);
-    vector<int> ans = removeElement(vec, target);
+    vector<int> ans = RemoveElement(vec, target);
     printVecElement(ans);
 }
 
@@ -94,7 +94,7 @@ vector<int> generateRandomVec(int low, int high, int len)
 // 滑动窗口：
 // Time: O(n)
 // Space: O(1)
-vector<int> removeElement(vector<int> vec, int target)
+vector<int> RemoveElement(vector<int> vec, int target)
 {
     int l = vec.size();
     int left = 0;

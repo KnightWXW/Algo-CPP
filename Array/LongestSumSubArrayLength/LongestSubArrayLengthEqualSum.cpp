@@ -18,6 +18,7 @@ using namespace std;
 int generateRandomNum(int low, int high);
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
+
 int digitSum(vector<int> vec, int start, int end);
 int minElementOfVec(vector<int> vec, int start, int end);
 int longestSubArrayLengthEqualSum_A(vector<int> vec, int k);
