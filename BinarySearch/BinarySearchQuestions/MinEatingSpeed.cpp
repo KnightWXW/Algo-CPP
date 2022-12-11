@@ -36,19 +36,20 @@ using namespace std;
 //          piles.length <= h <= 109
 //          1 <= piles[i] <= 109
 
-int minEatingSpeed(vector<int> piles, int h);
-bool judge(vector<int> nums, int h, int k);
-
 int generateRandomNum(int low, int high);
 vector<int> generateRandomVec(int low, int high, int len);
 void printVec(vector<int> &vec);
 
+int MinEatingSpeed(vector<int> piles, int h);
+bool JudgeMinEatingSpeed(vector<int> nums, int h, int k);
+
 int main()
 {
-    vector<int> vec = generateRandomVec(1, 100, 10);
+    int n = generateRandomNum(1, 30);
+    vector<int> vec = generateRandomVec(1, 100, n);
     int h = generateRandomNum(vec.size(), 100);
     printVec(vec);
-    int k = minEatingSpeed(vec, h);
+    int k = MinEatingSpeed(vec, h);
     printf("珂珂在 %d 小时内吃掉所有香蕉的最小速度 k 为 %d", h, k);
 }
 
@@ -80,7 +81,10 @@ void printVec(vector<int> &vec)
     printf("\n");
 }
 
-int minEatingSpeed(vector<int> piles, int h)
+// 二分查找：
+// Time: O(NlogN)
+// Space: O(1)
+int MinEatingSpeed(vector<int> piles, int h)
 {
     int maxVal = *max_element(piles.begin(), piles.end());
 
@@ -90,7 +94,7 @@ int minEatingSpeed(vector<int> piles, int h)
     while (left <= right)
     {
         int mid = left + (right - left) / 2;
-        if (judge(piles, h, mid))
+        if (JudgeMinEatingSpeed(piles, h, mid))
         {
             right = mid - 1;
         }
@@ -99,11 +103,10 @@ int minEatingSpeed(vector<int> piles, int h)
             left = mid + 1;
         }
     }
-
     return left;
 }
 
-bool judge(vector<int> nums, int h, int k)
+bool JudgeMinEatingSpeed(vector<int> nums, int h, int k)
 {
     long hours = 0;
     for (int i = 0; i < nums.size(); i++)

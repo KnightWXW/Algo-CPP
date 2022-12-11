@@ -88,6 +88,5 @@ int CharacterReplacement(string s, int k){
         }
         right++;
     }
-
     return ans;
 }

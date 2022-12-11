@@ -52,7 +52,7 @@ using namespace std;
 //          1 <= weights[i] <= 500
 
 int shipWithinDays(vector<int> &weights, int days);
-bool judge(vector<int> vec, int days, int loads);
+bool JudgeMinEatingSpeed(vector<int> vec, int days, int loads);
 
 int generateRandomNum(int low, int high);
 vector<int> generateRandomVec(int low, int high, int len);
@@ -105,7 +105,7 @@ int shipWithinDays(vector<int> &weights, int days)
     while (left <= right)
     {
         int mid = left + (right - left) / 2;
-        if (judge(weights, days, mid))
+        if (JudgeMinEatingSpeed(weights, days, mid))
         {
             right = mid - 1;
         }
@@ -118,7 +118,7 @@ int shipWithinDays(vector<int> &weights, int days)
     return left;
 }
 
-bool judge(vector<int> vec, int days, int loads)
+bool JudgeMinEatingSpeed(vector<int> vec, int days, int loads)
 {
     int time = 1;
     int tem = 0;

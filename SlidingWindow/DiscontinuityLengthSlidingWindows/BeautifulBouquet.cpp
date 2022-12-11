@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <unordered_map>
 
 using namespace std;
 
@@ -41,21 +42,21 @@ using namespace std;
 //          1 <= cnt <= 10^5
 //          通过次数2,358提交次数5,101
 
-
 int generateRandomNum(int low, int high);
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
 
-int BeautifulBouquet(vector<int>& flowers, int cnt);
+int BeautifulBouquet(vector<int> &flowers, int cnt);
 
 int main()
 {
-    int n = generateRandomNum(0, 30);
-    vector<int> arr = generateRandomVec(0, 1, n);
-    int limit = generateRandomNum(minVal, maxVal);
+    int n = generateRandomNum(1, 30);
+    vector<int> arr = generateRandomVec(0, 10, n);
+    int cnt = generateRandomNum(1, n / 5 + 1);
+    int ans = BeautifulBouquet(arr, cnt);
     printf("arr数组 元素为: ");
     printVecElement(arr);
-    printf("子数组中的任意两个元素之间的绝对差必须小于或者等于 %d 时\n, 最长连续子数组的长度 %d", limit, ans);
+    printf("每一品种的鲜花数量都不超过 %d 朵，共有 %d 种可选择的区间，使得插花是 美观的", cnt, ans);
 }
 
 int generateRandomNum(int low, int high)
@@ -85,6 +86,25 @@ vector<int> generateRandomVec(int low, int high, int len)
     return vec;
 }
 
-int BeautifulBouquet(vector<int>& flowers, int cnt){
-    
+int BeautifulBouquet(vector<int> &flowers, int cnt)
+{
+    int l = flowers.size();
+    const int MOD = 1000000007;
+    unordered_map<int, int> hmap;
+    int left = 0;
+    int right = 0;
+    int ans = 0;
+    while (right < l)
+    {
+        hmap[flowers[right]]++;
+        while (hmap[flowers[right]] > cnt)
+        {
+            hmap[flowers[left]]--;
+            left++;
+        }
+        // right 每向右移动一位，就添加 right - left + 1 种结果 
+        ans = (ans + right - left + 1) % MOD;
+        right++;
+    }
+    return ans;
 }
