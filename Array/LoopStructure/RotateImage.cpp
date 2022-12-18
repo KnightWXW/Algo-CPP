@@ -14,14 +14,12 @@ using namespace std;
 //      你必须在 原地 旋转图像，这意味着你需要直接修改输入的二维矩阵。
 //      请不要 使用另一个矩阵来旋转图像。
 //      矩阵为正方形矩阵：n == matrix.length == matrix[i].length
-
 //      输入：matrix = [[1,2,3],
 //                     [4,5,6],
 //                     [7,8,9]]                  
 //      输出：[[7,4,1],
 //             [8,5,2],
 //             [9,6,3]]
-
 //      输入：matrix = [[5,1,9,11],
 //                      [2,4,8,10],
 //                      [13,3,6,7],
@@ -30,8 +28,6 @@ using namespace std;
 //             [14,3,4,1],
 //             [12,6,8,9],
 //             [16,7,10,11]]
-
-
 
 void print2DVecElement(vector<vector<int>> vec);
 vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col);

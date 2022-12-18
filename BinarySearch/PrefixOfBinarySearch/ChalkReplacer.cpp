@@ -54,17 +54,16 @@ int generateRandomNum(int low, int high);
 vector<int> generateRandomVec(int low, int high, int len);
 void printVec(vector<int> &vec);
 
-int ChalkReplacer(vector<int>& chalk, int k);
-bool JudgeChalkReplacer(vector<int> nums, int h, int k);
+int ChalkReplacer(vector<int> &chalk, int k);
 
 int main()
 {
     int n = generateRandomNum(1, 30);
-    vector<int> vec = generateRandomVec(1, 100, n);
-    int k = generateRandomNum(vec.size(), 100);
+    vector<int> vec = generateRandomVec(1, 10, n);
+    int h = generateRandomNum(vec.size(), 100);
     printVec(vec);
     int ans = ChalkReplacer(vec, h);
-    printf("粉笔盒里总共有 %d 支粉笔。\n需要 补充 粉笔的学生 编号 为 %d", k, ans);
+    printf("粉笔盒里总共有 %d 支粉笔。\n需要 补充 粉笔的学生 编号 为 %d", h, ans);
 }
 
 int generateRandomNum(int low, int high)
@@ -95,14 +94,37 @@ void printVec(vector<int> &vec)
     printf("\n");
 }
 
-// 二分查找：
+// 前缀和 + 二分查找：
 // Time: O(NlogN)
 // Space: O(1)
-int ChalkReplacer(vector<int>& chalk, int k)
+int ChalkReplacer(vector<int> &chalk, int k)
 {
+    // 前缀和：
+    int l = chalk.size();
+    vector<long> preSum(l + 1, 0);
+    for (int i = 1; i <= l; i++)
+    {
+        preSum[i] = preSum[i - 1] + chalk[i - 1];
+    }
+    k %= preSum[l];
 
-}
-
-bool JudgeChalkReplacer(vector<int> nums, int h, int k){
-    
+    // 二分查找：
+    // return upper_bound(preSum.begin(), preSum.end(), k) - preSum.begin() - 1;
+    int left = 0;
+    int right = l;
+    int ans = 0;
+    while (left <= right)
+    {
+        int mid = left + ((right - left) >> 1);
+        if (preSum[mid] > k)
+        {
+            ans = mid;
+            right = mid - 1;
+        }
+        else
+        {
+            left = mid + 1;
+        }
+    }
+    return ans - 1;
 }
