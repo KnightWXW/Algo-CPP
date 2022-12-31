@@ -8,7 +8,8 @@ using namespace std;
 
 //      LeetCode 15. 三数之和
 
-//      链接：https://leetcode.cn/problems/3sum/
+//      链接1 ：https://leetcode.cn/problems/3sum/
+//      链接2 ：https://leetcode.cn/problems/1fGaJU/?favorite=e8X3pBZi
 
 //      给你一个整数数组 nums ，
 //      判断是否存在三元组 [nums[i], nums[j], nums[k]]

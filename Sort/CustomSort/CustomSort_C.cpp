@@ -46,7 +46,7 @@ int main()
             }
             return p1.second > p2.second; });
 
-    printf("计数排序 后为：\n");
+    printf("自定义排序 后为：\n");
     printPairVecElement(arr_A);
     printPairVecElement(arr_B);
 }

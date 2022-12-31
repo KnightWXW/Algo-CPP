@@ -14,7 +14,7 @@ using namespace std;
 
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
-int digitSum(vector<int> vec);
+int DigitSum(vector<int> vec);
 int splitClosestSumWithLimit_A_A(vector<int> vec);
 int dfsSplitClosestSumWithLimit_A_A(vector<int> vec, int index, int cnt, int target);
 int splitClosestSumWithLimit_A_B(vector<int> vec);
@@ -28,7 +28,7 @@ int splitClosestSumWithLimit_C(vector<int> vec);
 int main()
 {
     vector<int> vec = generateRandomVec(0, 10, 20);
-    int sumAll = digitSum(vec);
+    int sumAll = DigitSum(vec);
     printVecElement(vec);
     printf("数组元素的累加和为：%d\n", sumAll);
     printf("暴力递归(一)：%d\n", splitClosestSumWithLimit_A_A(vec));
@@ -59,7 +59,7 @@ vector<int> generateRandomVec(int low, int high, int len)
     return vec;
 }
 
-int digitSum(vector<int> vec)
+int DigitSum(vector<int> vec)
 {
     int sum = 0;
     for (int i = 0; i < vec.size(); i++)
@@ -74,7 +74,7 @@ int digitSum(vector<int> vec)
 // Space: O(N)
 int splitClosestSumWithLimit_A_A(vector<int> vec)
 {
-    int sumAll = digitSum(vec);
+    int sumAll = DigitSum(vec);
 
     int cnt = vec.size() >> 1;
     int target = sumAll >> 1;
@@ -119,7 +119,7 @@ int dfsSplitClosestSumWithLimit_A_A(vector<int> vec, int index, int cnt, int tar
 // Space: O(N)
 int splitClosestSumWithLimit_A_B(vector<int> vec)
 {
-    int sumAll = digitSum(vec);
+    int sumAll = DigitSum(vec);
 
     int target = sumAll >> 1;
     int cnt = vec.size() >> 1;
@@ -172,7 +172,7 @@ int dfsSplitClosestSumWithLimit_A_B(vector<int> vec, int index, int cnt, int tar
 // Space: O(N)
 int splitClosestSumWithLimit_B_A(vector<int> vec)
 {
-    int sumAll = digitSum(vec);
+    int sumAll = DigitSum(vec);
 
     int cntAll = (vec.size() + 1) / 2;
     int cnt = vec.size() / 2;
@@ -240,7 +240,7 @@ int dfsSplitClosestSumWithLimit_B_A(vector<int> vec, int index, int cnt, int tar
 // Space: O(N)
 int splitClosestSumWithLimit_B_B(vector<int> vec)
 {
-    int sumAll = digitSum(vec);
+    int sumAll = DigitSum(vec);
 
     int cntAll = (vec.size() + 1) / 2;
     int cnt = vec.size() / 2;
@@ -325,7 +325,7 @@ int dfsSplitClosestSumWithLimit_B_B(vector<int> vec, int index, int cnt, int tar
 // Space: O(M * N)
 int splitClosestSumWithLimit_C(vector<int> vec)
 {
-    int sumAll = digitSum(vec);
+    int sumAll = DigitSum(vec);
 
     int cntAll = (vec.size() + 1) >> 1;
     int cnt = vec.size() >> 1;

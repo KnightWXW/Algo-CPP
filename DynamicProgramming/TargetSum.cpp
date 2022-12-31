@@ -15,31 +15,52 @@ using namespace std;
 //           例如，nums = [2, 1] ，可以在 2 之前添加 '+' ，在 1 之前添加 '-' ，
 //           然后串联起来得到表达式 "+2-1" 。
 //      返回可以通过上述方法构造的、运算结果等于 target 的不同 表达式 的数目。
-
+//      示例 1：
+//          输入：nums = [1,1,1,1,1], target = 3
+//          输出：5
+//          解释：一共有 5 种方法让最终目标和为 3 。
+//              -1 + 1 + 1 + 1 + 1 = 3
+//              +1 - 1 + 1 + 1 + 1 = 3
+//              +1 + 1 - 1 + 1 + 1 = 3
+//              +1 + 1 + 1 - 1 + 1 = 3
+//              +1 + 1 + 1 + 1 - 1 = 3
+//      示例 2：
+//          输入：nums = [1], target = 1
+//          输出：1 
+//          提示：
+//              1 <= nums.length <= 20
+//              0 <= nums[i] <= 1000
+//              0 <= sum(nums[i]) <= 1000
+//              -1000 <= target <= 1000
 
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
 int generateRandomNum(int low, int high);
-int digitSum(vector<int> vec);
-int targetSum_A(vector<int> vec, int target);
-int dfsTargetSum_A(vector<int> vec, int index, int temSum, int target);
-int targetSum_B(vector<int> vec, int target);
-int dfsTargetSum_B(vector<int> vec, int index, int temSum, int target, unordered_map<string, int> map);
-int targetSum_C(vector<int> vec, int target);
-int dfsTargetSum_C(vector<int> vec, int index, int temSum, int target, int sum, int **arr);
-int targetSum_D(vector<int> vec, int target);
+int DigitSum(vector<int> vec);
+int TargetSum_A(vector<int> vec, int target);
+int DfsTargetSum_A(vector<int> vec, int index, int temSum, int target);
+int TargetSum_B(vector<int> vec, int target);
+int DfsTargetSum_B(vector<int> vec, int index, int temSum, int target, unordered_map<string, int> map);
+int TargetSum_C(vector<int> vec, int target);
+int DfsTargetSum_C(vector<int> vec, int index, int temSum, int target, int sum, int **arr);
+int TargetSum_D(vector<int> vec, int target);
+int TargetSum_E(vector<int> vec, int target);
+int TargetSum_F(vector<int> vec, int target);
 
 int main()
 {
-    vector<int> vec = generateRandomVec(0, 10, 10);
-    int sum = digitSum(vec);
+    int n = generateRandomNum(1, 10);
+    vector<int> vec = generateRandomVec(0, 10, n);
+    int sum = DigitSum(vec);
     int target = generateRandomNum(-sum, sum);
     printVecElement(vec);
     printf("target 为：%d。\n", target);
-    printf("暴力递归：%d\n", targetSum_A(vec, target));
-    printf("记忆化搜索(map存储)：%d\n", targetSum_B(vec, target));
-    printf("记忆化搜索(数组存储)：%d\n", targetSum_C(vec, target));
-    printf("动态规划：%d\n", targetSum_D(vec, target));
+    printf("暴力递归：%d\n", TargetSum_A(vec, target));
+    printf("记忆化搜索(map存储)：%d\n", TargetSum_B(vec, target));
+    printf("记忆化搜索(数组存储)：%d\n", TargetSum_C(vec, target));
+    printf("动态规划：%d\n", TargetSum_D(vec, target));
+    printf("背包问题：%d\n", TargetSum_E(vec, target));
+    printf("背包问题(空间压缩)：%d\n", TargetSum_F(vec, target));
 }
 
 void printVecElement(vector<int> vec)
@@ -69,7 +90,7 @@ int generateRandomNum(int low, int high)
     return (rand() % (high - low + 1)) + low;
 }
 
-int digitSum(vector<int> vec)
+int DigitSum(vector<int> vec)
 {
     int sum = 0;
     for (int i = 0; i < vec.size(); i++)
@@ -82,17 +103,17 @@ int digitSum(vector<int> vec)
 // 暴力递归：
 // Time: O(2^N)
 // Space: O(N)
-int targetSum_A(vector<int> vec, int target)
+int TargetSum_A(vector<int> vec, int target)
 {
-    int sum = digitSum(vec);
+    int sum = DigitSum(vec);
     if (sum < target || target < -sum)
     {
         return -1;
     }
-    return dfsTargetSum_A(vec, 0, 0, target);
+    return DfsTargetSum_A(vec, 0, 0, target);
 }
 
-int dfsTargetSum_A(vector<int> vec, int index, int temSum, int target)
+int DfsTargetSum_A(vector<int> vec, int index, int temSum, int target)
 {
     if (index == vec.size())
     {
@@ -106,29 +127,29 @@ int dfsTargetSum_A(vector<int> vec, int index, int temSum, int target)
         }
     }
     int cnt = 0;
-    cnt += dfsTargetSum_A(vec, index + 1, temSum + vec[index], target);
-    cnt += dfsTargetSum_A(vec, index + 1, temSum - vec[index], target);
+    cnt += DfsTargetSum_A(vec, index + 1, temSum + vec[index], target);
+    cnt += DfsTargetSum_A(vec, index + 1, temSum - vec[index], target);
     return cnt;
 }
 
 // 记忆化搜索(map存储)：
 // Time: O(2^N)
 // Space: O(N)
-int targetSum_B(vector<int> vec, int target)
+int TargetSum_B(vector<int> vec, int target)
 {
-    int sum = digitSum(vec);
+    int sum = DigitSum(vec);
     if (sum < target || target < -sum)
     {
         return -1;
     }
 
     unordered_map<string, int> map;
-    int ans = dfsTargetSum_B(vec, 0, 0, target, map);
+    int ans = DfsTargetSum_B(vec, 0, 0, target, map);
 
     return ans;
 }
 
-int dfsTargetSum_B(vector<int> vec, int index, int temSum, int target, unordered_map<string, int> map)
+int DfsTargetSum_B(vector<int> vec, int index, int temSum, int target, unordered_map<string, int> map)
 {
     string key = to_string(index) + "_" + to_string(temSum);
     if (index == vec.size())
@@ -150,8 +171,8 @@ int dfsTargetSum_B(vector<int> vec, int index, int temSum, int target, unordered
     }
 
     int cnt = 0;
-    cnt += dfsTargetSum_B(vec, index + 1, temSum - vec[index], target, map);
-    cnt += dfsTargetSum_B(vec, index + 1, temSum + vec[index], target, map);
+    cnt += DfsTargetSum_B(vec, index + 1, temSum - vec[index], target, map);
+    cnt += DfsTargetSum_B(vec, index + 1, temSum + vec[index], target, map);
     map[key] = cnt;
     return cnt;
 }
@@ -159,9 +180,9 @@ int dfsTargetSum_B(vector<int> vec, int index, int temSum, int target, unordered
 // 记忆化搜索(数组存储)：
 // Time: O(2^N)
 // Space: O(N)
-int targetSum_C(vector<int> vec, int target)
+int TargetSum_C(vector<int> vec, int target)
 {
-    int sum = digitSum(vec);
+    int sum = DigitSum(vec);
     if (sum < target || target < -sum)
     {
         return -1;
@@ -178,7 +199,7 @@ int targetSum_C(vector<int> vec, int target)
         }
     }
 
-    int ans = dfsTargetSum_C(vec, 0, 0, target, sum, arr);
+    int ans = DfsTargetSum_C(vec, 0, 0, target, sum, arr);
 
     for (int i = 0; i < vec.size() + 1; i++)
     {
@@ -189,7 +210,7 @@ int targetSum_C(vector<int> vec, int target)
     return ans;
 }
 
-int dfsTargetSum_C(vector<int> vec, int index, int temSum, int target, int sum, int **arr)
+int DfsTargetSum_C(vector<int> vec, int index, int temSum, int target, int sum, int **arr)
 {
     if (index == vec.size())
     {
@@ -210,8 +231,8 @@ int dfsTargetSum_C(vector<int> vec, int index, int temSum, int target, int sum, 
     }
 
     int cnt = 0;
-    cnt += dfsTargetSum_C(vec, index + 1, temSum + vec[index], target, sum, arr);
-    cnt += dfsTargetSum_C(vec, index + 1, temSum - vec[index], target, sum, arr);
+    cnt += DfsTargetSum_C(vec, index + 1, temSum + vec[index], target, sum, arr);
+    cnt += DfsTargetSum_C(vec, index + 1, temSum - vec[index], target, sum, arr);
     arr[index][temSum + sum] = cnt;
     return cnt;
 }
@@ -219,9 +240,9 @@ int dfsTargetSum_C(vector<int> vec, int index, int temSum, int target, int sum, 
 // 动态规划：
 // Time: O(M * N)
 // Space: O(M * N)
-int targetSum_D(vector<int> vec, int target)
+int TargetSum_D(vector<int> vec, int target)
 {
-    int sum = digitSum(vec);
+    int sum = DigitSum(vec);
     if (sum < target || target < -sum)
     {
         return -1;
@@ -243,12 +264,14 @@ int targetSum_D(vector<int> vec, int target)
     {
         for (int j = 0; j < 2 * sum + 1; j++)
         {
-            if (j - vec[i] >= 0){
+            if (j - vec[i] >= 0)
+            {
                 dp[i][j] += dp[i + 1][j - vec[i]];
             }
-            if (j + vec[i] < 2 * sum + 1){
+            if (j + vec[i] < 2 * sum + 1)
+            {
                 dp[i][j] += dp[i + 1][j + vec[i]];
-            }  
+            }
         }
     }
 
@@ -261,4 +284,66 @@ int targetSum_D(vector<int> vec, int target)
     free(dp);
 
     return ans;
+}
+
+// 转换为背包问题：
+// 求目标问题 实际上 就是求 背包问题 ：
+// Time: O(M * N)
+// Space: O(M * N)
+// target = 正数和 - 负数和
+//        = sumAll - 负数和 - 负数和
+//        = sumAll - 2 * 负数和
+int TargetSum_E(vector<int> vec, int target)
+{
+    int l = vec.size();
+    int sumAll = DigitSum(vec);
+    int k = sumAll - target;
+    if ((k & 1) == 1 || k < 0)
+    {
+        return 0;
+    }
+    k /= 2;
+    vector<vector<int>> dp(l + 1, vector<int>(k + 1, 0));
+    dp[0][0] = 1;
+    for (int i = 1; i <= l; i++)
+    {
+        for (int j = 0; j <= k; j++)
+        {
+            if (j >= vec[i - 1])
+            {
+                dp[i][j] = dp[i - 1][j] + dp[i - 1][j - vec[i - 1]];
+            }
+            else
+            {
+                dp[i][j] = dp[i - 1][j];
+            }
+        }
+    }
+    return dp[l][k];
+}
+
+// 转换为 背包问题(空间压缩)：
+// 求目标问题 实际上 就是求 背包问题 ：
+// Time: O(M * N)
+// Space: O(M * N)
+int TargetSum_F(vector<int> vec, int target)
+{
+    int l = vec.size();
+    int sumAll = DigitSum(vec);
+    int k = sumAll - target;
+    if ((k & 1) == 1 || k < 0)
+    {
+        return 0;
+    }
+    k /= 2;
+    vector<int> dp(k + 1, 0);
+    dp[0] = 1;
+    for (int i = 1; i <= l; i++)
+    {
+        for (int j = k; j >= vec[i - 1]; j--)
+        {
+            dp[j] += dp[j - vec[i - 1]];
+        }
+    }
+    return dp[k];
 }

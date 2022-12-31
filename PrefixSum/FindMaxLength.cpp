@@ -8,7 +8,8 @@ using namespace std;
 
 //      LeetCode 525. 连续数组
 
-//      链接：https://leetcode.cn/problems/contiguous-array/
+//      链接1 ：https://leetcode.cn/problems/contiguous-array/
+//      链接2 ：https://leetcode.cn/problems/A1NYOS/
 
 //      给定一个 二进制数组 nums,
 //      找到含有 相同数量 的 0 和 1 的 最长连续子数组，
