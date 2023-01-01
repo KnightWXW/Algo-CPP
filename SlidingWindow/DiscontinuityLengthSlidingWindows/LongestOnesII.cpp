@@ -10,14 +10,11 @@ using namespace std;
 //      链接：https://leetcode.cn/problems/max-consecutive-ones-ii/
 
 //      给定一个二进制数组，你可以最多将 1 个 0 翻转为 1，找出其中最大连续 1 的个数。
-
 //      示例 1：
-
 //      输入：[1,0,1,1,0]
 //      输出：4
 //      解释：翻转第一个 0 可以得到最长的连续 1。
 //      当翻转以后，最大连续 1 的个数为 4。
-
 //      提示：
 //          1 <= nums.length <= 105
 //          nums[i] 不是 0 就是 1

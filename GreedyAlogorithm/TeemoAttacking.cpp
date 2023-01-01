@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <cstdlib>
 #include <ctime>
 #include <vector>
@@ -52,7 +53,7 @@ int main()
     vector<int> vec = generateRandomVec(1, 100, n);
     int duration = generateRandomNum(1, 2 * n);
     printVec(vec);
-    int ans = TeemoAttacking(vec, maxOperations);
+    int ans = TeemoAttacking(vec, duration);
     printf("中毒持续时间的为 %d。艾希处于中毒状态的 总秒数为 %d ", duration, ans);
 }
 
