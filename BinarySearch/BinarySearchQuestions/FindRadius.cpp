@@ -40,7 +40,8 @@ int FindRadius(vector<int>& houses, vector<int>& heaters);
 
 int main()
 {
-    vector<int> vec = generateRandomVec(1, 30, 25);
+    int n = generateRandomNum(1, 20);
+    vector<int> vec = generateRandomVec(1, 30, n);
     long long k = (long long)generateRandomNum(1, 30);
     printVec(vec);
     int ans = MaximumCandies(vec, k);

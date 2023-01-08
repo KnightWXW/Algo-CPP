@@ -31,6 +31,7 @@ using namespace std;
 
 void print2DVecElement(vector<vector<int>> vec);
 vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col);
+
 void rotateImage(vector<vector<int>> &vec);
 void rotate(vector<vector<int>> &vec, int x1, int y1, int x2, int y2);
 

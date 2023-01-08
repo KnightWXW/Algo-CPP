@@ -35,14 +35,25 @@ int SingleNonDuplicate_D(vector<int> &nums);
 
 int main()
 {
-    int n = generateRandomNum(1, 20);
-    vector<int> vec = generateRandomVec(1, 30, n);
-    vector<int> copyArr(vec);
-    copyArr.erase(vec.end() - 1);
-    copy(copyArr.begin(), copyArr.end(), vec.end());
-    printVec(vec);
-    int ans = SingleNonDuplicate(vec);
-    printf("找出并返回只出现一次的那个数 为 %d。", ans);
+    int n = generateRandomNum(1, 10);
+    vector<int> vec = generateRandomVec(1, 100, n); 
+    vector<int> copyArr(2 * n - 1);
+    copy(vec.begin(), vec.end(), copyArr.begin());
+    copy(vec.begin(), vec.end(), copyArr.begin() + n - 1);
+    sort(copyArr.begin(), copyArr.end());
+    printVec(copyArr);
+    vector<int> copyArrA(copyArr);
+    vector<int> copyArrB(copyArr);
+    vector<int> copyArrC(copyArr);
+    vector<int> copyArrD(copyArr);
+    int ans_A = SingleNonDuplicate_A(copyArrA);
+    int ans_B = SingleNonDuplicate_B(copyArrB);
+    int ans_C = SingleNonDuplicate_C(copyArrC);
+    int ans_D = SingleNonDuplicate_D(copyArrD);
+    printf("找出并返回只出现一次的那个数 为 %d。\n", ans_A);
+    printf("找出并返回只出现一次的那个数 为 %d。\n", ans_B);
+    printf("找出并返回只出现一次的那个数 为 %d。\n", ans_C);
+    printf("找出并返回只出现一次的那个数 为 %d。\n", ans_D);
 }
 
 int generateRandomNum(int low, int high)

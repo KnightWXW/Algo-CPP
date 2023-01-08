@@ -51,12 +51,12 @@ using namespace std;
 //          1 <= days <= weights.length <= 5 * 104
 //          1 <= weights[i] <= 500
 
-int ShipWithinDays(vector<int> &weights, int days);
-bool JudgeMinEatingSpeed(vector<int> vec, int days, int loads);
-
 int generateRandomNum(int low, int high);
 vector<int> generateRandomVec(int low, int high, int len);
 void printVec(vector<int> &vec);
+
+int ShipWithinDays(vector<int> &weights, int days);
+bool JudgeMinEatingSpeed(vector<int> vec, int days, int loads);
 
 int main()
 {
@@ -114,7 +114,6 @@ int ShipWithinDays(vector<int> &weights, int days)
             left = mid + 1;
         }
     }
-
     return left;
 }
 
