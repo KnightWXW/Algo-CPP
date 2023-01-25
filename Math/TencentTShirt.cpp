@@ -2,6 +2,8 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <unordered_map>
+#include <algorithm>
 
 using namespace std;
 
@@ -22,15 +24,16 @@ int generateRandomNum(int low, int high);
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
 
-int TencentTShirt(vector<int> vec);
+int TencentTShirt_A(vector<int> vec);
+int TencentTShirt_B(vector<int> vec);
 
 int main()
 {
-    int n = generateRandomNum(0, 30);
-    vector<int> buttons = generateRandomVec(1, 20, n);
-    printVecElement(buttons);
-    long ans = SonOfHeavenAbandoned(buttons);
-    printf("最多的按按钮次数 %d\n", ans);
+    int n = generateRandomNum(0, 50);
+    vector<int> answers = generateRandomVec(1, 5, n);
+    printVecElement(answers);
+    int ans = TencentTShirt(answers);
+    printf("鹅厂中企鹅的最少数量为 %d\n", ans);
 }
 
 int generateRandomNum(int low, int high)
@@ -60,6 +63,41 @@ vector<int> generateRandomVec(int low, int high, int len)
     return vec;
 }
 
-int TencentTShirt(vector<int> vec){
-    
+int TencentTShirt(vector<int> answers)
+{
+    int l = answers.size();
+    sort(answers.begin(), answers.end());
+    int cnt = 1;
+    int pre = answers[0];
+    int ans = 0;
+    for (int i = 1; i < l; i++)
+    {
+        if (pre == answers[i])
+        {
+            cnt++;
+        }
+        else
+        {
+            ans += ((cnt + pre) / (pre + 1)) * (pre + 1);
+            pre = answers[i];
+            cnt = 1;
+        }
+    }
+    return ans + ((cnt + pre) / (pre + 1)) * (pre + 1);
+}
+
+int TencentTShirt(vector<int> answers)
+{
+    unordered_map<int, int> umap;
+    for (auto v : answers)
+    {
+        umap[v]++;
+    }
+    int ans = 0;
+    for (auto it = umap.begin(); it != umap.end(); it++)
+    {
+        ans += (it->first + it->second) / (it->first + 1) * (it->first + 1);
+        ans += ((it->second - 1) / (it->first + 1) + 1) * (it->first + 1);
+    }
+    return ans;
 }
