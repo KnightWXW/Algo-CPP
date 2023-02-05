@@ -18,13 +18,11 @@ double pickElementFromArr(double ***arr, int i, int j, int cnt, int n, int m);
 
 int main()
 {
-
     int n = 30;
     int m = 10;
     int row = 2;
     int col = 8;
     int k = 7;
-
     printf("暴力递归：%lf\n", drunkBobWalking_A(n, m, row, col, k));
     printf("记忆化搜索：%lf\n", drunkBobWalking_B(n, m, row, col, k));
     printf("动态规划：%lf\n", drunkBobWalking_C(n, m, row, col, k)); // 可计算k达到500

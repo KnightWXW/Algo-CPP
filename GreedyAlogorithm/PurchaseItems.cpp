@@ -7,6 +7,8 @@
 
 using namespace std;
 
+//      Huawei: 采购办公用品
+
 //      某商店正在销售一种原价 price 的办公用品。
 //      随着促销季的到来，将优惠售卖一定量的该办公用品，促销信息记录于数组 discount 中，
 //      discount[j] = [day, promotionPrice, limit] 表示：
@@ -132,6 +134,9 @@ struct cmp
     }
 };
 
+// 贪心 + 优先队列：
+// Time: O(NlogN)
+// Space: O(logN)
 int PurchaseItems_A(int num, int price, vector<vector<int>> &discount, int budget)
 {
     int l = discount.size();

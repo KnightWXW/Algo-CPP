@@ -5,7 +5,8 @@
 
 using namespace std;
 
-//      给定一个正数数组arr，请把 arr 中所有的 元素 分成两个集合，尽量让两个集合的累加和相近。
+//      给定一个正数数组arr，请把 arr 中所有的 元素 分成两个集合，
+//      尽量让两个集合的累加和相近。
 //      返回：两个集合的累加和 在最接近的情况下，较小集合的累加和。
 
 void printVecElement(vector<int> vec);

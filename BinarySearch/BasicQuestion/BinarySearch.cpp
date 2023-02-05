@@ -23,6 +23,30 @@ int main()
     printf("target在vector中的索引位置为 %d\n", binarySearch(vec, target));
 }
 
+// 产生随机数组：
+vector<int> generateRandomVec(int low, int high, int len)
+{
+    vector<int> vec;
+    srand(time(0));
+    for (int i = 0; i < len; i++)
+    {
+        int v = (rand() % (high - low + 1)) + low;
+        vec.push_back(v);
+    }
+    return vec;
+}
+
+// 打印数组：
+void printVec(vector<int> &vec)
+{
+    printf("vector的元素依次为：");
+    for (int i = 0; i < vec.size(); i++)
+    {
+        printf("%d ", vec[i]);
+    }
+    printf("\n");
+}
+
 // Time: O(logN)
 // Space: O(1)
 int binarySearch(vector<int> &vec, int target)
@@ -46,28 +70,4 @@ int binarySearch(vector<int> &vec, int target)
         }
     }
     return -1;
-}
-
-// 产生随机数组：
-vector<int> generateRandomVec(int low, int high, int len)
-{
-    vector<int> vec;
-    srand(time(0));
-    for (int i = 0; i < len; i++)
-    {
-        int v = (rand() % (high - low + 1)) + low;
-        vec.push_back(v);
-    }
-    return vec;
-}
-
-// 打印数组：
-void printVec(vector<int> &vec)
-{
-    printf("vector的元素依次为：");
-    for (int i = 0; i < vec.size(); i++)
-    {
-        printf("%d ", vec[i]);
-    }
-    printf("\n");
 }

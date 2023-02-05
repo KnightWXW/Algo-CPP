@@ -52,7 +52,6 @@ int ReverseInteger(int x)
     int ans = 0;
     int divide = INT_MIN / 10;
     int remainder = INT_MIN % 10;
-
     while (x != 0)
     {
         if (ans < divide || (ans == divide && x % 10 < remainder))

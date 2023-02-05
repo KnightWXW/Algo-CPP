@@ -25,6 +25,30 @@ int main()
     printf("小于等于 %d 在vector中的第一个索引位置为 %d\n", target, binarySearchLessAndEqual_B(vec, target));
 }
 
+// 产生随机数组：
+vector<int> generateRandomVec(int low, int high, int len)
+{
+    vector<int> vec;
+    srand(time(0));
+    for (int i = 0; i < len; i++)
+    {
+        int v = (rand() % (high - low + 1)) + low;
+        vec.push_back(v);
+    }
+    return vec;
+}
+
+// 打印数组：
+void printVec(vector<int> &vec)
+{
+    printf("vector的元素依次为：");
+    for (int i = 0; i < vec.size(); i++)
+    {
+        printf("%d ", vec[i]);
+    }
+    printf("\n");
+}
+
 // Time: O(logN)
 // Space: O(1)
 int binarySearchLessAndEqual_A(vector<int> &vec, int target)
@@ -69,28 +93,4 @@ int binarySearchLessAndEqual_B(vector<int> &vec, int target)
         }
     }
     return left;
-}
-
-// 产生随机数组：
-vector<int> generateRandomVec(int low, int high, int len)
-{
-    vector<int> vec;
-    srand(time(0));
-    for (int i = 0; i < len; i++)
-    {
-        int v = (rand() % (high - low + 1)) + low;
-        vec.push_back(v);
-    }
-    return vec;
-}
-
-// 打印数组：
-void printVec(vector<int> &vec)
-{
-    printf("vector的元素依次为：");
-    for (int i = 0; i < vec.size(); i++)
-    {
-        printf("%d ", vec[i]);
-    }
-    printf("\n");
 }
