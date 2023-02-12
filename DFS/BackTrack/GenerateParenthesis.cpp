@@ -116,5 +116,3 @@ void DFSGenerateParenthesis_B(string path, vector<string> &ans, int n, int leftC
         path.pop_back();
     }
 }
-
-

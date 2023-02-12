@@ -93,7 +93,6 @@ int longestSubArrayLengthEqualSum_A(vector<int> vec, int k)
     {
         return 0;
     }
-
     // map:  Key:     记录 前缀和 为 key
     //       Value:   记录 前缀和 为 key 最早 出现 的 位置为 value
     //                (value为该子数组的结尾索引)

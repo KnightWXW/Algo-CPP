@@ -1,7 +1,11 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <string>
+#include <algorithm>
 
-
-
-
+using namespace std;
 
 //      LeetCode 38. 外观数列
 
@@ -43,5 +47,48 @@
 //      提示：
 //          1 <= n <= 30
 
+int generateRandomNum(int low, int high);
+void printString(string s);
 
 string CountAndSay(int n);
+
+int main()
+{
+    int n = generateRandomNum(1, 10);
+    string ans = CountAndSay(n);
+    printf("给定一个正整数 %d, 输出外观数列的第 %d 项为: \n", n, n);
+    printString(ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((int)time(0));
+    return (rand() % (high - low + 1)) + low;
+}
+
+void printString(string s)
+{
+    printf("%s\n", s.c_str());
+}
+
+string CountAndSay(int n){
+    if(n <= 0){
+        return "";
+    }
+    if(n == 1){
+        return "1";
+    }
+    string str = CountAndSay(n - 1);
+    string ans = "";
+    int cnt = 1;
+    char pre = str[0];
+    for(int i = 1; i <= str.size(); i++){
+        if(i == str.size() || pre != str[i]){
+            ans += to_string(cnt) + pre;
+            pre = str[i];
+            cnt = 0;
+        }
+        cnt++;
+    }
+    return ans;
+}

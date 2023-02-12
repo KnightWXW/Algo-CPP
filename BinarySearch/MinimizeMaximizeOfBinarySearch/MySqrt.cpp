@@ -31,7 +31,6 @@ double MySqrtDouble(double x); // 精准到 0.001
 
 int main()
 {
-    
     int n = generateRandomNum(0, 100000000);
     double d = generateRandomNumDouble(0, 1000000);
     int ans = MySqrt(n);
