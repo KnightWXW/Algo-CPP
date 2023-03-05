@@ -80,18 +80,6 @@ void print2DStringVecElement(vector<vector<string>> vec)
     printf("\n");
 }
 
-void printBool(bool b)
-{
-    if (b == true)
-    {
-        printf("True\n");
-    }
-    else
-    {
-        printf("False\n");
-    }
-}
-
 void SolveSudoku(vector<vector<string>> &board)
 {
     const int NINE = board.size();

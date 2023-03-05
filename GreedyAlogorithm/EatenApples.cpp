@@ -51,10 +51,10 @@ int EatenApples(vector<int>& apples, vector<int>& days);
 int main()
 {
     int n = generateRandomNum(1, 10);
-    vector<int> apples = generateRandomVec(1, 5, n);
+    vector<int> apples = generateRandomVecA(1, 5, n);
     printf("apples数组 元素为: ");
     printVecElement(apples);
-    vector<int> days = generateRandomVec(1, 5, n);
+    vector<int> days = generateRandomVecB(1, 5, n);
     printf("days数组 元素为: ");
     printVecElement(days);
     int ans = EatenApples(apples, days);
@@ -90,7 +90,7 @@ vector<int> generateRandomVecA(int low, int high, int len)
 
 vector<int> generateRandomVecB(int low, int high, int len)
 {
-    srand((int)time(1));
+    srand((int)time(0));
     vector<int> vec;
     for (int i = 0; i < len; i++)
     {

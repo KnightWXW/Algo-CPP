@@ -33,19 +33,22 @@ using namespace std;
 //          1 <= houses[i], heaters[i] <= 109
 
 int generateRandomNum(int low, int high);
-vector<int> generateRandomVec(int low, int high, int len);
+vector<int> generateRandomVecA(int low, int high, int len);
+vector<int> generateRandomVecB(int low, int high, int len);
 void printVec(vector<int> &vec);
 
-int FindRadius(vector<int>& houses, vector<int>& heaters);
+bool JudgeFindRadius(vector<int> &houses, vector<int> &heaters, int i, int j);
+int FindRadius(vector<int> &houses, vector<int> &heaters);
 
 int main()
 {
     int n = generateRandomNum(1, 20);
-    vector<int> vec = generateRandomVec(1, 30, n);
-    long long k = (long long)generateRandomNum(1, 30);
-    printVec(vec);
-    int ans = MaximumCandies(vec, k);
-    printf("可以覆盖所有房屋的最小加热半径 %d。", );
+    vector<int> houses = generateRandomVecA(1, 50, n);
+    vector<int> heaters = generateRandomVecB(1, 30, n);
+    printVec(houses);
+    printVec(heaters);
+    int ans = FindRadius(houses, heaters);
+    printf("可以覆盖所有房屋的最小加热半径 %d。", ans);
 }
 
 int generateRandomNum(int low, int high)
@@ -54,7 +57,19 @@ int generateRandomNum(int low, int high)
     return (rand() % (high - low + 1)) + low;
 }
 
-vector<int> generateRandomVec(int low, int high, int len)
+vector<int> generateRandomVecA(int low, int high, int len)
+{
+    vector<int> vec;
+    srand(time(0));
+    for (int i = 0; i < len; i++)
+    {
+        int v = (rand() % (high - low + 1)) + low;
+        vec.push_back(v);
+    }
+    return vec;
+}
+
+vector<int> generateRandomVecB(int low, int high, int len)
 {
     vector<int> vec;
     srand(time(0));
@@ -76,3 +91,27 @@ void printVec(vector<int> &vec)
     printf("\n");
 }
 
+int FindRadius(vector<int> &houses, vector<int> &heaters)
+{
+    sort(houses.begin(), houses.end());
+    sort(heaters.begin(), heaters.end());
+    int ans = 0;
+    for (int i = 0, j = 0; i < houses.size(); i++)
+    {
+        while (JudgeFindRadius(houses, heaters, i, j))
+        {
+            j++;
+        }
+        ans = max(ans, abs(heaters[j] - houses[i]));
+    }
+    return ans;
+}
+
+bool JudgeFindRadius(vector<int> &houses, vector<int> &heaters, int i, int j)
+{
+    if (j == heaters.size() - 1 || abs(heaters[j + 1] - houses[i]) > abs(heaters[j] - houses[i]))
+    {
+        return true;
+    }
+    return false;
+}
