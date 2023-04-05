@@ -1,35 +1,18 @@
 
 
-
 //      请设计一个租房信息查询系统，需要实现如下功能：
-
-//   addRoom(int id, int area, int price, int rooms, int[] address)：在系统中增加一套编号为 id，面积为 area，月租金为 price，卧室数量为 rooms，地址坐标为 address（格式为 [横坐标x, 纵坐标y]）的房源：
-
- 
-
-// 若系统中不存在编号为 id的房源，则添加该房源，返回 true；
-
-// 若已存在，则将对应房源信息 更新 为新传入的 area、price、rooms 与 address，并返回 false；
-
-// l  deleteRoom(int id)：删除系统中编号为 id 的房源：
-
- 
-
-// 若存在编号为 id 的房源，删除此房源并返回 true；若不存在，返回 false。
-
-// l  queryRoom(int area, int price, int rooms, int[] address, int[][] orderBy)：查询系统中符合筛选条件的房源，并按排序要求返回房源编号的序列。其中：
-
-//    Ø  筛选条件：面积大于等于 area，月租金小于等于 price，卧室数为 rooms 的房源；
-
-//    Ø  排序要求：按orderBy中的排序条件依次进行排序；若按orderBy排序结果仍相同（含orderBy为空），则按房源编号升序排列。
-
-// orderBy的元素格式为 [parameter,order]。
-
-// ²  parameter取值范围[1,3]， 1（表示 area）、2（表示 price）、3（表示房源坐标与address的曼哈顿距离）；
-
-// ²  order取值仅为 1 和 -1，1（表示升序）、-1（表示降序）。
-
-// 例如 orderBy = [[3,1],[1,-1]] 表示先按照曼哈顿距离升序排列；若曼哈顿距离相同，再按照面积降序排列；若依然相同，则按编号升序排列。
+//      addRoom(int id, int area, int price, int rooms, int[] address)：在系统中增加一套编号为 id，面积为 area，月租金为 price，卧室数量为 rooms，地址坐标为 address（格式为 [横坐标x, 纵坐标y]）的房源：
+//      若系统中不存在编号为 id的房源，则添加该房源，返回 true；
+//      若已存在，则将对应房源信息 更新 为新传入的 area、price、rooms 与 address，并返回 false；
+//      deleteRoom(int id)：删除系统中编号为 id 的房源：
+//      若存在编号为 id 的房源，删除此房源并返回 true；若不存在，返回 false。
+//      queryRoom(int area, int price, int rooms, int[] address, int[][] orderBy)：查询系统中符合筛选条件的房源，并按排序要求返回房源编号的序列。其中：
+//      筛选条件：面积大于等于 area，月租金小于等于 price，卧室数为 rooms 的房源；
+//      排序要求：按orderBy中的排序条件依次进行排序；若按orderBy排序结果仍相同（含orderBy为空），则按房源编号升序排列。
+//      orderBy的元素格式为 [parameter,order]。
+//      parameter取值范围[1,3]， 1（表示 area）、2（表示 price）、3（表示房源坐标与address的曼哈顿距离）；
+//      order取值仅为 1 和 -1，1（表示升序）、-1（表示降序）。
+//      例如 orderBy = [[3,1],[1,-1]] 表示先按照曼哈顿距离升序排列；若曼哈顿距离相同，再按照面积降序排列；若依然相同，则按编号升序排列。
 
  
 

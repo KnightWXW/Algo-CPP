@@ -1,5 +1,10 @@
+#include <stdio.h>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+#include <numeric>
 
-
+using namespace std;
 
 //      LeetCode 754. 到达终点数字
 
@@ -27,4 +32,29 @@
 //          -109 <= target <= 109
 //          target != 0
 
+int generateRandomNum(int low, int high);
+
 int ReachNumber(int target);
+
+int main()
+{
+    int target = generateRandomNum(-100000, 100000);
+    int ans = ReachNumber(target);
+    printf("到达 %d 所需的 最小 移动次数为 %d。\n", target, ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((unsigned)time(NULL));
+    return (rand() % (high - low + 1)) + low;
+}
+
+int ReachNumber(int target)
+{
+    int k = abs(target);
+    int ans = 0;
+    while(k > 0){
+        ans++;
+        k -= ans;
+    }
+}

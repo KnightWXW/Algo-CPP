@@ -6,7 +6,7 @@
 
 using namespace std;
 
-//      32. 最长有效括号
+//      LeetCode 32. 最长有效括号
 
 //      链接：https://leetcode.cn/problems/longest-valid-parentheses/
 
@@ -21,10 +21,8 @@ using namespace std;
 //      输出：4
 //      解释：最长有效括号子串是 "()()"
 //      示例 3：
-
 //      输入：s = ""
 //      输出：0
- 
 //      提示：
 //          0 <= s.length <= 3 * 104
 //          s[i] 为 '(' 或 ')'
@@ -32,6 +30,8 @@ using namespace std;
 int generateRandomNum(int low, int high);
 string generateRandomString(int n);
 void printString(string s);
+
+int LongestValidParentheses(string s);
 
 int main(){
     int n = generateRandomNum(0, 20);
@@ -61,4 +61,9 @@ string generateRandomString(int n)
 void printString(string s)
 {
     printf("%s\n", s.c_str());
+}
+
+int LongestValidParentheses(string s)
+{
+    
 }

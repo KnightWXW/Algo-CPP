@@ -1,6 +1,12 @@
+#include <stdio.h>
+#include <string>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+#include <numeric>
+#include <stack>
 
-
-
+using namespace std;
 
 //      LeetCode 150. 逆波兰表达式求值
 
@@ -46,5 +52,82 @@
 //          去掉括号后表达式无歧义，上式即便写成 1 2 + 3 4 + * 也可以依据次序计算出正确结果。
 //          适合用栈操作运算：遇到数字则入栈；遇到算符则取出栈顶两个数字进行计算，并将结果压入栈中
 
+void printStringVecElement(vector<string> vec);
 
-int EvalRPN(vector<string>& tokens);
+bool JudgeNumber(string s);
+int EvalRPN(vector<string> &tokens);
+
+int main()
+{
+    vector<string> tokens1 = {"2", "1", "+", "3", "*"};
+    int ans1 = EvalRPN(tokens1);
+    printStringVecElement(tokens1);
+    printf("计算该表达式结果为 %d。\n", ans1);
+    vector<string> tokens2 = {"4", "13", "5", "/", "+"};
+    int ans2 = EvalRPN(tokens2);
+    printStringVecElement(tokens2);
+    printf("计算该表达式结果为 %d。\n", ans2);
+    vector<string> tokens3 = {"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"};
+    int ans3 = EvalRPN(tokens3);
+    printStringVecElement(tokens3);
+    printf("计算该表达式结果为 %d。\n", ans3);
+}
+
+void printStringVecElement(vector<string> vec)
+{
+    for (int i = 0; i < vec.size(); i++)
+    {
+        printf("%s ", vec[i].c_str());
+    }
+    printf("\n");
+}
+
+bool JudgeNumber(string s)
+{
+    if (s.compare("+") == 0 || s.compare("-") == 0 || s.compare("*") == 0 || s.compare("/") == 0)
+    {
+        return false;
+    }
+    return true;
+}
+
+// 手写栈
+// Time: O(N)
+// Space: O(N)
+int EvalRPN(vector<string> &tokens)
+{
+    stack<int> stk;
+    for (int i = 0; i < tokens.size(); i++)
+    {
+        string tem = tokens[i];
+        if (JudgeNumber(tem))
+        {
+            stk.push(stoi(tem));
+        }
+        else
+        {
+            int a = stk.top();
+            stk.pop();
+            int b = stk.top();
+            stk.pop();
+            switch (tem[0])
+            {
+            case '+':
+                stk.push(b + a);
+                break;
+            case '-':
+                stk.push(b - a);
+                break;
+            case '*':
+                stk.push(b * a);
+                break;
+            case '/':
+                stk.push(b / a);
+                break;
+            }
+        }
+    }
+    int ans = stk.top();
+    stk.pop();
+    return ans;
+}
