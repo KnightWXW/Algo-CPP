@@ -56,11 +56,11 @@ int main()
     printVecElement(vec);
     printf("target 为：%d。\n", target);
     printf("暴力递归：%d\n", TargetSum_A(vec, target));
-    printf("记忆化搜索(map存储)：%d\n", TargetSum_B(vec, target));
-    printf("记忆化搜索(数组存储)：%d\n", TargetSum_C(vec, target));
+    printf("记忆化搜索(map存储): %d\n", TargetSum_B(vec, target));
+    printf("记忆化搜索(数组存储): %d\n", TargetSum_C(vec, target));
     printf("动态规划：%d\n", TargetSum_D(vec, target));
     printf("背包问题：%d\n", TargetSum_E(vec, target));
-    printf("背包问题(空间压缩)：%d\n", TargetSum_F(vec, target));
+    printf("背包问题(空间压缩): %d\n", TargetSum_F(vec, target));
 }
 
 void printVecElement(vector<int> vec)

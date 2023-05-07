@@ -1,6 +1,11 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <string>
+#include <vector>
+#include <algorithm>
 
-
-
+using namespace std;
 
 //      LeetCode 2222. 选择建筑的方案数
 
@@ -34,4 +39,65 @@
 //          3 <= s.length <= 105
 //          s[i] 要么是 '0' ，要么是 '1' 。
 
+int generateRandomNum(int low, int high);
+string generateRandomString(int n);
+void printString(string s);
+
 long long NumberOfWaysToSelectBuildings(string s);
+
+int main()
+{
+    int n = generateRandomNum(3, 100);
+    string str = generateRandomString(n);
+    printf("街道沿途的建筑类型为：\n");
+    printString(str);
+    long long ans = NumberOfWaysToSelectBuildings(str);
+    printf("有效方案数为：%d\n", ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((unsigned)time(NULL));
+    return (rand() % (high - low + 1)) + low;
+}
+
+string generateRandomString(int n)
+{
+    string str = "";
+    srand((int)time(0));
+    char arr[] = "01";
+    for (int i = 0; i < n; i++)
+    {
+        int index = rand() % (sizeof(arr) - 1);
+        str += arr[index];
+    }
+    return str;
+}
+
+void printString(string s)
+{
+    printf("%s\n", s.c_str());
+}
+
+// 贪心：
+// 只有两种情况：“0 1 0” 和 “1 0 1”
+long long NumberOfWaysToSelectBuildings(string s)
+{
+    int l = s.size();
+    long long ans = 0;
+    int cnt = 0;
+    int ones = count(s.begin(), s.end(), '1');
+    for (int i = 0; i < l; i++)
+    {
+        if (s[i] == '1')
+        {
+            ans += (long long)(i - cnt) * (l - i - (ones - cnt));
+            cnt++;
+        }
+        else
+        {
+            ans += (long long)(cnt) * (ones - cnt);
+        }
+    }
+    return ans;
+}

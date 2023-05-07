@@ -1,3 +1,11 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
 
 //      LeetCode 220. 存在重复元素 III
 

@@ -1,4 +1,11 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+using namespace std;
 
 
 //      LeetCode 1753. 移除石子的最大得分

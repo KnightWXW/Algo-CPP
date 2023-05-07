@@ -12,8 +12,8 @@ using namespace std;
 //      你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，
 //      影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，
 //      如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
-//      给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。
-
+//      给定一个代表每个房屋存放金额的非负整数数组，
+//      计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。
 //      示例 1：
 //      输入：[1,2,3,1]
 //      输出：4
@@ -22,14 +22,12 @@ using namespace std;
 //      示例 2：
 //      输入：[2,7,9,3,1]
 //      输出：12
-//      解释：偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。
+//      解释：偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，
+//          接着偷窃 5 号房屋 (金额 = 1)。
 //          偷窃到的最高金额 = 2 + 9 + 1 = 12 。
-
 //      提示：
-//      1 <= nums.length <= 100
-//      0 <= nums[i] <= 400
-
-//      链接：https://leetcode.cn/problems/house-robber/
+//          1 <= nums.length <= 100
+//          0 <= nums[i] <= 400
 
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
@@ -85,10 +83,10 @@ int dfsRobbery_A(vector<int> vec, int index)
     {
         return 0;
     }
-
-    int p1 = dfsRobbery_A(vec, index - 1);
-    int p2 = dfsRobbery_A(vec, index - 2) + vec[index];
-    return max(p1, p2);
+    int p1 = vec[index];
+    int p2 = dfsRobbery_A(vec, index - 1);
+    int p3 = dfsRobbery_A(vec, index - 2) + vec[index];
+    return max(p1, max(p2, p3));
 }
 
 // 记忆化搜索：
@@ -118,11 +116,11 @@ int dfsRobbery_B(vector<int> vec, int index, int *arr)
     {
         return arr[index];
     }
-
-    int p1 = dfsRobbery_B(vec, index - 1, arr);
-    int p2 = dfsRobbery_B(vec, index - 2, arr) + vec[index];
-    arr[index] = max(p1, p2);
-    return max(p1, p2);
+    int p1 = arr[index];
+    int p2 = dfsRobbery_B(vec, index - 1, arr);
+    int p3 = dfsRobbery_B(vec, index - 2, arr) + vec[index];
+    arr[index] = max(p1, max(p2, p3));
+    return arr[index];
 }
 
 // 动态规划：
@@ -136,7 +134,10 @@ int robbery_C(vector<int> vec)
     dp[1] = max(vec[0], vec[1]);
     for (int i = 2; i < vec.size(); i++)
     {
-        dp[i] = max(dp[i - 1], dp[i - 2] + vec[i]);
+        int p1 = vec[i - 1];
+        int p2 = dp[i - 1];
+        int p3 = dp[i - 2] + vec[i];
+        dp[i] = max(p1, max(p2, p3));
     }
     int ans = dp[vec.size() - 1];
     free(dp);
@@ -152,7 +153,7 @@ int robbery_D(vector<int> vec)
     int b = max(vec[0], vec[1]);
     for (int i = 2; i < vec.size(); i++)
     {
-        int c = max(b, a + vec[i]);
+        int c = max(vec[i], max(b, a + vec[i]));
         a = b;
         b = c;
     }

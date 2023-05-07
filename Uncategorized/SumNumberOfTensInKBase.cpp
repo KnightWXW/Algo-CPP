@@ -1,9 +1,11 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <string>
+#include <algorithm>
 
-
-
-
-
-
+using namespace std;
 
 //      牛客 K进制下一的个数
 
