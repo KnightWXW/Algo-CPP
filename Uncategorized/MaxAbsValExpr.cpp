@@ -27,7 +27,8 @@ int generateRandomNum(int low, int high);
 vector<int> generateRandomVec(int low, int high, int len);
 void printVecElement(vector<int> vec);
 
-int MaxAbsValExpr(vector<int> &arr1, vector<int> &arr2);
+int MaxAbsValExpr_A(vector<int> &arr1, vector<int> &arr2);
+int MaxAbsValExpr_B(vector<int> &arr1, vector<int> &arr2);
 
 int main()
 {
@@ -69,6 +70,14 @@ vector<int> generateRandomVec(int low, int high, int len)
     return vec;
 }
 
-int MaxAbsValExpr(vector<int> &arr1, vector<int> &arr2)
+int MaxAbsValExpr_A(vector<int> &arr1, vector<int> &arr2)
 {
+    int n = arr1.size();
+
+}
+
+int MaxAbsValExpr_B(vector<int> &arr1, vector<int> &arr2)
+{
+    int n = arr1.size();
+
 }

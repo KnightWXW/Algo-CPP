@@ -32,14 +32,14 @@ using namespace std;
 void print2DVecElement(vector<vector<int>> vec);
 vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col);
 
-void rotateImage(vector<vector<int>> &vec);
+void RotateImage(vector<vector<int>> &vec);
 void rotate(vector<vector<int>> &vec, int x1, int y1, int x2, int y2);
 
 int main(){
     vector<vector<int>> vec = generateRandom2DVec(0, 20, 3, 3);
     printf("数组翻转前为：\n");
     print2DVecElement(vec);
-    rotateImage(vec);
+    RotateImage(vec);
     printf("数组翻转后为：\n");
     print2DVecElement(vec);
 }
@@ -76,7 +76,7 @@ vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col)
 // 按圈 原地旋转：
 // Time: O(m * n)
 // Space: O(m * n)
-void rotateImage(vector<vector<int>> &vec){
+void RotateImage(vector<vector<int>> &vec){
     int x1 = 0, y1 = 0;
     int x2 = vec.size() - 1, y2 = vec[0].size() - 1;
     while(x1 < x2 && y1 < y2){

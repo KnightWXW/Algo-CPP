@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <cstdlib>
 #include <ctime>
@@ -7,8 +6,6 @@
 #include <algorithm>
 
 using namespace std;
-
-
 
 //      LeetCode 2048. 下一个更大的数值平衡数
 

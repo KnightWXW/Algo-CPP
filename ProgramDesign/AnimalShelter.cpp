@@ -1,6 +1,11 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <algorithm>
+#include <unordered_map>
 
-
-
+using namespace std;
 
 //      面试题 03.06. 动物收容所
 
@@ -32,3 +37,26 @@
 //              [null,null,null,null,[2,1],[0,0],[1,0]]
 //      说明:
 //          收纳所的最大容量为20000
+
+class AnimalShelf {
+public:
+    AnimalShelf() {
+
+    }
+    
+    void enqueue(vector<int> animal) {
+
+    }
+    
+    vector<int> dequeueAny() {
+
+    }
+    
+    vector<int> dequeueDog() {
+
+    }
+    
+    vector<int> dequeueCat() {
+
+    }
+};

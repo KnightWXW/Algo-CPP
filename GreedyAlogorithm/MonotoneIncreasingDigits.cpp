@@ -1,8 +1,9 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
 
-
-
-
-
+using namespace std;
 
 //      LeetCode 738. 单调递增的数字
 
@@ -23,5 +24,25 @@
 //      提示:
 //          0 <= n <= 109
 
+int generateRandomNum(int low, int high);
 
 int MonotoneIncreasingDigits(int n);
+
+int main()
+{
+    int l = generateRandomNum(1, 20);
+    vector<int> arr = generateRandomVec(0, 10, l);
+    printf("arr数组 元素为: ");
+    printVecElement(arr);
+    printf("灌溉 长度为 %d 的整个花园的 最少水龙头数目 %d。\n", l - 1, minTaps(l - 1, arr));
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((unsigned)time(NULL));
+    return (rand() % (high - low + 1)) + low;
+}
+
+int MonotoneIncreasingDigits(int n){
+    
+}

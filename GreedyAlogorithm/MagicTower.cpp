@@ -1,5 +1,9 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
 
-
+using namespace std;
 
 //      LeetCode LCP 30. 魔塔游戏
 
@@ -26,5 +30,51 @@
 //          1 <= nums.length <= 10^5
 //          -10^5 <= nums[i] <= 10^5
 
+int generateRandomNum(int low, int high);
+vector<int> generateRandomVec(int low, int high, int len);
+void printVecElement(vector<int> vec);
 
 int MagicTower(vector<int>& nums);
+
+int main()
+{
+    int n = generateRandomNum(1, 30);
+    vector<int> arr = generateRandomVec(-100, 100, n);
+    printf("arr数组 元素为: ");
+    printVecElement(arr);
+    int ans = MagicTower(arr);
+    printf("小扣最少需要调整 %d 次，才能顺利访问所有房间。\n", ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((unsigned)time(NULL));
+    return (rand() % (high - low + 1)) + low;
+}
+
+void printVecElement(vector<int> vec)
+{
+    for (int i = 0; i < vec.size(); i++)
+    {
+        printf("%d ", vec[i]);
+    }
+    printf("\n");
+}
+
+vector<int> generateRandomVec(int low, int high, int len)
+{
+    srand((int)time(0));
+    vector<int> vec;
+    for (int i = 0; i < len; i++)
+    {
+        int v = (rand() % (high - low + 1)) + low;
+        vec.push_back(v);
+    }
+    return vec;
+}
+
+int MagicTower(vector<int>& nums)
+{
+    int l = nums.size();
+    
+}

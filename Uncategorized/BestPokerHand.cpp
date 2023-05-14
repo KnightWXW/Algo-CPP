@@ -41,7 +41,6 @@ using namespace std;
 //          'a' <= suits[i] <= 'd'
 //          任意两张扑克牌不会同时有相同的大小和花色。
 
-
 int generateRandomNum(int low, int high);
 void printVecElement(vector<int> &vec);
 vector<int> generateRandomVec(int low, int high, int len);
@@ -83,7 +82,6 @@ vector<int> generateRandomVec(int low, int high, int len)
 
 void printVecElement(vector<int> &vec)
 {
-    printf("vector的元素依次为：");
     for (int i = 0; i < vec.size(); i++)
     {
         printf("%d ", vec[i]);

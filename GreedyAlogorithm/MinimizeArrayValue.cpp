@@ -78,3 +78,7 @@ vector<int> generateRandomVec(int low, int high, int len)
     }
     return vec;
 }
+
+int MinimizeArrayValue(vector<int>& nums){
+    
+}
