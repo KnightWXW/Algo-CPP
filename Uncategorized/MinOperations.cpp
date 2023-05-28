@@ -7,8 +7,6 @@
 
 using namespace std;
 
-
-
 //      LeetCode 1775. 通过最少操作次数使数组的和相等
 
 //      链接：https://leetcode.cn/problems/equal-sum-arrays-with-minimum-number-of-operations/

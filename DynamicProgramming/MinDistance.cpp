@@ -1,4 +1,11 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <string>
+#include <algorithm>
 
+using namespace std;
 
 //      LeetCode 72. 编辑距离
 
@@ -28,3 +35,65 @@
 //      提示：
 //          0 <= word1.length, word2.length <= 500
 //          word1 和 word2 由小写英文字母组成
+
+int generateRandomNum(int low, int high);
+string generateRandomString(int n);
+void printString(string s);
+void printBool(bool b);
+
+int MinDistance_A(string word1, string word2);
+int MinDistance_B(string word1, string word2);
+int MinDistance_C(string word1, string word2);
+
+
+int main()
+{
+    int ns = generateRandomNum(1, 10);
+    string s = generateRandomString(ns);
+    int nt = generateRandomNum(1, 9);
+    string t = generateRandomStringT(nt);
+    bool ans_A = MinDistance_A(s, t);
+    bool ans_B = MinDistance_B(s, t);
+    bool ans_C = MinDistance_C(s, t);
+    printf("字符串s: %s \n字符串t: %s \n", s.c_str(), t.c_str());
+    printf("它们的编辑距离为 %d\n", ans_A); 
+    printf("它们的编辑距离为 %d\n", ans_B); 
+    printf("它们的编辑距离为 %d\n", ans_C); 
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((unsigned)time(NULL));
+    return (rand() % (high - low + 1)) + low;
+}
+
+string generateRandomStringS(int n)
+{
+    string str = "";
+    srand((int)time(0));
+    char arr[] = "abc";
+    for (int i = 0; i < n; i++)
+    {
+        int index = rand() % (sizeof(arr) - 1);
+        str += arr[index];
+    }
+    return str;
+}
+
+string generateRandomStringT(int n)
+{
+    string str = "";
+    srand((int)time(0) + 1);
+    char arr[] = "abc";
+    for (int i = 0; i < n; i++)
+    {
+        int index = rand() % (sizeof(arr) - 1);
+        str += arr[index];
+    }
+    return str;
+}
+
+void printString(string s)
+{
+    printf("%s\n", s.c_str());
+}

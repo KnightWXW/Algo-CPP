@@ -7,9 +7,6 @@
 
 using namespace std;
 
-
-
-
 //      LeetCode 296 最佳的碰头地点
 
 //      链接：https://leetcode.cn/problems/best-meeting-point
@@ -35,4 +32,48 @@ using namespace std;
 //          grid[i][j] == 0 or 1.
 //          grid 中 至少 有两个朋友
 
+void print2DVecElement(vector<vector<int>> vec);
+vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col);
+vector<vector<int>> snakePrint(vector<vector<int>> vec);
+
 int BestAppointmentLocation(vector<vector<int>>& grid);
+
+int main()
+{
+    vector<vector<int>> vec = generateRandom2DVec(0, 20, 3, 3);
+    printf("原数组为：\n");
+    print2DVecElement(vec);
+    vector<vector<int>> ans = snakePrint(vec);
+    printf("蛇形打印数组为：\n");
+    print2DVecElement(ans);
+}
+
+void print2DVecElement(vector<vector<int>> vec)
+{ 
+    for (int i = 0; i < vec.size(); i++)
+    {
+        for (int j = 0; j < vec[i].size(); j++)
+        {
+            printf("%d\t", vec[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col)
+{
+    srand((int)time(0));
+    vector<vector<int>> vec;
+    for (int i = 0; i < row; i++)
+    {
+        vector<int> tem;
+        for (int j = 0; j < col; j++)
+        {
+            int v = (rand() % (high - low + 1)) + low;
+            tem.push_back(v);
+        }
+        vec.push_back(tem);
+    }
+    return vec;
+}

@@ -43,7 +43,7 @@ int main()
     int nt = generateRandomNum(1, 10);
     string t = generateRandomStringT(nt);
     bool ans = OneEditDistance(s, t);
-    printf("字符串s: %s \n字符串t: %s \ns2 它们的编辑距离为1???\n", s.c_str(), t.c_str());
+    printf("字符串s: %s \n字符串t: %s \n它们的编辑距离为: \n", s.c_str(), t.c_str());
     printBool(ans);
 }
 

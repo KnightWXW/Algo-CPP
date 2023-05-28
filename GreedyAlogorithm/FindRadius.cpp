@@ -83,7 +83,6 @@ vector<int> generateRandomVecB(int low, int high, int len)
 
 void printVec(vector<int> &vec)
 {
-    printf("vector的元素依次为: ");
     for (int i = 0; i < vec.size(); i++)
     {
         printf("%d ", vec[i]);

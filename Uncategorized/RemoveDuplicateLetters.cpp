@@ -1,6 +1,11 @@
+#include <ctime>
+#include <cstdlib>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <numeric>
 
-
-
+using namespace std;
 
 //      LeetCode 316. 去除重复字母
 
@@ -19,4 +24,43 @@
 //          1 <= s.length <= 104
 //          s 由小写英文字母组成
 
+int generateRandomNum(int low, int high);
+string generateRandomString(int n);
+void printString(string s);
+
 string RemoveDuplicateLetters(string s);
+
+int main()
+{
+    int n = generateRandomNum(1, 10);
+    string s = generateRandomString(n);
+    string ans = RemoveDuplicateLetters(s);
+    printf("去除字符串中重复的字母后的字符串为: \n");
+    printString(ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((int)time(0));
+    return (rand() % (high - low + 1)) + low;
+}
+
+void generateRandomString(int n, string &str)
+{
+    char arr[] = "abcdefghijklmnopqrstuvwxyz";
+    for (int i = 0; i < n; i++)
+    {
+        int index = rand() % (sizeof(arr) - 1);
+        str += arr[index];
+    }
+}
+
+void printString(string s)
+{
+    printf("%s\n", s.c_str());
+}
+
+string RemoveDuplicateLetters(string s)
+{
+    int l = s.size();
+}

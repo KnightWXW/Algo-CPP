@@ -20,6 +20,7 @@ using namespace std;
 void print2DVecElement(vector<vector<int>> vec);
 vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col);
 vector<vector<int>> snakePrint(vector<vector<int>> vec);
+
 void snackPrint_A(vector<vector<int>> vec, int &i, int &j, bool &flag, vector<vector<int>> &ans);
 void snackPrint_B(vector<vector<int>> vec, int &i, int &j, bool &flag, vector<vector<int>> &ans);
 
