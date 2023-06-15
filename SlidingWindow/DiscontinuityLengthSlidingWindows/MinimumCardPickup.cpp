@@ -2,6 +2,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <unordered_map>
 
 using namespace std;
 
@@ -13,7 +14,6 @@ using namespace std;
 //      如果两张卡牌的值相同，则认为这一对卡牌 匹配 。
 //      返回你必须拿起的最小连续卡牌数，以使在拿起的卡牌中有一对匹配的卡牌。
 //      如果无法得到一对匹配的卡牌，返回 -1 。
-
 //      示例 1：
 //          输入：cards = [3,4,2,3,4,7]
 //          输出：4
@@ -30,17 +30,15 @@ int generateRandomNum(int low, int high);
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
 
-int MinimumCardPickup(vector<int>& cards);
+int MinimumCardPickup(vector<int> &cards);
 
 int main()
 {
-    int n = generateRandomNum(0, 30);
-    vector<int> vec = generateRandomVec(0, 20, n);
-    int sum = accumulate(vec.begin(), vec.end(), 0);
-    int target = generateRandomNum(0, sum);
+    int n = generateRandomNum(0, 10);
+    vector<int> vec = generateRandomVec(0, 10, n);
     printVecElement(vec);
-    int ans = MinSubArrayLen(target, vec);
-    printf("满足其和 ≥ %d 的长度最小的 连续子数组长度为 %d\n", target, ans);
+    int ans = MinimumCardPickup(vec);
+    printf("你必须拿起的最小连续卡牌数为 %d\n", ans);
 }
 
 int generateRandomNum(int low, int high)
@@ -70,6 +68,45 @@ vector<int> generateRandomVec(int low, int high, int len)
     return vec;
 }
 
-int MinimumCardPickup(vector<int>& cards){
-    
+// 滑动窗口：
+// Time: O(N)
+// Space: O(N)
+int MinimumCardPickup(vector<int> &cards)
+{
+    int l = cards.size();
+    unordered_map<int, int> hmap;
+    int left = 0;
+    int right = 0;
+    int ans = INT_MAX;
+    while (right < l)
+    {
+        hmap[cards[right]]++;
+        while (hmap[cards[right]] >= 2)
+        {
+            ans = min(ans, right - left + 1);
+            hmap[cards[left]]--;
+            left++;
+        }
+        right++;
+    }
+    return ans == INT_MAX ? -1 : ans;
+}
+
+// 哈希：
+// Time: O(N)
+// Space: O(N)
+int MinimumCardPickup(vector<int> &cards)
+{
+    int l = cards.size();
+    unordered_map<int, int> hmap;
+    int ans = INT_MAX;
+    for (int i = 0; i < l; i++)
+    {
+        if (hmap.count(cards[i]) > 0)
+        {
+            ans = min(ans, i - hmap[cards[i]] + 1);
+        }
+        hmap[cards[i]] = i;
+    }
+    return ans == INT_MAX ? -1 : ans;
 }

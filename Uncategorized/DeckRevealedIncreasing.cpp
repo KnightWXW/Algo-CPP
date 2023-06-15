@@ -1,12 +1,10 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <algorithm>
 
-
-
-
-
-
-
-
-
+using namespace std;
 
 //      LeetCode 950. 按递增顺序显示卡牌
 
@@ -40,4 +38,51 @@
 //          1 <= A[i] <= 10^6
 //          对于所有的 i != j，A[i] != A[j]
 
- vector<int> DeckRevealedIncreasing(vector<int>& deck);
+int generateRandomNum(int low, int high);
+vector<int> generateRandomVec(int low, int high, int len);
+void printVecElement(vector<int> vec);
+
+vector<int> DeckRevealedIncreasing(vector<int>& deck);
+
+int main()
+{
+    int n = generateRandomNum(1, 10);
+    vector<int> vec = generateRandomVec(1, 100, n);
+    printVecElement(vec);
+    vector<int> ans_A = DeckRevealedIncreasing(vec);
+    printf("能以递增顺序显示卡牌的牌组顺序为: \n");
+    printVecElement(ans_A);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((int)time(0));
+    return (rand() % (high - low + 1)) + low;
+}
+
+void printVecElement(vector<int> vec)
+{
+    for (int i = 0; i < vec.size(); i++)
+    {
+        printf("%d ", vec[i]);
+    }
+    printf("\n");
+}
+
+vector<int> generateRandomVec(int low, int high, int len)
+{
+    srand((int)time(0));
+    vector<int> vec;
+    for (int i = 0; i < len; i++)
+    {
+        int v = (rand() % (high - low + 1)) + low;
+        vec.push_back(v);
+    }
+    return vec;
+}
+
+vector<int> DeckRevealedIncreasing(vector<int>& deck)
+{
+    int l = deck.size();
+    
+}
