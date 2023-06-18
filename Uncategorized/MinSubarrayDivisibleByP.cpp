@@ -1,6 +1,3 @@
-
-
-
 #include <stdio.h>
 #include <cstdlib>
 #include <ctime>
@@ -9,8 +6,6 @@
 #include <algorithm>
 
 using namespace std;
-
-
 
 //      LeetCode 1590. 使数组和能被 P 整除
 
