@@ -3,7 +3,7 @@
 #include <ctime>
 #include <vector>
 #include <algorithm>
-#include <unordered_map>
+#include <deque>
 
 using namespace std;
 
@@ -38,25 +38,105 @@ using namespace std;
 //      说明:
 //          收纳所的最大容量为20000
 
-class AnimalShelf {
+void printVecElement(vector<int> &vec)
+{
+    for (int i = 0; i < vec.size(); i++)
+    {
+        printf("%d ", vec[i]);
+    }
+    printf("\n");
+}
+
+class AnimalShelf
+{
 public:
-    AnimalShelf() {
+    deque<vector<int>> catDeque;
+    deque<vector<int>> dogDeque;
 
+    AnimalShelf()
+    {
     }
-    
-    void enqueue(vector<int> animal) {
 
+    void enqueue(vector<int> animal)
+    {
+        int type = animal[1];
+        if (type == 0)
+        {
+            catDeque.push_back(animal);
+        }
+        else
+        {
+            dogDeque.push_back(animal);
+        }
     }
-    
-    vector<int> dequeueAny() {
 
+    vector<int> dequeueAny()
+    {
+        vector<int> ans = {-1, -1};
+        if (dogDeque.empty() && catDeque.empty())
+        {
+            return ans;
+        }
+        else if (!dogDeque.empty() && catDeque.empty())
+        {
+            return dequeueDog();
+        }
+        else if (dogDeque.empty() && !catDeque.empty())
+        {
+            return dequeueCat();
+        }
+        else
+        {
+            if (dogDeque.front()[0] < catDeque.front()[0])
+            {
+                return dequeueDog();
+            }
+            else
+            {
+                return dequeueCat();
+            }
+        }
     }
-    
-    vector<int> dequeueDog() {
 
+    vector<int> dequeueDog()
+    {
+        if (!dogDeque.empty())
+        {
+            vector<int> ans = dogDeque.front();
+            dogDeque.pop_front();
+            return ans;
+        }
+        else
+        {
+            return {-1, -1};
+        }
     }
-    
-    vector<int> dequeueCat() {
 
+    vector<int> dequeueCat()
+    {
+        if (!catDeque.empty())
+        {
+            vector<int> ans = catDeque.front();
+            catDeque.pop_front();
+            return ans;
+        }
+        else
+        {
+            return {-1, -1};
+        }
     }
 };
+
+int main()
+{
+    AnimalShelf* animalShelf = new AnimalShelf();
+    animalShelf->enqueue({0, 0});
+    animalShelf->enqueue({1, 0});
+    animalShelf->enqueue({2, 1});
+    vector<int> d1 = animalShelf->dequeueDog();
+    printVecElement(d1);
+    vector<int> d2 = animalShelf->dequeueCat();
+    printVecElement(d2);
+    vector<int> d3 = animalShelf->dequeueAny();
+    printVecElement(d3);
+}
