@@ -24,7 +24,7 @@ int generateRandomNum(int low, int high);
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
 
-int longestOnesII(vector<int> &nums);
+int LongestOnesII(vector<int> &nums);
 
 int main()
 {
@@ -32,7 +32,7 @@ int main()
     vector<int> arr = generateRandomVec(0, 1, n);
     printf("arr数组 元素为: ");
     printVecElement(arr);
-    int ans = longestOnesII(arr);
+    int ans = LongestOnesII(arr);
     printf("数组中连续 1 的最大个数为 %d", ans);
 }
 
@@ -66,7 +66,7 @@ vector<int> generateRandomVec(int low, int high, int len)
 // 滑动窗口：
 // Time: O(n)
 // Space: O(1)
-int longestOnesII(vector<int> &nums)
+int LongestOnesII(vector<int> &nums)
 {
     int n = nums.size();
 

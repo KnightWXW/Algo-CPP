@@ -5,7 +5,7 @@
 #include <numeric>
 #include <algorithm>
 #include <map>
-#include <unordered_set>
+#include <unordered_map>
 
 using namespace std;
 
@@ -89,26 +89,41 @@ using namespace std;
 class UndergroundSystem
 {
 public:
+    map<int, pair<int, string>> inHashMap;
+    map<pair<string, string>, vector<int>> timeHashMap;
+
     UndergroundSystem()
     {
     }
 
     void checkIn(int id, string stationName, int t)
     {
+        pair<int, string> tem = make_pair(t, stationName);
+        inHashMap[id] = tem;
     }
 
     void checkOut(int id, string stationName, int t)
     {
+        int time = t - inHashMap[id].first;
+        pair<string, string> tem = make_pair(inHashMap[id].second, stationName);
+        timeHashMap[tem].push_back(time);
     }
 
     double getAverageTime(string startStation, string endStation)
     {
+        double sum = 0.0;
+        pair<string, string> tem = make_pair(startStation, endStation);
+        for (int k = 0; k < timeHashMap[tem].size(); k++)
+        {
+            sum += double(timeHashMap[tem][k]);
+        }
+        return sum / (double)timeHashMap[tem].size();
     }
 };
 
 int main()
 {
-    UndergroundSystem undergroundSystem = new UndergroundSystem();
+    UndergroundSystem *undergroundSystem = new UndergroundSystem();
     undergroundSystem->checkIn(10, "Leyton", 3);
     undergroundSystem->checkOut(10, "Paradise", 8);                      // 乘客 10 "Leyton" -> "Paradise" ，用时 8-3 = 5
     double g1 = undergroundSystem->getAverageTime("Leyton", "Paradise"); // 返回 5.00000 ，(5) / 1 = 5
