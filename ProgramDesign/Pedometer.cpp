@@ -41,15 +41,25 @@ using namespace std;
 
 class Pedometer
 {
+    int targetStep;
+    Pedometer(int target)
+    {
+        targetStep = target;
+    }
+
     void SetTarget(int date, int target)
     {
+        
     }
 
     int Record(int date, int steps)
     {
+
     }
+
     int GetMaxCompleteDays(int date)
     {
+        
     }
 };
 

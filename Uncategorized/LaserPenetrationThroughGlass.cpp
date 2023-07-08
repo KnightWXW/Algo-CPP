@@ -31,3 +31,5 @@ using namespace std;
 //          2 <= planks[i].size() <= 1000
 //          2 <= planks.size() <= 1000
 //          0 <= planks[i][j] <= 1
+
+int LaserPenetrationThroughGlass(vector<vector<int>> arr);

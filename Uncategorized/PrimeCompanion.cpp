@@ -31,3 +31,5 @@
 //          输入：2
 //               3 6
 //          输出：0
+
+int PrimeCompanion(vector<int> arr);
