@@ -2,8 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
-#include <string>
 #include <algorithm>
+#include <unordered_map>
 
 using namespace std;
 
@@ -42,4 +42,77 @@ using namespace std;
 //          1 <= nums[i] <= 109
 //          1 <= p <= 109
 
-int MinSubarrayDivisibleByP(vector<int>& nums, int p);
+int generateRandomNum(int low, int high);
+void printVecElement(vector<int> &vec);
+vector<int> generateRandomVec(int low, int high, int len);
+
+int MinSubarrayDivisibleByP(vector<int> &nums, int p);
+
+int main()
+{
+    int n = generateRandomNum(1, 20);
+    vector<int> vec = generateRandomVec(1, 100, n);
+    printVecElement(vec);
+    vector<int> ans = NextPermutation(vec);
+    printf("下一个排列为：\n");
+    printVecElement(ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((int)time(0));
+    return (rand() % (high - low + 1)) + low;
+}
+
+vector<int> generateRandomVec(int low, int high, int len)
+{
+    vector<int> vec;
+    srand(time(0));
+    for (int i = 0; i < len; i++)
+    {
+        int v = (rand() % (high - low + 1)) + low;
+        vec.push_back(v);
+    }
+    return vec;
+}
+
+void printVecElement(vector<int> &vec)
+{
+    for (int i = 0; i < vec.size(); i++)
+    {
+        printf("%d ", vec[i]);
+    }
+    printf("\n");
+}
+
+// 前缀和 + 哈希表：
+// Time: O(N)
+// Space: O(N)
+int MinSubarrayDivisibleByP(vector<int> &nums, int p)
+{
+    int l = nums.size();
+    int sum = 0;
+    for (int i = 0; i < l; i++)
+    {
+        sum = (nums[i] + sum) % p;
+    }
+    if (sum == 0)
+    {
+        return 0;
+    }
+    unordered_map<int, int> hMap;
+    hMap[0] = -1;
+    int pre = 0;
+    int ans = l;
+    for (int i = 0; i < l; i++)
+    {
+        pre = (pre + nums[i]) % p;
+        int target = (pre - sum + p) % p;
+        if (hMap.count(target) > 0)
+        {
+            ans = min(ans, i - hMap[target]);
+        }
+        hMap[pre] = i;
+    }
+    return ans == l ? -1 : ans;
+}

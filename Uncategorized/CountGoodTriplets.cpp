@@ -2,7 +2,7 @@
 
 
 
-//      LeetCode1534. 统计好三元组
+//      LeetCode 1534. 统计好三元组
 
 //      链接: https://leetcode.cn/problems/count-good-triplets/
 

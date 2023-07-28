@@ -11,7 +11,8 @@ using namespace std;
 
 //      链接：https://leetcode.cn/problems/least-number-of-unique-integers-after-k-removals/
 
-//      给你一个整数数组 arr 和一个整数 k 。现需要从数组中恰好移除 k 个元素，请找出移除后数组中不同整数的最少数目。
+//      给你一个整数数组 arr 和一个整数 k 。现需要从数组中恰好移除 k 个元素，
+//      请找出移除后数组中不同整数的最少数目。
 
 //      示例 1：
 //      输入：arr = [5,5,4], k = 1
@@ -34,7 +35,7 @@ int generateRandomNum(int low, int high);
 vector<int> generateRandomVec(int low, int high, int len);
 void printVecElement(vector<int> vec);
 
-int findLeastNumOfUniqueInts(vector<int> arr, int k);
+int FindLeastNumOfUniqueInts(vector<int> arr, int k);
 
 int main()
 {
@@ -43,7 +44,7 @@ int main()
     int k = generateRandomNum(0, n);
     printf("arr数组 元素为: ");
     printVecElement(arr);
-    printf("移除%d个元素 后 数组中 不同整数 的 最少数目为%d。\n", k, findLeastNumOfUniqueInts(arr, k));
+    printf("移除%d个元素 后 数组中 不同整数 的 最少数目为%d。\n", k, FindLeastNumOfUniqueInts(arr, k));
 }
 
 int generateRandomNum(int low, int high)
@@ -76,7 +77,7 @@ vector<int> generateRandomVec(int low, int high, int len)
 // 贪心：
 // Time: O(NlogN)
 // Space: O(N)
-int findLeastNumOfUniqueInts(vector<int> arr, int k)
+int FindLeastNumOfUniqueInts(vector<int> arr, int k)
 {
     unordered_map<int, int> hashMap;
     for (auto v : arr)

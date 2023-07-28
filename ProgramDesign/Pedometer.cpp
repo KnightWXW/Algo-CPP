@@ -2,10 +2,6 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
-#include <numeric>
-#include <algorithm>
-#include <map>
-#include <unordered_set>
 
 using namespace std;
 
@@ -26,6 +22,11 @@ using namespace std;
 //              根据已有记录，返回截止date(含), 达标的最长天数
 //              达标：某天的累积步数大于等于当天的目标步数
 //          输入保证 setTarget、Record、GetMaxCompleteDays Date参数按顺序递增
+//      提示：
+//          2 <= setTarget, record, getMaxCompleteDays 累计操作数 <= 10^3
+//          1 <= target <= 10^5
+//          0 <= date <= 365
+//          1 <= steps <= 10^5
 //      示例：
 //          输入：
 //              ["Pedometer", "Record", "Record", "Record", "SetTarget",
@@ -39,27 +40,51 @@ using namespace std;
 //              [null, 600, 1100, 600, null, 1300, 300, 700, 1200, 2, null, 1500,
 //              null, 2200, 3000, 3]
 
+#define YEAR_DAYS_NUM 365
 class Pedometer
 {
-    int targetStep;
+public:
+    vector<int> targetArr; // 存储目标步数数组
+    vector<int> stepsArr;  // 存储当前步数数组
+
     Pedometer(int target)
     {
-        targetStep = target;
+        targetArr = vector<int>(YEAR_DAYS_NUM + 1, target);
+        stepsArr = vector<int>(YEAR_DAYS_NUM + 1, 0);
     }
 
     void SetTarget(int date, int target)
     {
-        
+        for (int i = date + 1; i < YEAR_DAYS_NUM + 1; i++)
+        {
+            targetArr[i] = target;
+        }
+        return;
     }
 
     int Record(int date, int steps)
     {
-
+        stepsArr[date] += steps;
+        return stepsArr[date];
     }
 
     int GetMaxCompleteDays(int date)
     {
-        
+        int days = 0;
+        int maxDays = 0;
+        for (int i = 1; i <= date; i++)
+        {
+            if (targetArr[i] <= stepsArr[i])
+            {
+                days++;
+                maxDays = max(days, maxDays);
+            }
+            else
+            {
+                days = 0;
+            }
+        }
+        return maxDays;
     }
 };
 

@@ -38,14 +38,16 @@ int generateRandomNum(int low, int high);
 vector<int> generateRandomVec(int low, int high, int len);
 void printVecElement(vector<int> vec);
 
+int MaxFrequency(vector<int> &nums, int k);
+
 int main()
 {
     int n = generateRandomNum(1, 10);
-    vector<int> arr = generateRandomVec(1, 5, n);
-    printf("arr数组 元素为: ");
-    printVecElement(arr);
-    int ans = LongestWPI(arr);
-    printf("工作时间表中「表现良好时间段」的最大长度 %d。\n", ans);
+    vector<int> nums = generateRandomVec(1, 100, n);
+    int k = generateRandomNum(1, 100);
+    printVecElement(nums);
+    int ans = MaxFrequency(nums, k);
+    printf("执行最多 %d 次操作后，返回数组中最高频元素的 最大可能频数 %d。\n", k, ans);
 }
 
 int generateRandomNum(int low, int high)
@@ -73,4 +75,12 @@ vector<int> generateRandomVec(int low, int high, int len)
         vec.push_back(v);
     }
     return vec;
+}
+
+// 二分查找：
+// Time: O(NlogN)
+// Space: O(1)
+int MaxFrequency(vector<int> &nums, int k)
+{
+    int l = nums.size();
 }
