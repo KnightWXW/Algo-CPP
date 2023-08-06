@@ -37,6 +37,7 @@ using namespace std;
 int generateRandomNum(int low, int high);
 void print2DVecElement(vector<vector<int>> vec);
 vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col);
+
 int TwoCitySchedCost(vector<vector<int>> &costs);
 
 int main()

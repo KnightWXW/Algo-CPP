@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <ctime>
-#include <vector>     
+#include <vector>
+#include <string>     
 
 using namespace std;
 
