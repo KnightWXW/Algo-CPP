@@ -68,7 +68,8 @@ vector<int> generateRandomVec(int len)
     return vec;
 }
 
-vector<int> shuffleVec(vector<int> vec){
+vector<int> shuffleVec(vector<int> vec)
+{
     srand((int)time(0));
     random_shuffle(vec.begin(), vec.end());
     return vec;
@@ -87,17 +88,20 @@ void printVecElement(vector<int> vec)
 //    类似于 环形链表
 // Time: O(N)
 // Space: O(1)
-int FindDuplicate_A(vector<int>& nums){
+int FindDuplicate_A(vector<int> &nums)
+{
     int slow = 0;
     int fast = 0;
     slow = nums[slow];
     fast = nums[nums[fast]];
-    while(slow != fast){
+    while (slow != fast)
+    {
         slow = nums[slow];
         fast = nums[nums[fast]];
     }
     slow = 0;
-    while(slow != fast){
+    while (slow != fast)
+    {
         slow = nums[slow];
         fast = nums[fast];
     }
@@ -107,12 +111,16 @@ int FindDuplicate_A(vector<int>& nums){
 // 数组哈希：
 // Time: O(N)
 // Space: O(1)
-int FindDuplicate_B(vector<int>& nums){
-    for(int i = 0; i < nums.size(); i++){
-        while(i < nums.size() && nums[i] != nums[nums[i] - 1]){
+int FindDuplicate_B(vector<int> &nums)
+{
+    for (int i = 0; i < nums.size(); i++)
+    {
+        while (i < nums.size() && nums[i] != nums[nums[i] - 1])
+        {
             swap(nums[i], nums[nums[i] - 1]);
         }
-        if(i + 1 != nums[i]){
+        if (i + 1 != nums[i])
+        {
             return nums[i];
         }
     }

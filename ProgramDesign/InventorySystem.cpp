@@ -7,12 +7,14 @@
 
 using namespace std;
 
+//      Huawei: 库存管理系统
+
 //      实现一个产品生产与原材料库存管理系统，以满足以下功能：
 //          InventorySystem(int materialsNum, vector<vector<int>> products):
 //              初始化系统，其中materialsNum是物料的种类数量,
 //              物料的编号是 0 ~ materialsNum - 1
 //              vector<vector<int>> products二维数组表示
-//              生产产品i的所需要的j编号的物料的数量，
+//              生产产品 i 的所需要的 j编号 的 物料的数量，
 //              如果数量为0，表示不需要物料j
 //          void purchase(vector<vector<int>> materials): 购买物料并完成数量的更新，
 //              其中vector<vector<int>> materials二维数组表示物料的数量，
@@ -39,6 +41,7 @@ void printBool(bool b)
 class InventorySystem
 {
 public:
+    vector<vector<int>> productsVec;
     InventorySystem(int materialsNum, vector<vector<int>> products)
     {
     }
