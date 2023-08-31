@@ -55,7 +55,25 @@ using namespace std;
 //          1 <= plans.length, plans[i].length <= 1000
 //          1 <= plans[i][j], depts[i] <= 10^5
 
+void print2DVecElement(vector<vector<int>> vec);
+void printVec(vector<int> vec);
 int RentCars1(vector<int> depts, vector<vector<int>> plans);
+
+int main()
+{
+    vector<int> depts1 = {10, 8, 15};
+    vector<vector<int>> plans1 = {{8, 15, 12}, {20, 4, 15, 4}, {15, 8}};
+    int ans11 = RentCars1(depts1, plans1);
+    printf("所选方案的下标为 %d\n", ans11);
+    vector<int> depts2 = {5, 9};
+    vector<vector<int>> plans2 = {{4}, {6, 10}, {5, 11}};
+    int ans12 = RentCars1(depts2, plans2);
+    printf("所选方案的下标为 %d\n", ans12);
+    vector<int> depts3 = {10, 10};
+    vector<vector<int>> plans3 = {{2, 9, 8, 3}, {7}};
+    int ans13 = RentCars1(depts3, plans3);
+    printf("所选方案的下标为 %d\n", ans13);
+}
 
 void print2DVecElement(vector<vector<int>> vec)
 {
@@ -112,20 +130,4 @@ int RentCars1(vector<int> depts, vector<vector<int>> plans)
         }
     }
     return ans;
-}
-
-int main()
-{
-    vector<int> depts1 = {10, 8, 15};
-    vector<vector<int>> plans1 = {{8, 15, 12}, {20, 4, 15, 4}, {15, 8}};
-    int ans11 = RentCars1(depts1, plans1);
-    printf("所选方案的下标为 %d\n", ans11);
-    vector<int> depts2 = {5, 9};
-    vector<vector<int>> plans2 = {{4}, {6, 10}, {5, 11}};
-    int ans12 = RentCars1(depts2, plans2);
-    printf("所选方案的下标为 %d\n", ans12);
-    vector<int> depts3 = {10, 10};
-    vector<vector<int>> plans3 = {{2, 9, 8, 3}, {7}};
-    int ans13 = RentCars1(depts3, plans3);
-    printf("所选方案的下标为 %d\n", ans13);
 }

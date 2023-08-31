@@ -44,6 +44,7 @@ using namespace std;
 int generateRandomNum(int low, int high);
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
+
 vector<int> RemoveElement(vector<int> vec, int target);
 
 int main()

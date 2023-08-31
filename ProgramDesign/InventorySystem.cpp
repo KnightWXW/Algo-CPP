@@ -41,20 +41,69 @@ void printBool(bool b)
 class InventorySystem
 {
 public:
+    int materialsCnt;
+    int productsCnt;
+    vector<int> materialsVec;
     vector<vector<int>> productsVec;
+
     InventorySystem(int materialsNum, vector<vector<int>> products)
     {
+        materialsCnt = materialsNum;
+        productsCnt = products.size();
+        materialsVec = vector<int>(materialsNum, 0);
+        productsVec = vector<vector<int>>(products);
     }
 
-    void Purchase(vector<vector<int>> products)
+    void Purchase(vector<vector<int>> materials)
     {
+        for (int i = 0; i < materials.size(); i++)
+        {
+            int materialIndex = materials[i][0];
+            int materialNumber = materials[i][1];
+            materialsVec[materialIndex] += materialNumber;
+        }
     }
 
     bool Produce(vector<int> productIds)
     {
+        vector<int> materialsTem(materialsCnt, 0);
+        vector<int> productsTem(productsCnt, 0);
+        bool ans = true;
+        for (int i = 0; i < productIds.size(); i++)
+        {
+            productsTem[productIds[i]]++;
+        }
+        for (int i = 0; i < productsCnt; i++)
+        {
+            for (int j = 0; j < materialsCnt; j++)
+            {
+                materialsTem[j] += (productsTem[i] * productsVec[i][j]);
+                if (materialsTem[j] > materialsVec[j])
+                {
+                    return false;
+                }
+            }
+        }
+        for (int i = 0; i < materialsCnt; i++)
+        {
+            materialsVec[i] -= materialsTem[i];
+        }
+        return true;
     }
+
     int QueryMin()
     {
+        int minMaterial = INT_MAX;
+        int minIndex = 0;
+        for (int i = 0; i < materialsVec.size(); i++)
+        {
+            if (materialsVec[i] < minMaterial)
+            {
+                minIndex = i;
+                minMaterial = materialsVec[i];
+            }
+        }
+        return minIndex;
     }
 };
 

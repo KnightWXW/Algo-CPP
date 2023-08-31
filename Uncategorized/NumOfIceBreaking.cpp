@@ -1,7 +1,12 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <algorithm>
+#include <map>
+#include <string>
 
-
-
-
+using namespace std;
 
 //      Huawei: 破冰船的破冰次数
 
@@ -19,5 +24,84 @@
 //          输入：route = "RDDUURDLLURU", limit = 4
 //          输出：9
 
+int generateRandomNum(int low, int high);
+string generateRandomString(int n);
+void printString(string s);
+
 int NumOfIceBreaking(string route, int limit);
 
+int main()
+{
+    int n = generateRandomNum(1, 20);
+    int limit = generateRandomNum(1, 7);
+    string str = generateRandomString(n);
+    printf("给定航线为：\n");
+    printString(str);
+    int ans = NumOfIceBreaking(str, limit);
+    printf("在行驶路线中，破冰船共破了 %d 次。\n", ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((unsigned)time(NULL));
+    return (rand() % (high - low + 1)) + low;
+}
+
+string generateRandomString(int n)
+{
+    string str = "";
+    srand((int)time(0));
+    char arr[] = "UDLR";
+    for (int i = 0; i < n; i++)
+    {
+        int index = rand() % (sizeof(arr) - 1);
+        str += arr[index];
+    }
+    return str;
+}
+
+void printString(string s)
+{
+    printf("%s\n", s.c_str());
+}
+
+int NumOfIceBreaking(string route, int limit)
+{
+    int l = route.size();
+    int x = 0;
+    int y = 0;
+    int ans = 0;
+    map<pair<int, int>, int> hmap;
+    for (int i = 0; i < l; i++)
+    {
+        hmap[make_pair(x, y)] = limit;
+        if (route[i] == 'U')
+        {
+            y++;
+        }
+        else if (route[i] == 'D')
+        {
+            y--;
+        }
+        else if (route[i] == 'L')
+        {
+            x--;
+        }
+        else if (route[i] == 'R')
+        {
+            x++;
+        }
+        if (hmap[make_pair(x, y)] == 0)
+        {
+            ans++;
+        }
+        for (auto v : hmap)
+        {
+            if (v.second > 0)
+            {
+                hmap[v.first]--;
+            }
+        }
+    }
+    return ans;
+}
