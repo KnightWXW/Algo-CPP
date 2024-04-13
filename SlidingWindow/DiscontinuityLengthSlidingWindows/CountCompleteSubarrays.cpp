@@ -2,6 +2,8 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <unordered_set>
+#include <unordered_map>
 
 using namespace std;
 
@@ -21,7 +23,8 @@ using namespace std;
 //      示例 2：
 //          输入：nums = [5,5,5,5]
 //          输出：10
-//          解释：数组仅由整数 5 组成，所以任意子数组都满足完全子数组的条件。子数组的总数为 10 。
+//          解释：数组仅由整数 5 组成，所以任意子数组都满足完全子数组的条件。
+//              子数组的总数为 10 。
 //      提示：
 //          1 <= nums.length <= 1000
 //          1 <= nums[i] <= 2000
@@ -30,18 +33,15 @@ int generateRandomNum(int low, int high);
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
 
-int CountCompleteSubarrays(vector<int>& nums);
+int CountCompleteSubarrays(vector<int> &nums);
 
 int main()
 {
     int n = generateRandomNum(0, 50);
     vector<int> vec = generateRandomVec(0, 5, n);
     printVecElement(vec);
-    int v = (rand() % vec.size());
-    int target = vec[v];
-    printf("target 为 %d\n", target);
-    vector<int> ans = RemoveElement(vec, target);
-    printVecElement(ans);
+    int ans_A = CountCompleteSubarrays(vec);
+    printf("数组中完全子数组的数目 为 %d。\n", ans_A);
 }
 
 int generateRandomNum(int low, int high)
@@ -74,7 +74,28 @@ vector<int> generateRandomVec(int low, int high, int len)
 // 滑动窗口：
 // Time: O(n)
 // Space: O(1)
-int CountCompleteSubarrays(vector<int>& nums)
+int CountCompleteSubarrays(vector<int> &nums)
 {
-
+    int l = nums.size();
+    int ans = 0;
+    int left = 0;
+    int right = 0;
+    unordered_map<int, int> hmap;
+    int count = unordered_set<int>(nums.begin(), nums.end()).size();
+    while (right < l)
+    {
+        hmap[nums[right]]++;
+        while (left <= right && hmap.size() == count)
+        {
+            ans += (l - right);
+            hmap[nums[left]]--;
+            if (hmap[nums[left]] == 0)
+            {
+                hmap.erase(nums[left]);
+            }
+            left++;
+        }
+        right++;
+    }
+    return ans;
 }

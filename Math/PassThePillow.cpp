@@ -1,6 +1,11 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <algorithm>
+#include <numeric>
 
-
-
+using namespace std;
 
 //      LeetCode 2582. 递枕头
 
@@ -27,4 +32,37 @@
 //          2 <= n <= 1000
 //          1 <= time <= 1000
 
+int generateRandomNum(int low, int high);
+
 int PassThePillow(int n, int time);
+
+int main()
+{
+    int n = generateRandomNum(2, 1000);
+    int time = generateRandomNum(1, 1000);
+    int ans = PassThePillow(n, time);
+    printf("当有 %d 个人, %d 秒后拿着枕头的人的编号是 %d\n", n, time, ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((unsigned)time(NULL));
+    return (rand() % (high - low + 1)) + low;
+}
+
+// 模拟 + 数学:
+// Time: O(1)
+// Space: O(1)
+int PassThePillow(int n, int time)
+{
+    int k = time / (n - 1);
+    int mod = time % (n - 1);
+    if ((k & 1) == 1)
+    {
+        return n - mod;
+    }
+    else
+    {
+        return mod + 1;
+    }
+}

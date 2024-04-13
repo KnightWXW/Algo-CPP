@@ -40,4 +40,53 @@ using namespace std;
 //          1 <= nums1.length, nums2.length <= 105
 //          1 <= nums1[i], nums2[i] <= 6
 
-int MinOperations(vector<int>& nums1, vector<int>& nums2);
+int generateRandomNum(int low, int high);
+string generateRandomString(int n);
+void printString(string s);
+void printVecElement(vector<int> vec);
+
+vector<int> MinOperationsOfMoveBalls(string boxes);
+
+int main()
+{
+    int n = generateRandomNum(0, 4);
+    string str = generateRandomString(n);
+    printf("数字的字符串为：");
+    printString(str);
+    vector<string> vec = LetterCombinations_A(str);
+    printf("它能表示的字母组合：\n");
+    printStringVecElement(vec);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((unsigned)time(NULL));
+    return (rand() % (high - low + 1)) + low;
+}
+
+string generateRandomString(int n)
+{
+    string str = "";
+    srand((int)time(0));
+    char arr[] = "23456789";
+    for (int i = 0; i < n; i++)
+    {
+        int index = rand() % (sizeof(arr) - 1);
+        str += arr[index];
+    }
+    return str;
+}
+
+void printString(string s)
+{
+    printf("%s\n", s.c_str());
+}
+
+void printVecElement(vector<int> vec)
+{
+    for (int i = 0; i < vec.size(); i++)
+    {
+        printf("%d ", vec[i]);
+    }
+    printf("\n");
+}

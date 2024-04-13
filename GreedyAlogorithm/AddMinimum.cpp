@@ -24,7 +24,7 @@ using namespace std;
 //      示例 3：
 //          输入：word = "abc"
 //          输出：0
-//          解释：word 已经是有效字符串，不需要进行修改。 
+//          解释：word 已经是有效字符串，不需要进行修改。
 //      提示：
 //          1 <= word.length <= 50
 //          word 仅由字母 "a"、"b" 和 "c" 组成。
@@ -68,7 +68,19 @@ void printString(string s)
     printf("%s\n", s.c_str());
 }
 
+// 贪心：
+// Time: O(N)
+// Space: O(1)
 int AddMinimum(string word)
 {
-    
+    int l = word.size();
+    int cnt = 1;
+    for (int i = 1; i < l; i++)
+    {
+        if (word[i - 1] >= word[i])
+        {
+            cnt++;
+        }
+    }
+    return 3 * cnt - l;
 }
