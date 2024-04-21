@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <ctime>
 #include <cstdlib>
 #include <vector>
@@ -30,7 +31,7 @@ int generateRandomNum(int low, int high);
 vector<int> generateRandomVec(int low, int high, int len);
 void printVecElement(vector<int> vec);
 
-vector<int> DailyTemperatures(vector<int>& temperatures);
+vector<int> DailyTemperatures(vector<int> &temperatures);
 
 int main()
 {
@@ -69,8 +70,29 @@ vector<int> generateRandomVec(int low, int high, int len)
     return vec;
 }
 
-vector<int> DailyTemperatures(vector<int>& temperatures)
+// 单调栈：
+// Space: O(N)
+// Time: O(1)
+vector<int> DailyTemperatures(vector<int> &temperatures)
 {
     int l = temperatures.size();
     stack<int> stk;
+    vector<int> ans(l, 0);
+    for (int i = 0; i < l; i++)
+    {
+        while (!stk.empty() && temperatures[stk.top()] < temperatures[i])
+        {
+            int tem = stk.top();
+            ans[tem] = i - tem;
+            stk.pop();
+        }
+        stk.push(i);
+    }
+    while (!stk.empty())
+    {
+        int tem = stk.top();
+        ans[tem] = 0;
+        stk.pop();
+    }
+    return ans;
 }

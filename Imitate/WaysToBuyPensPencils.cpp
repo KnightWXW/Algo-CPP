@@ -1,10 +1,11 @@
+#include <stdio.h>
+#include <string>
+#include <vector>
+#include <string.h>
+#include <ctime>
+#include <cstdlib>
 
-
-
-
-
-
-
+using namespace std;
 
 //      LeetCode 2240. 买钢笔和铅笔的方案数
 
@@ -30,4 +31,38 @@
 //      提示：
 //          1 <= total, cost1, cost2 <= 106
 
+int generateRandomNum(int low, int high);
+
 long long WaysToBuyPensPencils(int total, int cost1, int cost2);
+
+int main()
+{
+    int total = generateRandomNum(1, 1000);
+    int cost1 = generateRandomNum(1, 1000);
+    int cost2 = generateRandomNum(1, 1000);
+    long long ans = WaysToBuyPensPencils(total, cost1, cost2);
+    printf("总钱数 为 %d, 一支钢笔和一支铅笔的价格 分别为 %d 和 %d, \n购买钢笔和铅笔的 不同方案数目 有 %d。", total, cost1, cost2, ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((unsigned)time(NULL));
+    return (rand() % (high - low + 1)) + low;
+}
+
+// 模拟：
+// Time: O(N)
+// Space: O(1)
+long long WaysToBuyPensPencils(int total, int cost1, int cost2)
+{
+    long long ans = 0;
+    int large = max(cost1, cost2);
+    int small = min(cost1, cost2);
+    int largeCnt = total / large;
+    for (int i = 0; i <= largeCnt; i++)
+    {
+        int dif = total - i * large;
+        ans += (dif / small + 1);
+    }
+    return ans;
+}

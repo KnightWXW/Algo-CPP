@@ -2,9 +2,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
-#include <algorithm>
-
-using namespace std;
 
 //      LeetCode LCP 33. 蓄水
 

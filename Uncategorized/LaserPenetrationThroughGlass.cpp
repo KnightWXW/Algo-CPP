@@ -178,6 +178,5 @@ int LaserPenetrationThroughGlass_B(vector<vector<int>> planks)
             }
         }
     }
-
     return DigitMaxDistance(planks, posArr);
 }
