@@ -77,3 +77,8 @@ vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col)
     }
     return vec;
 }
+
+int BestAppointmentLocation(vector<vector<int>>& grid)
+{
+    
+}

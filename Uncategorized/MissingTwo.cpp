@@ -74,4 +74,7 @@ vector<int> generateRandomVecSeries(int len)
     return vec;
 }
 
-vector<int> MissingTwo(vector<int>& nums);
+vector<int> MissingTwo(vector<int>& nums)
+{
+    
+}

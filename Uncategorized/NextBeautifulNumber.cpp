@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <ctime>
-#include <vector>
-#include <string>
 #include <algorithm>
 
 using namespace std;
@@ -40,4 +38,24 @@ using namespace std;
 //      提示：
 //          0 <= n <= 106
 
+int generateRandomNum(int low, int high);
+
 int NextBeautifulNumber(int n);
+
+int main()
+{
+    int n = generateRandomNum(1, 9999999);
+    int ans = NextBeautifulNumber(n);
+    printf("严格大于 %d 的 最小数值平衡数为 %ld\n", n, ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((int)time(0));
+    return (rand() % (high - low + 1)) + low;
+}
+
+int NextBeautifulNumber(int n)
+{
+
+}

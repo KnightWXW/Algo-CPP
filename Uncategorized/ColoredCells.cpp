@@ -1,6 +1,9 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
 
-
-
+using namespace std;
 
 //      LeetCode 2579. 统计染色格子数
 
@@ -23,4 +26,27 @@
 //      提示：
 //          1 <= n <= 105
 
+int generateRandomNum(int low, int high);
+
 long long ColoredCells(int n);
+
+int main()
+{
+    int n = generateRandomNum(1, 10000);
+    long long ans = ColoredCells(n);
+    printf("%u 分钟之后 被染色的格子 数目 为 %llu。", n, ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((unsigned)time(NULL));
+    return (rand() % (high - low + 1)) + low;
+}
+
+// 数学：作差后递归求和
+// Time: O(1)
+// Space: O(1)
+long long ColoredCells(int n)
+{
+    return ((long long)2 * n * n - 2 * n + 1);
+}

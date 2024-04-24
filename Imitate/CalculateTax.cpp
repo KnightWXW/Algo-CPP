@@ -13,8 +13,9 @@ using namespace std;
 
 //      给你一个下标从 0 开始的二维整数数组 brackets ，
 //      其中 brackets[i] = [upperi, percenti] ，
-//      表示第 i 个税级的上限是 upperi ，征收的税率为 percenti 。
-//      税级按上限 从低到高排序（在满足 0 < i < brackets.length 的前提下，upperi-1 < upperi）。
+//      表示 第 i 个税级的上限是 upperi ，征收的税率为 percenti。
+//      税级按上限 从低到高排序
+//      （在满足 0 < i < brackets.length 的前提下，upperi-1 < upperi）。
 //      税款计算方式如下：
 //          不超过 upper0 的收入按税率 percent0 缴纳
 //          接着 upper1 - upper0 的部分按税率 percent1 缴纳
@@ -51,25 +52,22 @@ using namespace std;
 //          upperi 中的所有值 互不相同
 //          最后一个税级的上限大于等于 income
 
-int generateRandomNum(int low, int high);
 void print2DVecElement(vector<vector<int>> vec);
-vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col);
 
-double CalculateTax(vector<vector<int>>& brackets, int income);
+double CalculateTax(vector<vector<int>> &brackets, int income);
 
 int main()
 {
-    int n = generateRandomNum(0, 20);
-    vector<vector<int>> brackets = generateRandom2DVec(0, 20, n, 2);
-    print2DVecElement(brackets);
-    double ans = CalculateTax(brackets);
-    printf("需要缴纳的税款总额为：%lf。\n", ans);
-}
-
-int generateRandomNum(int low, int high)
-{
-    srand((unsigned)time(NULL));
-    return (rand() % (high - low + 1)) + low;
+    vector<vector<int>> brackets_A = {{3, 50}, {7, 10}, {12, 25}};
+    int income_A = 10;
+    print2DVecElement(brackets_A);
+    double ans_A = CalculateTax(brackets_A, income_A);
+    printf("需要缴纳的税款总额为：%lf。\n", ans_A);
+    vector<vector<int>> brackets_B = {{1, 0}, {4, 25}, {5, 50}};
+    int income_B = 2;
+    print2DVecElement(brackets_B);
+    double ans_B = CalculateTax(brackets_B, income_B);
+    printf("需要缴纳的税款总额为：%lf。\n", ans_B);
 }
 
 void print2DVecElement(vector<vector<int>> vec)
@@ -85,25 +83,24 @@ void print2DVecElement(vector<vector<int>> vec)
     printf("\n");
 }
 
-vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col)
+// 模拟：
+// Time: O(N)
+// Space: O(1)
+double CalculateTax(vector<vector<int>> &brackets, int income)
 {
-    srand((int)time(0));
-    vector<vector<int>> vec;
-    for (int i = 0; i < row; i++)
+    double ans = 0.0;
+    int preUpper = 0;
+    for (int i = 0; i < brackets.size(); i++)
     {
-        vector<int> tem;
-        for (int j = 0; j < col; j++)
+        int upper = brackets[i][0];
+        int percent = brackets[i][1];
+        int tem = min(income, upper);
+        ans += (tem - preUpper) * percent;
+        if (income == tem)
         {
-            int v = (rand() % (high - low + 1)) + low;
-            tem.push_back(v);
+            break;
         }
-        vec.push_back(tem);
+        preUpper = upper;
     }
-    return vec;
-}
-
-double CalculateTax(vector<vector<int>>& brackets, int income)
-{
-    int l = brackets.size();
-
+    return ans / 100.0;
 }
