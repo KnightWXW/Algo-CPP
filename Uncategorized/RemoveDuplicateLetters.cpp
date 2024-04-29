@@ -32,7 +32,7 @@ string RemoveDuplicateLetters(string s);
 
 int main()
 {
-    int n = generateRandomNum(1, 10);
+    int n = generateRandomNum(1, 30);
     string s = generateRandomString(n);
     string ans = RemoveDuplicateLetters(s);
     printf("去除字符串中重复的字母后的字符串为: \n");
@@ -47,7 +47,7 @@ int generateRandomNum(int low, int high)
 
 void generateRandomString(int n, string &str)
 {
-    char arr[] = "abcdefghijklmnopqrstuvwxyz";
+    char arr[] = "abcdef";
     for (int i = 0; i < n; i++)
     {
         int index = rand() % (sizeof(arr) - 1);

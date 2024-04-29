@@ -4,10 +4,11 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <queue>
 
 using namespace std;
 
-//      Huawei: 小熊猫拍照
+//      Huawei: 大熊猫拍照
 
 //      卧龙大熊猫基地要对今年新出生的大熊猫进行拍照合影。
 //      但是熊猫不太听话，有的面向前方，有的面向后方。
@@ -25,7 +26,9 @@ using namespace std;
 //          BBFBFBB
 //      输出样例 3
 
-int generateRandomNum(int low, int high)
+int generateRandomNum(int low, int high);
+string generateRandomString(int n);
+void printString(string s);
 
 int TakingPhotosOfRedPandas(string s);
 
@@ -62,9 +65,41 @@ void printString(string s)
     printf("%s\n", s.c_str());
 }
 
+int HelperTakingPhotosOfRedPandas(string s, int k)
+{
+    int l = s.size();
+    int cnt = 0;
+    queue<int> q;
+    for (int i = 0; i < l; i++)
+    {
+        if (q.size() > 0 && i - k + 1 > q.front())
+        {
+            q.pop();
+        }
+        if ((q.size() % 2 == 0 && s[i] == 'B') || (q.size() % 2 == 1 && s[i] == 'F'))
+        {
+            if (i + k > s.size())
+            {
+                return -1;
+            }
+            q.push(i);
+            cnt++;
+        }
+    }
+    return cnt;
+}
+
 int TakingPhotosOfRedPandas(string s)
 {
     int l = s.size();
-    int ans = 0;
-    
+    int ans = l + 1;
+    for (int i = 1; i <= l; i++)
+    {
+        int tem = HelperTakingPhotosOfRedPandas(s, i);
+        if (tem > 0)
+        {
+            ans = min(ans, tem);
+        }
+    }
+    return ans;
 }
