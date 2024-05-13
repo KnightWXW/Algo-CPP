@@ -1,5 +1,11 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <algorithm>
+#include <numeric>
 
-
+using namespace std;
 
 //      Huawei: 鱼缸难题
 
@@ -14,14 +20,14 @@
 //      输入：
 //          共三行:
 //              整数 N
-//              C1 N1 
+//              C1 N1
 //              C2 N2
 //              所有数范围 [1, 2000000000]
 //      输出：
 //          每个用例占一行，对于不存在解的情况输出Failed
 //          (即不能满足所有的鱼都装在鱼缸中且每个鱼缸都装满)
-//          否则，请输出两个整数M1, M2
-//          (表示第一种鱼缸买M1个，第二种鱼缸买M2个，保证是唯一解)
+//          否则，请输出两个整数 M1, M2
+//          (表示第一种鱼缸买 M1 个，第二种鱼缸买 M2 个，保证是唯一解)
 //      输入样例1：
 //          43
 //          1 3
@@ -29,4 +35,75 @@
 //      输出样例1：
 //          13 1
 
-int FishTankChallenge(int fishes, int c1, int n1, int c2, int n2);
+int generateRandomNum(int low, int high);
+
+vector<int> FishTankChallenge(int fishes, int c1, int n1, int c2, int n2);
+
+int main()
+{
+    int fishes = generateRandomNum(1, 1000);
+    int c1 = generateRandomNum(1, 100);
+    int n1 = generateRandomNum(1, 101);
+    int c2 = generateRandomNum(1, 102);
+    int n2 = generateRandomNum(1, 103);
+    // int fishes = 43;
+    // int c1 = 1;
+    // int n1 = 3;
+    // int c2 = 2;
+    // int n2 = 4;
+    vector<int> ans_A = FishTankChallenge(fishes, c1, n1, c2, n2);
+    printf("fishes == %d, c1 == %d, n1 == %d, c2 == %d, n2 == %d, 最小花费为: [1]%d $ [2]%d\n", fishes, c1, n1, c2, n2, ans_A[0], ans_A[1]);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((int)time(0));
+    return (rand() % (high - low + 1)) + low;
+}
+
+// 数学：
+// Time: O(N)
+// Space: O(1)
+vector<int> FishTankChallenge(int fishes, int c1, int n1, int c2, int n2)
+{
+    bool flag = true;
+    int smallC = c1;
+    int smallN = n1;
+    int largeC = c2;
+    int largeN = n2;
+    if ((1.0 * c1 / n1) > (1.0 * c2 / n2))
+    {
+        flag = false;
+        smallC = c2;
+        smallN = n2;
+        largeC = c1;
+        largeN = n1;
+    }
+    int cnt = fishes / smallN;
+    int a1 = cnt;
+    int a2 = 0;
+    int dif = fishes % smallN;
+    for (int i = 0; i <= cnt; i++)
+    {
+        int tem = dif + smallN * i;
+        if (tem % largeN == 0)
+        {
+            a1 -= i;
+            a2 = tem / largeN;
+            break;
+        }
+        if (i == cnt)
+        {
+            return {-1, -1};
+        }
+    }
+
+    if (flag == true)
+    {
+        return {a1, a2};
+    }
+    else
+    {
+        return {a2, a1};
+    }
+}

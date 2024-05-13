@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 #include <cstdlib>
 #include <ctime>
@@ -83,8 +81,8 @@ vector<int> generateRandomVec(int low, int high, int len)
 }
 
 // 贪心：
-//      所有的菜按照满意程度从大到小排序，随后依次遍历每一道菜。
-//      如果加入这道菜导致总喜爱时间增加，我们就可以选取这道菜，否则我们直接退出循环。
+//    所有的菜按照满意程度从大到小排序，随后依次遍历每一道菜。
+//    如果加入这道菜导致总喜爱时间增加，我们就可以选取这道菜，否则我们直接退出循环。
 // Time: O(NlogN)
 // Space: O(logN)
 int MaxSatisfaction_A(vector<int> satisfaction)

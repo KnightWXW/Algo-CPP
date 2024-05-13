@@ -39,11 +39,10 @@ using namespace std;
 
 void print2DVecElement(vector<vector<int>> vec);
 
-int GuiLinTravel(int n, vector<vector<int>> vec);
+int GuiLinTravel(vector<vector<int>> vec);
 
 int main()
 {
-    int n1 = 3;
     vector<vector<int>> vec1 = {{0, 2, 3, 6},
                                 {0, 0, 1, 3},
                                 {0, 0, 0, 2},
@@ -52,7 +51,6 @@ int main()
     int ans1 = GuiLinTravel(vec1);
     printf("游客从起点到终点间最少租船费用为 %d\n", ans1);
 
-    int n1 = 4;
     vector<vector<int>> vec2 = {{0, 1, 2, 3, 4},
                                 {0, 0, 1, 2, 3},
                                 {0, 0, 0, 1, 2},
@@ -61,7 +59,6 @@ int main()
     print2DVecElement(vec2);
     int ans2 = GuiLinTravel(vec2);
     printf("游客从起点到终点间最少租船费用为 %d\n", ans2);
-    
 }
 
 void print2DVecElement(vector<vector<int>> vec)
@@ -77,15 +74,24 @@ void print2DVecElement(vector<vector<int>> vec)
     printf("\n");
 }
 
-int GuiLinTravel(int n, vector<vector<int>> vec)
+// 动态规划：
+// Time: O(M * N)
+// Space: O(1)
+int GuiLinTravel(vector<vector<int>> vec)
 {
     int l = vec.size();
-    int ans = 0;
-    for(int i = 0; i < l; i++)
+    vector<vector<int>> arr(vec);
+    int ans = INT_MAX;
+    for (int i = 1; i < l; i++)
     {
-        for(int j = 0; i < l ;j++)
+        for (int j = i + 1; j < l; j++)
         {
-            
+            arr[i][j] += arr[i - 1][i];
         }
     }
+    for (int i = 0; i < l - 1; i++)
+    {
+        ans = min(ans, arr[i][l - 1]);
+    }
+    return ans;
 }

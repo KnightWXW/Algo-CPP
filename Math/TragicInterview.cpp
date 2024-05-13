@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#define MOD_VAL 1000000007
+
 //      Huawei：悲剧的面试
 
 //      小华十分向往华为公司，今天他来到华为公司面试。
@@ -26,16 +28,17 @@ int generateRandomNum(int low, int high);
 void printVecElement(vector<int> vec);
 vector<int> generateRandomVec(int low, int high, int len);
 
+long long DightPermutations(int num);
 int TragicInterview(vector<int> arr);
 
 int main()
 {
-    int n = generateRandomNum(0, 20);
-    vector<int> arr = generateRandomVec(1, 1000, n);
-    printf("分数数组 元素为: ");
+    int n = generateRandomNum(1, 15);
+    vector<int> arr = generateRandomVec(1, 100, n);
+    printf("分数数组 元素为: \n");
     printVecElement(arr);
     int ans = TragicInterview(arr);
-    printf("有 %d 种考官打分的情况。", ans);。
+    printf("有 %d 种考官打分的情况。", ans);
 }
 
 int generateRandomNum(int low, int high)
@@ -63,4 +66,53 @@ vector<int> generateRandomVec(int low, int high, int len)
         vec.push_back(v);
     }
     return vec;
+}
+
+long long DightPermutations(int num)
+{
+    int ans = 1;
+    while (num != 0)
+    {
+        ans *= num;
+        ans %= MOD_VAL;
+        num--;
+    }
+    return ans;
+}
+
+// 排列数：
+// Time：O(N)
+// Space：O(1)
+int TragicInterview(vector<int> arr)
+{
+    int l = arr.size();
+    bool flag = false;
+    unordered_map<int, int> hmap;
+    for (int i = 0; i < l; i++)
+    {
+        hmap[arr[i]]++;
+        if (hmap[arr[i]] > 1)
+        {
+            flag = true;
+        }
+    }
+    int ans = DightPermutations(l);
+    if (flag == false)
+    {
+        return ans;
+    }
+    else
+    {
+        int k = 1;
+        for (auto it = hmap.begin(); it != hmap.end(); it++)
+        {
+            int cnt = it->second;
+            if (cnt != 1)
+            {
+                k *= DightPermutations(cnt);
+            }
+        }
+        ans /= k;
+        return (int)ans;
+    }
 }

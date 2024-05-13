@@ -1,5 +1,11 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <string>
+#include <algorithm>
 
-
+using namespace std;
 
 //      LeetCode 面试题 17.08. 马戏团人塔
 
@@ -14,6 +20,7 @@
 //          解释：从上往下数，叠罗汉最多能叠 6 层：(56,90), (60,95), (65,100), (68,110), (70,150), (75,190)
 //      提示：
 //          height.length == weight.length <= 10000
+
 
 
 int BestSeqAtIndex(vector<int>& height, vector<int>& weight);

@@ -52,6 +52,9 @@ void printStringVector(vector<string> vec)
     }
 }
 
+// 模拟:
+// Time: O(N)
+// Space: O(N)
 int SeatSelectionOfHighSpeedRail(int rows, vector<string> seats)
 {
     int l = seats.size();

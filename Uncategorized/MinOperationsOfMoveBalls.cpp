@@ -40,7 +40,8 @@ string generateRandomString(int n);
 void printString(string s);
 void printVecElement(vector<int> vec);
 
-vector<int> MinOperationsOfMoveBalls(string boxes);
+vector<int> MinOperationsOfMoveBalls_A(string boxes);
+vector<int> MinOperationsOfMoveBalls_B(string boxes);
 
 int main()
 {
@@ -48,9 +49,12 @@ int main()
     string str = generateRandomString(n);
     printf("盒子的 初始状态为：");
     printString(str);
-    vector<int> ans_A = MinOperationsOfMoveBalls(str);
+    vector<int> ans_A = MinOperationsOfMoveBalls_A(str);
     printf("移动所有球到每个盒子所需的最小操作数为：\n");
-    printStringVecElement(ans_A);
+    printVecElement(ans_A);
+    vector<int> ans_B = MinOperationsOfMoveBalls_B(str);
+    printf("移动所有球到每个盒子所需的最小操作数为：\n");
+    printVecElement(ans_B);
 }
 
 int generateRandomNum(int low, int high)
@@ -86,9 +90,58 @@ void printVecElement(vector<int> vec)
     printf("\n");
 }
 
-vector<int> MinOperationsOfMoveBalls(string boxes)
+// 双层循环：
+// Time: O(N ^ 2)
+// Space: O(1)
+vector<int> MinOperationsOfMoveBalls_A(string boxes)
 {
     int l = boxes.size();
     vector<int> ans(l, 0);
-    
+    for (int i = 0; i < l; i++)
+    {
+        int sum = 0;
+        for (int j = 0; j < l; j++)
+        {
+            if (boxes[j] == '1')
+            {
+                sum += abs(j - i);
+            }
+            ans[i] = sum;
+        }
+    }
+    return ans;
+}
+
+// 前缀和：
+// Time: O(N)
+// Space: O(N)
+vector<int> MinOperationsOfMoveBalls_B(string boxes)
+{
+    int l = boxes.size();
+    vector<int> ans(l, 0);
+    vector<int> leftArr(l, 0);
+    vector<int> rightArr(l, 0);
+    int cnt = 0;
+    for (int i = 1; i < l; i++)
+    {
+        if (boxes[i - 1] == '1')
+        {
+            cnt++;
+        }
+        leftArr[i] = leftArr[i - 1] + cnt;
+    }
+    cnt = 0;
+    for (int i = l - 2; i >= 0; i--)
+    {
+        if (boxes[i + 1] == '1')
+        {
+            cnt++;
+        }
+        rightArr[i] = rightArr[i + 1] + cnt;
+    }
+    for (int i = 0; i < l; i++)
+    {
+        ans[i] = leftArr[i] + rightArr[i];
+    }
+    return ans;
 }
