@@ -36,15 +36,14 @@ using namespace std;
 int generateRandomNum(int low, int high);
 
 bool CanWinNimGame(int n);
+void printBool(bool b);
 
 int main()
 {
-    int numBottles = generateRandomNum(1, 100);
-    int numExchange = generateRandomNum(1, numBottles);
-    int ans_A = NumWaterBottles_A(numBottles, numExchange);
-    int ans_B = NumWaterBottles_B(numBottles, numExchange);
-    printf("购入了 %d 瓶水, 用 %d 个空水瓶兑换一瓶水, \n最多 可以喝到 %d 瓶水\n", numBottles, numExchange, ans_A);
-    printf("购入了 %d 瓶水, 用 %d 个空水瓶兑换一瓶水, \n最多 可以喝到 %d 瓶水\n", numBottles, numExchange, ans_B);
+    int num = generateRandomNum(1, 99999999);
+    bool ans_A = CanWinNimGame(num);
+    printf("在给定石头数量为 %d 的情况下可否赢得游戏 \n", num);
+    printBool(ans_A);
 }
 
 int generateRandomNum(int low, int high)
@@ -53,7 +52,30 @@ int generateRandomNum(int low, int high)
     return (rand() % (high - low + 1)) + low;
 }
 
+void printBool(bool b)
+{
+    if (b == true)
+    {
+        printf("True\n");
+    }
+    else
+    {
+        printf("False\n");
+    }
+}
+
+// 数学：
+// Time: O(1)
+// Space: O(1)
+//      如果总的石头数目为 4 的倍数时，
+//      因为无论你取多少石头，对方总有对应的取法，
+//      让剩余的石头的数目继续为 4 的倍数。
+//      对于你或者你的对手取石头时，显然最优的选择是当前己方取完石头后，
+//      让剩余的石头的数目为 4 的倍数。
+//      假设当前的石头数目为 x，如果 x 为 4 的倍数时，则此时你必然会输掉游戏；
+//      如果 x 不为 4 的倍数时，则此时你只需要取走 x mod 4 个石头时，
+//      则剩余的石头数目必然为 4 的倍数，从而对手会输掉游戏。
 bool CanWinNimGame(int n)
 {
-
+    return n % 4 != 0;
 }

@@ -42,6 +42,7 @@ void printVecElement(vector<int> vec);
 
 vector<int> MinOperationsOfMoveBalls_A(string boxes);
 vector<int> MinOperationsOfMoveBalls_B(string boxes);
+vector<int> MinOperationsOfMoveBalls_C(string boxes);
 
 int main()
 {
@@ -55,6 +56,9 @@ int main()
     vector<int> ans_B = MinOperationsOfMoveBalls_B(str);
     printf("移动所有球到每个盒子所需的最小操作数为：\n");
     printVecElement(ans_B);
+    vector<int> ans_C = MinOperationsOfMoveBalls_B(str);
+    printf("移动所有球到每个盒子所需的最小操作数为：\n");
+    printVecElement(ans_C);
 }
 
 int generateRandomNum(int low, int high)
@@ -142,6 +146,38 @@ vector<int> MinOperationsOfMoveBalls_B(string boxes)
     for (int i = 0; i < l; i++)
     {
         ans[i] = leftArr[i] + rightArr[i];
+    }
+    return ans;
+}
+
+// 前缀和(空间优化):
+// Time: O(N)
+// Space: O(N)
+vector<int> MinOperationsOfMoveBalls_C(string boxes)
+{
+    int l = boxes.size();
+    vector<int> ans(l, 0);
+    int cnt = 0;
+    int leftSum = 0;
+    int rightSum = 0;
+    for (int i = 1; i < l; i++)
+    {
+        if (boxes[i - 1] == '1')
+        {
+            cnt++;
+        }
+        leftSum += cnt;
+        ans[i] += leftSum;
+    }
+    cnt = 0;
+    for (int i = l - 2; i >= 0; i--)
+    {
+        if (boxes[i + 1] == '1')
+        {
+            cnt++;
+        }
+        rightSum += cnt;
+        ans[i] += rightSum;
     }
     return ans;
 }

@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <numeric>
+#include <unordered_map>
 
 using namespace std;
 
@@ -48,8 +49,17 @@ void printVecElement(vector<int> &vec)
     printf("\n");
 }
 
+class AlarmClock
+{
+    int hour;
+    int minute;
+    vector<int> weekdays;
+    int typeId;
+};
+
 class AlarmSystem
 {
+    unordered_map<int, AlarmClock> hmap;
 
     AlarmSystem()
     {

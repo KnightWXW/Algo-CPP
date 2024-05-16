@@ -100,6 +100,5 @@ int LongestOnesIII(vector<int> &nums, int k)
         ans = max(ans, right - left + 1);
         right++;
     }
-
     return ans;
 }

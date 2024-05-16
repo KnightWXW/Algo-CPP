@@ -7,10 +7,7 @@
 
 using namespace std;
 
-//      鹅厂文化衫问题
-//      LeetCode 781. 森林中的兔子
-
-//      链接：https://leetcode.cn/problems/rabbits-in-forest/
+//      Tencent: 鹅厂文化衫问题
 
 //      企鹅厂每年都会发文化衫，文化衫有很多种，
 //      厂庆的时候，企鹅们都需要穿文化衫来拍照
@@ -32,8 +29,10 @@ int main()
     int n = generateRandomNum(0, 50);
     vector<int> answers = generateRandomVec(1, 5, n);
     printVecElement(answers);
-    int ans = TencentTShirt(answers);
-    printf("鹅厂中企鹅的最少数量为 %d\n", ans);
+    int ans_A = TencentTShirt_A(answers);
+    printf("鹅厂中企鹅的最少数量为 %d\n", ans_A);
+    int ans_B = TencentTShirt_B(answers);
+    printf("鹅厂中企鹅的最少数量为 %d\n", ans_B);
 }
 
 int generateRandomNum(int low, int high)
@@ -63,7 +62,7 @@ vector<int> generateRandomVec(int low, int high, int len)
     return vec;
 }
 
-int TencentTShirt(vector<int> answers)
+int TencentTShirt_A(vector<int> answers)
 {
     int l = answers.size();
     sort(answers.begin(), answers.end());
@@ -86,7 +85,7 @@ int TencentTShirt(vector<int> answers)
     return ans + ((cnt + pre) / (pre + 1)) * (pre + 1);
 }
 
-int TencentTShirt(vector<int> answers)
+int TencentTShirt_B(vector<int> answers)
 {
     unordered_map<int, int> umap;
     for (auto v : answers)
