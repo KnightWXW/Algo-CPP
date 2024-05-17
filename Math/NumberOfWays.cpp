@@ -48,7 +48,7 @@ int generateRandomNum(int low, int high);
 string generateRandomString(int n);
 void printString(string s);
 
-int numberOfWays(string corridor);
+int NumberOfWays(string corridor);
 
 int main()
 {
@@ -56,7 +56,7 @@ int main()
     string s = generateRandomString(n);
     printf("图书馆的长廊 的 排列情况 为：");
     printString(s);
-    printf("划分走廊的方案数为 %d。", numberOfWays(s));
+    printf("划分走廊的方案数为 %d。", NumberOfWays(s));
 }
 
 int generateRandomNum(int low, int high)
@@ -83,7 +83,7 @@ void printString(string s)
     printf("%s\n", s.c_str());
 }
 
-int numberOfWays(string corridor)
+int NumberOfWays(string corridor)
 {
     int n = corridor.size();
     int numS = 0;
