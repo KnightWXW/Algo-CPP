@@ -1,6 +1,12 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <unordered_map>
 
-
-
+using namespace std;
 
 //      Huawei: 结果高效对比
 

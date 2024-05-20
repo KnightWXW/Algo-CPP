@@ -39,4 +39,48 @@ using namespace std;
 //          0 <= opeartion[i][0] <= 1
 //          0 < opeartion[i][1] < num - 1
 
+void print2DVecElement(vector<vector<int>> vec);
+void printVecElement(vector<string> vec);
+
 vector<int> CheckConnecttivity(int num, vector<vector<int>> operations);
+
+int main()
+{
+    int num1 = 5;
+    vector<vector<int>> vec1 = {{0, 2}, {0, 1}, {1, 2}, {0, 2}, {0, 1}};
+    print2DVecElement(vec1);
+    vector<int> ans1 = CheckConnecttivity(num1, vec1);
+    printf("结果序列为 %d\n", ans1);
+
+    int num2 = 6;
+    vector<vector<int>> vec2 = {{1, 1}, {0, 4}, {0, 1}, {1, 4}, {1, 1}, {0, 4}};
+    print2DVecElement(vec2);
+    vector<int> ans2 = CheckConnecttivity(num2, vec2);
+    printf("结果序列为 %d\n", ans2);
+}
+
+void print2DVecElement(vector<vector<int>> vec)
+{
+    for (int i = 0; i < vec.size(); i++)
+    {
+        for (int j = 0; j < vec[0].size(); j++)
+        {
+            printf("%d\t", vec[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void printVecElement(vector<string> vec)
+{
+    for (int i = 0; i < vec.size(); i++)
+    {
+        printf("%s ", vec[i]);
+    }
+    printf("\n");
+}
+
+vector<int> CheckConnecttivity(int num, vector<vector<int>> operations)
+{
+    
+}
