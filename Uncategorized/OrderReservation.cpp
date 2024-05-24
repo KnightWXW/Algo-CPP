@@ -51,7 +51,7 @@ using namespace std;
 int OrderReservation(int interval, const vector<vector<int>> &orders);
 
 int main(){
-
+    
 }
 
 int OrderReservation(int interval, const vector<vector<int>> &orders){
