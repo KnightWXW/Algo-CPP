@@ -1,6 +1,11 @@
+#include <stdio.h>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+#include <unordered_set>
+#include <unordered_map>
 
-
-
+using namespace std;
 
 //      面试题 17.07. 婴儿名字
 

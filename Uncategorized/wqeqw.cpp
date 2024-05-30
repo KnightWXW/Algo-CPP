@@ -1,6 +1,11 @@
+#include <stdio.h>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+#include <unordered_set>
+#include <unordered_map>
 
-
-
+using namespace std;
 
 //      有一批指示灯，放在正方形的测试仪器board上进行测试,
 //      board[i][j]表示第i行第j列位置上指示灯的型号，

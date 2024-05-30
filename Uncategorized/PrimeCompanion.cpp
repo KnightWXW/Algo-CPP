@@ -1,5 +1,11 @@
+#include <stdio.h>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+#include <unordered_set>
+#include <unordered_map>
 
-
+using namespace std;
 
 //      Huawei 素数伴侣
 

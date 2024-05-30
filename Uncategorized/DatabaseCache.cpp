@@ -7,7 +7,6 @@
 
 using namespace std;
 
-
 //      Huawei: 数据库缓存
 
 //      缓存是一种提高数据库查询效率的手段，试用训练数据进行模拟访问，以对缓存机制进行优化。
@@ -26,13 +25,12 @@ int DatabaseCache(vector<int> data, int cache);
 
 int main()
 {
-    int n = generateRandomNum(1, 30);
-    int cache = generateRandomNum(1, 20);
-    vector<int> vec = generateRandomVec(1, 100, n);
+    int n = generateRandomNum(1, 20);
+    int cache = generateRandomNum(1, 10);
+    vector<int> vec = generateRandomVec(1, 10, n);
     printVecElement(vec);
     int ans_A = DatabaseCache(vec, cache);
-    printf("能以递增顺序显示卡牌的牌组顺序为: \n");
-    printVecElement(ans_A);
+    printf("缓存大小为 %d 时, \n最少的数据库访问次数为: %d\n", cache, ans_A);
 }
 
 int generateRandomNum(int low, int high)
@@ -65,5 +63,19 @@ vector<int> generateRandomVec(int low, int high, int len)
 int DatabaseCache(vector<int> data, int cache)
 {
     int l = data.size();
-    
+    unordered_set<int> hset;
+    int ans = 0;
+    for (int i = 0; i < l; i++)
+    {
+        if (hset.find(data[i]) == hset.end())
+        {
+            if (hset.size() >= cache)
+            {
+                hset.erase(*hset.begin());
+            }
+            hset.insert(data[i]);
+            ans++;
+        }
+    }
+    return ans;
 }

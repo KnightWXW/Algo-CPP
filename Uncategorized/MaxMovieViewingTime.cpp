@@ -1,5 +1,11 @@
+#include <stdio.h>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+#include <unordered_set>
+#include <unordered_map>
 
-
+using namespace std;
 
 //      小红书 最长观影时间
 
