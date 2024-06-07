@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <numeric>
+#include <unordered_map>
 
 using namespace std;
 
@@ -70,28 +71,91 @@ void printVec(vector<int> &vec)
 class FlowChartSystem
 {
 public:
+    unordered_map<int, int> nodeMap;
+    // unordered_map<nodeId, nodeType>
+    unordered_map<int, pair<int, int>> connectMap;
+    // unordered_map<connectId, pair<startNodeId, endNodeIdnodeId>>
+
     FlowChartSystem()
     {
     }
 
     bool AddNode(int nodeId, int nodeType)
     {
+        if (nodeMap.find(nodeId) != nodeMap.end())
+        {
+            return false;
+        }
+        nodeMap[nodeId] = nodeType;
+        return true;
     }
 
     bool AddConnection(int connectId, int startNodeId, int endNodeId)
     {
+        if (connectMap.find(connectId) != connectMap.end())
+        {
+            return false;
+        }
+        if (nodeMap.find(startNodeId) == nodeMap.end() || nodeMap.find(endNodeId) == nodeMap.end() || startNodeId == endNodeId)
+        {
+            return false;
+        }
+        connectMap[connectId] = make_pair(startNodeId, endNodeId);
+        return true;
     }
 
     bool RemoveConnection(int connectId)
     {
+        if (connectMap.find(connectId) == connectMap.end())
+        {
+            return false;
+        }
+        connectMap.erase(connectId);
+        return true;
     }
 
     bool RemoveNode(int nodeId)
     {
+        if (nodeMap.find(nodeId) == nodeMap.end())
+        {
+            return false;
+        }
+        nodeMap.erase(nodeId);
+        vector<int> connArray;
+        for (auto it = connectMap.begin(); it != connectMap.end(); it++)
+        {
+            if (get<0>(it->second) == nodeId || get<1>(it->second) == nodeId)
+            {
+                connArray.push_back(it->first);
+            }
+        }
+        for (int i = 0; i < connArray.size(); i++)
+        {
+            connectMap.erase(connArray[i]);
+        }
+        return true;
     }
 
     vector<int> Query(int nodeId)
     {
+        vector<int> ans;
+        for (auto it = nodeMap.begin(); it != nodeMap.end(); it++)
+        {
+            if (it->first != nodeId && it->second == 1)
+            {
+                ans.push_back(it->first);
+            }
+        }
+        for (auto it = connectMap.begin(); it != connectMap.end(); it++)
+        {
+            if (get<0>(it->second) == nodeId)
+            {
+                ans.push_back(get<1>(it->second));
+            }
+        }
+        sort(ans.begin(), ans.end());
+        ans.erase(unique(ans.begin(), ans.end()), ans.end());
+        return ans;
     }
 };
 
@@ -99,37 +163,48 @@ int main()
 {
     FlowChartSystem *flowChartSystem = new FlowChartSystem();
     bool a1 = flowChartSystem->AddNode(100, 0);
-    printf("添加节点结果为 %d\n", a1);
+    printf("添加节点结果为\n");
+    printBool(a1);
     vector<int> q1 = flowChartSystem->Query(100);
     printf("查询节点结果为: \n");
     printVec(q1);
     bool a2 = flowChartSystem->AddNode(101, 1);
-    printf("添加节点结果为 %d\n", a2);
+    printf("添加节点结果为\n");
+    printBool(a2);
     bool a3 = flowChartSystem->AddNode(102, 1);
-    printf("添加节点结果为 %d\n", a3);
+    printf("添加节点结果为\n");
+    printBool(a3);
     bool a4 = flowChartSystem->AddNode(101, 1);
-    printf("添加节点结果为 %d\n", a4);
+    printf("添加节点结果为\n");
+    printBool(a4);
     bool a5 = flowChartSystem->AddNode(103, 0);
-    printf("添加节点结果为 %d\n", a5);
+    printf("添加节点结果为\n");
+    printBool(a5);
     vector<int> q2 = flowChartSystem->Query(103);
     printf("查询节点结果为: \n");
     printVec(q2);
     bool a6 = flowChartSystem->AddConnection(20, 100, 102);
-    printf("添加连接结果为 %d\n", a6);
+    printf("添加链接结果为\n");
+    printBool(a6);
     bool a7 = flowChartSystem->AddConnection(21, 101, 101);
-    printf("添加连接结果为 %d\n", a7);
+    printf("添加链接结果为\n");
+    printBool(a7);
     bool a8 = flowChartSystem->AddConnection(10, 100, 102);
-    printf("添加连接结果为 %d\n", a8);
+    printf("添加链接结果为\n");
+    printBool(a8);
     vector<int> q3 = flowChartSystem->Query(100);
     printf("查询节点结果为: \n");
     printVec(q3);
-    bool r1 = flowChartSystem->removeConnection(20);
-    printf("删除连接结果为 %d\n", r1);
+    bool r1 = flowChartSystem->RemoveConnection(20);
+    printf("删除节点结果为\n");
+    printBool(r1);
     vector<int> q4 = flowChartSystem->Query(102);
     printf("查询节点结果为: \n");
     printVec(q4);
-    bool r2 = flowChartSystem->removeNode(102);
-    printf("删除节点结果为 %d\n", r2);
-    bool r3 = flowChartSystem->removeNode(102);
-    printf("删除节点结果为 %d\n", r3);
+    bool r2 = flowChartSystem->RemoveNode(102);
+    printf("删除点结果为\n");
+    printBool(r2);
+    bool r3 = flowChartSystem->RemoveNode(102);
+    printf("删除节点结果为\n");
+    printBool(r3);
 }
