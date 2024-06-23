@@ -18,9 +18,11 @@ using namespace std;
 //                  在日期date为存单storeId租赁storeType类型的一个储藏室，
 //                  并存放物品 storeDays 天。
 //                  若有空间则存储成功，则须支付 storeDays 的费用
-//                  (按照实际储藏室的类型进行计算：(天数 * 每日租赁价格)，返回该费用
+//                  (按照实际储藏室的类型进行计算：天数 * 每日租赁价格)，返回该费用
+//                  当常温储藏空间不足时，可以使用空闲的冷藏储藏室存储，反之不可以
+//                  date 为 “租赁起始日期”，日期超过date + storeDays 时开始过期；
 //                  若无空间则不做任何处理，并返回-1
-//                  系统保证storeId参数全局唯一
+//                  系统保证 storeId 参数全局唯一
 //                  storeType 为 0 表示 冷藏, 1 表示 常温
 //          int Retrieve(int date, int storeId):
 //                  在日期date, 客户取出存单 storeId (存单一定存在且未被提取)对应的物品：
@@ -54,96 +56,87 @@ void printVec(vector<int> &vec)
 class StoreSystem
 {
 public:
-    int coldStorageNum = 0;
-    int coldStoragePrice = 0;
-    int normalStorageNum = 0;
-    int normalStoragePrice = 0;
-    int delay = 0;
-    int storeStatus = 1;
-
-    unordered_map<int, tuple<int, int, int, int>> hmap;
+    int delay;                                     // 时延
+    unordered_map<int, pair<int, int>> orderMap;   // 当前订单表
+    unordered_map<int, pair<int, int>> takeoutMap; // 取出订单表
+    unordered_map<int, pair<int, int>> cleanupMap; // 清空订单表
+    unordered_map<int, int> priceMap;              // 价格表
+    unordered_map<int, int> storagesMap;           // 存储表
 
     StoreSystem(int coldStorageNum, int coldStoragePrice,
                 int normalStorageNum, int normalStoragePrice, int delay)
     {
-        this->coldStorageNum = coldStorageNum;
-        this->coldStoragePrice = coldStoragePrice;
-        this->normalStorageNum = normalStorageNum;
-        this->coldStoragePrice = normalStoragePrice;
+        this->priceMap = {{0, coldStoragePrice}, {1, normalStoragePrice}};
+        this->storagesMap = {{0, coldStorageNum}, {1, normalStorageNum}};
         this->delay = delay;
+    }
+
+    void Update(int date)
+    {
+        for (auto it = orderMap.begin(); it != orderMap.end(); it++)
+        {
+            int id = it->first;
+            int type = it->second.first;
+            int d = it->second.second;
+            if (date > d + this->delay)
+            {
+                cleanupMap[id] = make_pair(type, d);
+                orderMap.erase(id);
+                storagesMap[type]++;
+            }
+        }
     }
 
     int Store(int date, int storeId, int storeType, int storeDays)
     {
-        int storeStatus = 1;
-        printf("333 / %d / %d / %d / %d / %d / \n", this->coldStorageNum,
-        this->coldStoragePrice ,
-        this->normalStorageNum ,
-        this->coldStoragePrice ,
-        this->delay);
-        if (storeType == 0)
+        Update(date);
+        if (orderMap.find(storeId) != orderMap.end())
         {
-            if (this->coldStorageNum > 0)
-            {
-                hmap[storeId] = make_tuple(storeType, date, storeDays, storeStatus);
-                printf("22222 %d * %d \n", storeDays, this->coldStoragePrice);
-                return storeDays * this->coldStoragePrice;
-            }
-            else
-            {
-                return -1;
-            }
+            return -1;
         }
-        else
+        if (storagesMap[storeType] <= 0 && storeType == 0)
         {
-            if (this->normalStorageNum > 0)
-            {
-                hmap[storeId] = make_tuple(storeType, date, storeDays, storeStatus);
-                printf("22222 %d * %d \n", storeDays, this->normalStoragePrice);
-                return storeDays * this->normalStoragePrice;
-            }
-            else
-            {
-                return -1;
-            }
+            return -1;
         }
+        if (storagesMap[0] <= 0 && storagesMap[1] <= 0)
+        {
+            return -1;
+        }
+        if (storagesMap[storeType] <= 0)
+        {
+            storeType = 0;
+        }
+        int price = priceMap[storeType];
+        orderMap[storeId] = make_pair(storeType, date + storeDays);
+        storagesMap[storeType]--;
+        return storeDays * price;
     }
 
     int Retrieve(int date, int storeId)
     {
-        auto tem = hmap[storeId];
-        int storeType = get<0>(tem);
-        int storeDate = get<1>(tem);
-        int storeDays = get<2>(tem);
-        if (date <= storeDate + storeDays)
+        Update(date);
+        auto it = orderMap.find(storeId);
+        if (it == orderMap.end())
         {
-            get<3>(hmap[storeId]) = 0;
-            return 0;
-        }
-        else if ((date > (storeDate + storeDays)) && (date <= (storeDate + storeDays + delay)))
-        {
-            int d = (storeDate + storeDays + delay) - date;
-            int price = storeType == 0 ? this->coldStoragePrice : this->normalStoragePrice;
-            get<3>(hmap[storeId]) = 0;
-            printf("11111  %d * %d \n", d, price);
-            return d * price;
-        }
-        else
-        {
-            get<3>(hmap[storeId]) = 2;
             return -1;
         }
+        int type = it->second.first;
+        int lastday = it->second.second;
+        int price = priceMap[type];
+        takeoutMap.insert(*it);
+        orderMap.erase(it);
+        storagesMap[type]++;
+        if (lastday >= date)
+        {
+            return 0;
+        }
+        return price * (date - lastday);
     }
 
     vector<int> Query(int date)
     {
-        vector<int> ans(3, 0);
-        for (auto it = hmap.begin(); it != hmap.end(); it++)
-        {
-            int status = get<3>(it->second);
-            ans[status]++;
-        }
-        return ans;
+        Update(date);
+        return {takeoutMap.size(), orderMap.size(), cleanupMap.size()};
     }
 };
 
