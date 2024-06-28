@@ -1,8 +1,9 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
 
-
-
-
-
+using namespace std;
 
 //      Huawei: 二进制差异数
 
@@ -15,16 +16,74 @@
 //      A与B的差异值十进制等于6，相似值十进制等于1，满足条件。
 //      输入输出
 //          输入
-//              一个n接下来个正整数
+//              一个n 接下来 n个正整数
 //          输出
 //              满足差异值大于相似值的对数
 //      样例1
 //          输入
 //              4
-//              4352
+//              4 3 5 2
 //          输出：
 //              4
-//          说明：
-//              4: 满足条件的分别是(0,1)(0,3)(1,2)(2,3)，共4对。
 
-int BinaryDiffNum(int a, int b);
+int generateRandomNum(int low, int high);
+vector<int> generateRandomVec(int low, int high, int len);
+void printVecElement(vector<int> vec);
+
+int BinaryDiffNum(vector<int> arr);
+
+int main()
+{
+    // int n = generateRandomNum(0, 100);
+    // vector<int> arr = generateRandomVec(0, 100, n);
+    // printf("数组为： \n");
+    // printVecElement(arr);
+    // int ans = BinaryDiffNum(arr);
+    // printf("满足差异值大于相似值的对数为：%d \n", ans);
+    vector<int> arr1 = {4, 3, 5, 2};
+    int ans1 = BinaryDiffNum(arr1);
+    printf("满足差异值大于相似值的对数为：%d \n", ans1);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((int)time(0));
+    return (rand() % (high - low + 1)) + low;
+}
+
+vector<int> generateRandomVec(int low, int high, int len)
+{
+    srand((int)time(0));
+    vector<int> vec;
+    for (int i = 0; i < len; i++)
+    {
+        int v = (rand() % (high - low + 1)) + low;
+        vec.push_back(v);
+    }
+    return vec;
+}
+
+void printVecElement(vector<int> vec)
+{
+    for (int i = 0; i < vec.size(); i++)
+    {
+        printf("%d ", vec[i]);
+    }
+    printf("\n");
+}
+
+int BinaryDiffNum(vector<int> arr)
+{
+    int l = arr.size();
+    int ans = 0;
+    for (int i = 0; i < l; i++)
+    {
+        for (int j = i + 1; j < l; j++)
+        {
+            int a = (arr[i] ^ arr[j]);
+            int b = (arr[i] & arr[j]);
+            ans += a > b ? 1 : 0;
+        }
+    }
+    return ans;
+}
