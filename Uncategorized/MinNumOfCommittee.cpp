@@ -32,6 +32,6 @@ using namespace std;
 //          输出：
 //              3
 
+int MinNumOfCommittee(vector<vector<int>> arr);
 
 
-MinNumOfCommittee

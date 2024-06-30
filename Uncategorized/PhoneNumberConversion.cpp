@@ -47,8 +47,6 @@ void printStringVector(vector<string> vec);
 
 bool JudgeChineseWord(string s);
 vector<string> SplitWord(string s);
-string ConvertCtoE(vector<string> vec);
-string ConvertEtoC(vector<string> vec);
 string PhoneNumberConversion(string phone);
 
 int main()
@@ -82,80 +80,55 @@ void printStringVector(vector<string> vec)
     }
 }
 
-bool JudgeChineseWord(string s)
-{
-    if (s.find("Yi") != s.npos || s.find("Er") != s.npos || s.find("San") != s.npos ||
-        s.find("Si") != s.npos || s.find("Wu") != s.npos || s.find("Liu") != s.npos ||
-        s.find("Qi") != s.npos || s.find("Ba") != s.npos || s.find("Jiu") != s.npos ||
-        s.find("Ling") != s.npos)
-    {
-        return true;
-    }
-    return false;
-}
-
 vector<string> SplitWord(string s)
 {
     vector<string> ans;
-    int pre = 0;
-    for (int i = 1; i < sizeof(s); i++)
+    for (int i = 0; i < sizeof(s);)
     {
+        string tem = "";
         if (isupper(s[i]))
         {
-            string tem = s.substr(pre, i - pre);
-            pre = i;
+            tem += s[i++];
+            while (!isupper(s[i]) && i < s.size())
+            {
+                tem += s[i++];
+            }
             ans.push_back(tem);
+            continue;
         }
-    }
-    ans.push_back(s.substr(pre, sizeof(s) - pre));
-    return ans;
-}
-
-string ConvertCtoE(vector<string> vec)
-{
-    unordered_map<string, string> hmap = {{"Ling", "Zero"}, {"Yi", "One"}, {"Er", "Two"}, {"San", "Three"}, {"Si", "Four"}, {"Wu", "Five"}, {"Liu", "Six"}, {"Qi", "Seven"}, {"Ba", "Eight"}, {"Jiu", "Nine"}};
-    string ans = "";
-    for (int i = 0; i < vec.size(); i++)
-    {
-        ans += hmap[vec[i]];
-    }
-    return ans;
-}
-
-string ConvertEtoC(vector<string> vec)
-{
-    unordered_map<string, string> hmap = {{"Zero", "Ling"}, {"One", "Yi"}, {"Two", "Er"}, {"Three", "San"}, {"Four", "Si"}, {"Five", "Wu"}, {"Six", "Liu"}, {"Seven", "Qi"}, {"Eight", "Ba"}, {"Nine", "Jiu"}};
-    string ans = "";
-    for (int i = 0; i < vec.size(); i++)
-    {
-        if (vec[i] == "Double")
-        {
-            ans += hmap[vec[i + 1]];
-            i++;
-        }
-        else
-        {
-            ans += hmap[vec[i]];
-        }
+        i++;
     }
     return ans;
 }
 
 string PhoneNumberConversion(string phone)
 {
+    unordered_map<string, string> CtoEmap = {{"Ling", "Zero"}, {"Yi", "One"}, {"Er", "Two"}, {"San", "Three"}, {"Si", "Four"}, {"Wu", "Five"}, {"Liu", "Six"}, {"Qi", "Seven"}, {"Ba", "Eight"}, {"Jiu", "Nine"}};
+    unordered_map<string, string> EtoCmap = {{"Zero", "Ling"}, {"One", "Yi"}, {"Two", "Er"}, {"Three", "San"}, {"Four", "Si"}, {"Five", "Wu"}, {"Six", "Liu"}, {"Seven", "Qi"}, {"Eight", "Ba"}, {"Nine", "Jiu"}};
     int l = phone.size();
+    string ans = "";
     vector<string> vec = SplitWord(phone);
-    if (JudgeChineseWord(phone))
+    for (int i = 0; i < vec.size(); i++)
     {
-        // if (phone.find("Double"))
-        // {
-        //     return "ERROR";
-        // }
-        printf("8956\n");
-        return ConvertCtoE(vec);
+        if (CtoEmap.find(vec[i]) != CtoEmap.end())
+        {
+            ans += CtoEmap[vec[i]];
+        }
+        else if (EtoCmap.find(vec[i]) != EtoCmap.end())
+        {
+            ans += EtoCmap[vec[i]];
+        }
+        else if (vec[i] == "Double" && (i + 1) < vec.size())
+        {
+            if (EtoCmap.find(vec[i + 1]) != EtoCmap.end())
+            {
+                ans += EtoCmap[vec[i + 1]];
+            }
+            else
+            {
+                return "Error";
+            }
+        }
     }
-    else
-    {
-        return ConvertEtoC(vec);
-    }
+    return ans;
 }
