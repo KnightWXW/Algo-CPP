@@ -18,12 +18,33 @@ using namespace std;
 //      示例1
 //          输入 5, 3
 //          输出 5
-//          说明 F(m,3)≥5，最小的m为5。             
+//          说明 F(m,3)≥5，最小的m为5。
 //      示例2
 //          输入 10, 10
 //          输出 17
 //          说明 十进制下1∼9只有一个1，10,11,12,13,14,15,16,17，一共10个1。
-//               所以最小的m=17。 
+//               所以最小的m=17。
 //      备注: 1 ≤ n ≤ 10^9,2 ≤ k ≤ 10^9。
 
-int SumNumberOfTensInKBase(int k, int m);
+int generateRandomNum(int low, int high);
+
+int SumNumberOfTensInKBase(int k, int n);
+
+int main()
+{
+    int k = generateRandomNum(1, 100);
+    int n = generateRandomNum(1, 100);
+    int ans = SumNumberOfTensInKBase(k, n);
+    printf("%d 进制下 1∼%d 的元素中,\n F(%d, m) ≥ %d，最小的 m 为：\n"; k, n, k, n, ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((int)time(0));
+    return (rand() % (high - low + 1)) + low;
+}
+
+int SumNumberOfTensInKBase(int k, int m)
+{
+    
+}

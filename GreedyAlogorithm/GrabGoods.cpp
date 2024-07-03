@@ -25,7 +25,7 @@ int GrabGoods(vector<int> goods);
 int main()
 {
     int n = generateRandomNum(0, 50);
-    vector<int> vec = generateRandomVec(1, 5, n);
+    vector<int> vec = generateRandomVec(1, 3, n);
     printVecElement(vec);
     int ans_A = GrabGoods(vec);
     printf("抓取完货物的次数为 %d\n", ans_A);
@@ -58,14 +58,54 @@ void printVecElement(vector<int> vec)
     printf("\n");
 }
 
+// 贪心：
+// Time: O(N)
+// Space: O(N)
 int GrabGoods(vector<int> goods)
 {
-    int l = goods.size();
+    vector<int> arr;
+    vector<int> *cur = &goods;
+    vector<int> *next = &arr;
+    vector<int> *tem;
     int ans = 0;
-    stack<pair<int, int>> stk;
-    for (int i = l - 1; i >= 0; i--)
+
+    while (cur->size() != 0)
     {
-        stk.push(goods[i]);
+        int preEle = (*cur)[0];
+        int cnt = 1;
+        int maxCnt = 1;
+        int index = 0;
+        for (int i = 1; i < cur->size(); i++)
+        {
+            if ((*cur)[i] == preEle)
+            {
+                cnt++;
+                continue;
+            }
+            else
+            {
+                if (cnt > maxCnt)
+                {
+                    index = i - cnt;
+                    maxCnt = cnt;
+                }
+                preEle = (*cur)[i];
+                cnt = 1;
+            }
+        }
+        ans++;
+        next->resize(0);
+        for (int i = 0; i < index; i++)
+        {
+            next->push_back((*cur)[i]);
+        }
+        for (int i = index + maxCnt; i < cur->size(); i++)
+        {
+            next->push_back((*cur)[i]);
+        }
+        tem = cur;
+        cur = next;
+        next = tem;
     }
-    while
+    return ans;
 }
