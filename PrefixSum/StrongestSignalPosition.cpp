@@ -25,12 +25,12 @@ int main()
     vector<vector<int>> vec1 = {{1, 1}, {3, -1}, {4, 1}, {6, -1}, {7, 1}, {9, -1}};
     print2DVecElement(vec1);
     int ans1 = StrongestSignalPosition(vec1);
-    printf("信号最强的位置是 %d", ans1);
+    printf("信号最强的位置是 %d\n", ans1);
 
     vector<vector<int>> vec2 = {{1, -1}, {3, -1}, {4, 1}, {6, -1}, {7, 1}, {9, 1}};
     print2DVecElement(vec2);
     int ans2 = StrongestSignalPosition(vec2);
-    printf("信号最强的位置是 %d", ans2);
+    printf("信号最强的位置是 %d\n", ans2);
 }
 
 void print2DVecElement(vector<vector<int>> vec)
@@ -63,17 +63,13 @@ int StrongestSignalPosition(vector<vector<int>> arr)
     int l = arr.size();
     int ans = 0;
     int maxPos = 0;
+    int tag = 0;
     for (int i = 0; i < l; i++)
     {
         maxPos = max(maxPos, arr[i][0]);
     }
-    printf("//// %d\n", maxPos);
-    vector<int> flag = vector<int>(maxPos, 0);
-    vector<int> vecE = vector<int>(maxPos, 0);
-    vector<int> vecW = vector<int>(maxPos, 0);
-    printVecElement(flag);
-    printVecElement(vecE);
-    printVecElement(vecW);
+    vector<int> flag = vector<int>(maxPos + 1, 0);
+    vector<int> vec = vector<int>(maxPos + 1, 0);
     for (int i = 0; i < l; i++)
     {
         if (arr[i][1] == 1)
@@ -85,35 +81,31 @@ int StrongestSignalPosition(vector<vector<int>> arr)
             flag[arr[i][0]] = -1;
         }
     }
-    printVecElement(flag);
     // 东向
-    vecE[0] = flag[0];
-    for (int i = 1; i < maxPos; i++)
+    tag = flag[0];
+    vec[0] = tag;
+    for (int i = 1; i <= maxPos; i++)
     {
-        vecE[i] = vecE[i - 1];
         if (flag[i] == 1)
         {
-            vecE[i]++;
+            tag++;
         }
+        vec[i] = tag;
     }
-    printVecElement(vecE);
-    
     // 西向
-    vecW[maxPos - 1] = flag[maxPos - 1];
-    for (int i = maxPos - 2; i >= 0; i--)
+    tag = flag[maxPos] == -1 ? -1 : 0;
+    vec[maxPos] += tag;
+    for (int i = maxPos - 1; i >= 0; i--)
     {
-        vecW[i] = vecW[i + 1];
         if (flag[i] == -1)
         {
-            vecW[i]--;
+            tag--;
         }
+        vec[i] += tag;
     }
-    printVecElement(vecW);
-    for (int i = 0; i < maxPos; i++)
+    for (int i = 0; i <= maxPos; i++)
     {
-        flag[i] = abs(vecE[i] + vecW[i]);
-        printf(":  %d  \n", flag[i]);
-        ans = max(abs(flag[i]), ans);
+        ans = max(abs(vec[i]), ans);
     }
     return ans;
 }

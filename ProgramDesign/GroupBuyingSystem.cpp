@@ -31,17 +31,53 @@ using namespace std;
 
 class GroupBuyingSystem
 {
+public:
+    int groupSize;
+    int groupIndex;
+    unordered_map<int, vector<int>> hmap;
+
     GroupBuyingSystem(int eachSize)
     {
+        this->groupSize = eachSize;
+        this->groupIndex = 0;
     }
+
     void Join(int id)
     {
+        for (int i = 0; i < this->groupIndex; i++)
+        {
+            if (hmap[i].size() < this->groupSize)
+            {
+                hmap[i].push_back(id);
+                return;
+            }
+        }
+        hmap[this->groupIndex++] = {id};
+        return;
     }
+
     int RemoveFrom(int groupIndex)
     {
+        int id = hmap[groupIndex].back();
+        hmap[groupIndex].pop_back();
+        // hmap[groupIndex].erase(hmap[groupIndex].size() - 1);
+        return id;
     }
+
     int RemoveLast(void)
     {
+        int ans = 0;
+        for (int i = this->groupIndex; i >= 0; i--)
+        {
+            if (hmap[i].size() != 0)
+            {
+                ans = hmap[i][hmap[i].size() - 1];
+                hmap[i].pop_back();
+                // hmap[i].erase(hmap[i].size() - 1);
+                return ans;
+            }
+        }
+        return -1;
     }
 };
 
@@ -71,5 +107,5 @@ int main()
     int a7 = groupBuyingSystem1->RemoveLast();
     printf("删除拼团结果为：%d\n", a7); // 1
     int a8 = groupBuyingSystem1->RemoveLast();
-    printf("删除拼团结果为：%d\n", a8); //-1
+    printf("删除拼团结果为：%d\n", a8); // -1
 }
