@@ -56,13 +56,71 @@ void printBool(bool b)
 
 class BookingSystem
 {
-    AddLab(int labId, int startTime, int endTime)
+
+    struct Lab
+    {
+        int labid;
+        vector<pair<int, int>> times;
+        Lab(int id)
+        {
+            this.id = labid;
+        }
+    };
+    publc : vector<Lab> vec;
+    map<int, vector<int>> hmap;
+
+    int FindLabId(int labid)
+    {
+        for (int i = 0; i < vec.size(); i++)
+        {
+            if (vec[i].labid == labid)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    bool IsCross(pair<int, int> p, int fromTime, int toTime)
+    {
+        if (p.first >= toTime || p.second <= fromTime)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    void MergeBook(vector<pair<int, int>> vec)
+    {
+        sort(vec.begin(), vec.end(), [](pair<int, int> &a, pair<int, int> &b)
+             { return a.first <= b.first; });
+        for (auto it = vec.begin() + 1; it != vec.end();)
+        {
+            if (it->first == (it - 1)->second)
+            {
+                (it - 1)->second = it->second;
+                vec.erase(it);
+            }
+            else
+            {
+                it++;
+            }
+        }
+        return;
+    }
+
+    bool AddLab(int labId, int startTime, int endTime)
     {
     }
-    BookTime(int recordId, int fromTime, int toTime)
+
+    int BookTime(int recordId, int fromTime, int toTime)
     {
     }
-    CancelBooking(int recordId)
+
+    bool CancelBooking(int recordId)
     {
     }
 };

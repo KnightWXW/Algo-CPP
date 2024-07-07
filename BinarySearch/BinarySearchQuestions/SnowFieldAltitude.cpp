@@ -2,8 +2,8 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
-#include <unordered_set>
-#include <unordered_map>
+#include <algorithm>
+#include <math.h>
 
 using namespace std;
 
@@ -32,12 +32,18 @@ int SnowFieldAltitude(vector<int> altitude, int difference);
 
 int main()
 {
-    int n = generateRandomNum(0, 20);
-    int dif = generateRandomNum(0, 15);
-    vector<int> vec = generateRandomVec(0, 10000, n);
+    int n = generateRandomNum(0, 10);
+    int dif = generateRandomNum(0, 10);
+    vector<int> vec = generateRandomVec(0, 100, n);
     printVecElement(vec);
     int ans = SnowFieldAltitude(vec, dif);
     printf("difference 为 %d 时，雪场经营者改造需要投入的最少成本是为 %d。\n", dif, ans);
+
+    int dif2 = 3;
+    vector<int> vec2 = {5, 1, 4, 3, 8};
+    printVecElement(vec2);
+    int ans2 = SnowFieldAltitude(vec2, dif2);
+    printf("difference 为 %d 时，雪场经营者改造需要投入的最少成本是为 %d。\n", dif2, ans2);
 }
 
 int generateRandomNum(int low, int high)
@@ -69,5 +75,33 @@ vector<int> generateRandomVec(int low, int high, int len)
 
 int SnowFieldAltitude(vector<int> altitude, int difference)
 {
-    
+    int l = altitude.size();
+    int ans = INT_MAX;
+    int minVal = *min_element(altitude.begin(), altitude.end());
+    int maxVal = *max_element(altitude.begin(), altitude.end());
+    printf("%d  ^^^^%^^  %d  \n", minVal, maxVal);
+    int low = minVal + difference;
+    int high = maxVal - difference;
+    if (low >= high)
+    {
+        return 0;
+    }
+    printf("%d  /////  %d  \n", low, high);
+    for (int i = low; i <= high; i++)
+    {
+        int sum = 0;
+        for (int j = 0; j < l; j++)
+        {
+            if ((altitude[j] >= i - difference) && (altitude[j] <= i + difference))
+            {
+                continue;
+            }
+            else
+            {
+                sum += (altitude[j] - i) * (altitude[j] - i);
+            }
+        }
+        ans = min(ans, sum);
+    }
+    return ans;
 }
