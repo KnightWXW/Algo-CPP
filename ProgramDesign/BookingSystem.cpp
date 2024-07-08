@@ -18,7 +18,7 @@ using namespace std;
 //              增加编号为 labId 的实验室，并开放时段 (左闭右开)。
 //              若系统中不存在该实验室，则将该实验室添加到系统中，
 //                  并设置开放时段为[startTime, endTime], 返回true。
-//              若系统中不存在该实验室，如果时段[startTime, endTime]
+//              若系统中存在该实验室，如果时段[startTime, endTime]
 //                  与该实验室已有开放时段存在重叠，则不做操作并返回false
 //                  否则，将该实验室新增开放时段[startTime, endTime], 并返回true
 //          BookTime(int recordId, int fromTime, int toTime):
@@ -56,17 +56,18 @@ void printBool(bool b)
 
 class BookingSystem
 {
-
     struct Lab
     {
         int labid;
         vector<pair<int, int>> times;
         Lab(int id)
         {
-            this.id = labid;
+            this->labid = id;
         }
     };
-    publc : vector<Lab> vec;
+
+public:
+    vector<Lab> vec;
     map<int, vector<int>> hmap;
 
     int FindLabId(int labid)
@@ -112,29 +113,93 @@ class BookingSystem
         return;
     }
 
+    bool InBooking(int labId, int startTime, int endTime)
+    {
+        for (auto it = hmap.begin(); it != hmap.end(); it++)
+        {
+            if (it->second[0] == labId)
+            {
+                auto tem = make_pair(it->second[1], it->second[2]);
+                if (IsCross(tem, startTime, endTime))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     bool AddLab(int labId, int startTime, int endTime)
     {
+        int id = FindLabId(labId);
+        if (id == -1)
+        {
+            Lab l = Lab(id);
+            l.times.push_back(make_pair(startTime, endTime));
+            vec.push_back(l);
+            return true;
+        }
+        else
+        {
+            bool f = false;
+            for (int i = 0; i < vec[id].times.size(); i++)
+            {
+                f = IsCross(vec[id].times[i], startTime, endTime);
+                if (f == true)
+                {
+                    return false;
+                }
+            }
+            vec[id].times.push_back(make_pair(startTime, endTime));
+            MergeBook(vec[id].times);
+            return true;
+        }
     }
 
     int BookTime(int recordId, int fromTime, int toTime)
     {
+        for (int i = 0; i < vec.size(); i++)
+        {
+
+            for (int j = 0; j < vec[i].times.size(); j++)
+            {
+                auto t = vec[i].times[j];
+                if (t.first <= fromTime && t.second >= toTime &&
+                    !InBooking(vec[i].labid, fromTime, toTime))
+                {
+                    vector<int> b = {vec[i].labid, fromTime, toTime};
+                    hmap[recordId] = b;
+                    return vec[i].labid;
+                }
+            }
+        }
+        return -1;
     }
 
     bool CancelBooking(int recordId)
     {
+        for (auto it = hmap.begin(); it != hmap.end(); it++)
+        {
+            if (it->first == recordId)
+            {
+                hmap.erase(recordId);
+                return true;
+            }
+        }
+        return false;
     }
 };
 
 int main()
 {
-    BookSystem *bookSystem = new BookSystem();
-    bool a1 = bookSystem->AddLib(2, 8, 17);
+    BookingSystem *bookSystem = new BookingSystem();
+    bool a1 = bookSystem->AddLab(2, 8, 17);
     printf("系统中添加 结果 为 :\n");
     printBool(a1);
-    bool a2 = bookSystem->AddLib(2, 2, 10);
+    bool a2 = bookSystem->AddLab(2, 2, 10);
     printf("系统中添加 结果 为 :\n");
     printBool(a2);
-    bool a3 = bookSystem->AddLib(2, 17, 30);
+    bool a3 = bookSystem->AddLab(2, 17, 30);
     printf("系统中添加 结果 为 :\n");
     printBool(a3);
     int b1 = bookSystem->BookTime(1, 9, 28);
@@ -142,7 +207,7 @@ int main()
     bool c1 = bookSystem->CancelBooking(1);
     printf("系统中删除 结果 为 :\n");
     printBool(c1);
-    bool a4 = bookSystem->AddLib(6, 1, 30);
+    bool a4 = bookSystem->AddLab(6, 1, 30);
     printf("系统中添加 结果 为 :\n");
     printBool(a4);
     int b2 = bookSystem->BookTime(13, 8, 27);
