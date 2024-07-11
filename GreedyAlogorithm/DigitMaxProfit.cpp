@@ -84,7 +84,7 @@ int DigitMaxProfit_A(vector<int> arr)
     return profit;
 }
 
-// 贪心：
+// 贪心：随时更新 最小花费 与 最大利润
 // Time: O(N)
 // Space: O(1)
 int DigitMaxProfit_B(vector<int> arr)

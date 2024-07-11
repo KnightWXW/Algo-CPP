@@ -134,7 +134,7 @@ public:
         int id = FindLabId(labId);
         if (id == -1)
         {
-            Lab l = Lab(id);
+            Lab l = Lab(labId);
             l.times.push_back(make_pair(startTime, endTime));
             vec.push_back(l);
             return true;
