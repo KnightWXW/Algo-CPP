@@ -22,12 +22,13 @@ int generateRandomNum(int low, int high);
 void print2DVecElement(vector<vector<int>> vec);
 vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col);
 
+int BinarySearchEfficientComparison(vector<int> arr, int num);
 vector<vector<int>> EfficientComparisonOfResults(vector<vector<int>> scores);
 
 int main()
 {
-    int row = generateRandomNum(1, 50);
-    vector<vector<int>> vec = generateRandom2DVec(1, 100, row, 2);
+    int row = generateRandomNum(1, 10);
+    vector<vector<int>> vec = generateRandom2DVec(1, 100, row, row);
     printf("二维数组元素为：\n");
     print2DVecElement(vec);
     vector<vector<int>> ans_A = EfficientComparisonOfResults(vec);
@@ -71,7 +72,71 @@ vector<vector<int>> generateRandom2DVec(int low, int high, int row, int col)
     return vec;
 }
 
+// 二分：查找数组中 >= num 的元素个数
+// Time：O(logN)
+// Space：O(1)
+int BinarySearchEfficientComparison(vector<int> arr, int num)
+{
+    int l = arr.size();
+    int left = 0;
+    int right = l - 1;
+    int ans = 0;
+    sort(arr.begin(), arr.end());
+    while (left <= right)
+    {
+        int mid = left + ((right - left) >> 1);
+        if (arr[mid] > num)
+        {
+            right = mid - 1;
+        }
+        else
+        {
+            left = mid + 1;
+        }
+    }
+    if (left >= arr.size())
+    {
+        return -1;
+    }
+    return left;
+}
+
 vector<vector<int>> EfficientComparisonOfResults(vector<vector<int>> scores)
 {
-    
+    int l = scores.size();
+    vector<vector<int>> ans(l, vector<int>(l, 0));
+    for (int i = 0; i < l; i++)
+    {
+        vector<int> arr = scores[i];
+        for (int j = 0; j < l; j++)
+        {
+            int index = BinarySearchEfficientComparison(arr, scores[i][j]);
+            int cnt = l - index;
+            if (index == -1)
+            {
+                cnt = 0;
+            }
+            ans[i][j] += cnt;
+        }
+    }
+
+    for (int j = 0; j < l; j++)
+    {
+        vector<int> arr(l, 0);
+        for (int i = 0; i < l; i++)
+        {
+            arr[i] = scores[i][j];
+        }
+        for (int i = 0; i < l; i++)
+        {
+            int index = BinarySearchEfficientComparison(arr, scores[i][j]);
+            int cnt = l - index;
+            if (index == -1)
+            {
+                cnt = 0;
+            }
+            ans[i][j] += cnt;
+        }
+    }
+    return ans;
 }

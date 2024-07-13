@@ -39,7 +39,7 @@ void DFSLetterCombinations_A(string digits, unordered_map<char, string> digitMap
 
 int main()
 {
-    int n = generateRandomNum(0, 4);
+    int n = generateRandomNum(0, 5);
     string str = generateRandomString(n);
     printf("数字的字符串为：");
     printString(str);

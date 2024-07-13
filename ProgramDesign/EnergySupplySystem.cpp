@@ -78,7 +78,7 @@ public:
             {
                 curSupply -= this->vec[i].second.first;
             }
-            else if (this->vec[i].second.first - curSupply <= min(curSupply, storeSupply))
+            else if (this->vec[i].second.first - curSupply <= min(this->curStore, storeSupply))
             {
                 this->curStore = this->curStore - this->vec[i].second.first + curSupply;
                 storeSupply = storeSupply - this->vec[i].second.first + curSupply;
@@ -88,7 +88,9 @@ public:
             {
                 break;
             }
-            if (curSupply > 0)
+            
+        }
+        if (curSupply > 0)
             {
                 if (curSupply >= this->storeRate)
                 {
@@ -99,7 +101,6 @@ public:
                     this->curStore = ((this->curStore + curSupply) > this->storeLimit) ? this->storeLimit : (this->curStore + curSupply);
                 }
             }
-        }
     }
 
     void Add(int time, int index, int consume, int priority)
