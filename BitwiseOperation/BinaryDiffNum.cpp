@@ -34,15 +34,12 @@ int BinaryDiffNum(vector<int> arr);
 
 int main()
 {
-    // int n = generateRandomNum(0, 100);
-    // vector<int> arr = generateRandomVec(0, 100, n);
-    // printf("数组为： \n");
-    // printVecElement(arr);
-    // int ans = BinaryDiffNum(arr);
-    // printf("满足差异值大于相似值的对数为：%d \n", ans);
-    vector<int> arr1 = {4, 3, 5, 2};
-    int ans1 = BinaryDiffNum(arr1);
-    printf("满足差异值大于相似值的对数为：%d \n", ans1);
+    int n = generateRandomNum(0, 100);
+    vector<int> arr = generateRandomVec(0, 100, n);
+    printf("数组为： \n");
+    printVecElement(arr);
+    int ans = BinaryDiffNum(arr);
+    printf("满足差异值大于相似值的对数为：%d \n", ans);
 }
 
 int generateRandomNum(int low, int high)

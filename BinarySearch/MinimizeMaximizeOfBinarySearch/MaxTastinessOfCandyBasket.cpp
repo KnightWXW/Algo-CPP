@@ -44,9 +44,9 @@ int MaximumTastiness(vector<int> &price, int k);
 
 int main()
 {
-    int n = generateRandomNum(1, 10);
-    vector<int> vec = generateRandomVec(1, 20, n);
-    int k = generateRandom(1, 20);
+    int n = generateRandomNum(1, 20);
+    vector<int> vec = generateRandomVec(1, 100, n);
+    int k = generateRandomNum(1, 10);
     int ans = MaximumTastiness(vec, k);
     printVecElement(vec);
     printf("商店组合 %d 类 不同 糖果打包成礼盒出售。\n能够取得的最大甜蜜度是 %d\n", k, ans);
@@ -79,7 +79,43 @@ vector<int> generateRandomVec(int low, int high, int len)
     return vec;
 }
 
+bool DigitMaximumTastiness(vector<int> &price, int k, int dif)
+{
+    int cnt = 1;
+    int prePrice = price[0];
+    int index = 1;
+    while (index < price.size())
+    {
+        if (price[index] - prePrice >= dif)
+        {
+            prePrice = price[index];
+            cnt++;
+        }
+        index++;
+    }
+    return cnt >= k;
+}
+
+// 二分查找：
+// Time: O(logN)
+// Space: O(1)
 int MaximumTastiness(vector<int> &price, int k)
 {
-
+    int l = price.size();
+    sort(price.begin(), price.end());
+    int left = 0;
+    int right = price[l - 1] - price[0];
+    while (left <= right)
+    {
+        int mid = left + ((right - left) >> 1);
+        if (DigitMaximumTastiness(price, k, mid) == true)
+        {
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid - 1;
+        }
+    }
+    return right;
 }

@@ -16,10 +16,11 @@ using namespace std;
 //          生产者  -----  先进先出队列  ----- 消费者
 //          生产者                            消费者
 //      单条消息处理的时长 T = 等待时长t1 + 消费时长t2,
-//      被消费前在队列中等待，被消费时所所需消费时长固定为 1 秒；要求 T <= S
+//      被消费前在队列中等待，被消费时所需消费时长固定为 1 秒；要求 T <= 5
 //      假设消费者集群初始机器数为 1 台，集群扩容，缩容需满足如下要求：
 //          扩容是增加机器，没有数量限制；扩容后实施会立刻生效，即扩容即刻可以处理消息
-//          缩容是减少机器，缩容后集群机器不少于1，缩容实施后会立刻生效，缩容机器即刻不能再处理消息。
+//          缩容是减少机器，缩容后集群机器不少于1，缩容实施后会立刻生效，
+//          缩容机器即刻不能再处理消息。
 //      请实现以下功能：
 //          ScalingSys(int capability):
 //              初始化系统，集群内每台机器每秒并行消费的消息量为 capablity;
@@ -34,11 +35,17 @@ using namespace std;
 
 class ScalingSys
 {
+public:
+    int capacity;
+    int time;
     ScalingSys(int capability)
     {
+        this->capacity = capability;
+        this->time = 0;
     }
     int JudgeWithMsgs(int time, int msgNum)
     {
+        
     }
 };
 

@@ -36,17 +36,12 @@ int NumberWeight(int minNum, int maxNum, int weight);
 
 int main()
 {
-    // int minNum = generateRandomNum(1, 1000);
-    // int maxNum = generateRandomNum(1000, 5000);
-    // int weight = generateRandomNum(1, 10);
-    // int ans_A = NumberWeight(minNum, maxNum, weight);
     int ans_A = NumberWeight(7483649, 123456789, 15);
     int ans_B = NumberWeight(0, 4294967295, 3);
     int ans_C = NumberWeight(3, 10, 2);
     printf("%d\n", ans_A);
     printf("%d\n", ans_B);
     printf("%d\n", ans_C);
-    // printf("在 %d 与 %d 之间, 1 的个数为 %d 的数有 %d 个。\n", minNum, maxNum, weight, ans_A);
 }
 
 int generateRandomNum(int low, int high)

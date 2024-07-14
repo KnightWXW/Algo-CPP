@@ -46,11 +46,6 @@ int main()
     int n1 = generateRandomNum(1, 101);
     int c2 = generateRandomNum(1, 102);
     int n2 = generateRandomNum(1, 103);
-    // int fishes = 43;
-    // int c1 = 1;
-    // int n1 = 3;
-    // int c2 = 2;
-    // int n2 = 4;
     vector<int> ans_A = FishTankChallenge(fishes, c1, n1, c2, n2);
     printf("fishes == %d, c1 == %d, n1 == %d, c2 == %d, n2 == %d, 最小花费为: [1]%d $ [2]%d\n", fishes, c1, n1, c2, n2, ans_A[0], ans_A[1]);
 }

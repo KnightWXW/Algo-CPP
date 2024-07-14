@@ -42,8 +42,8 @@ class MusicPlayer
 public:
     int capacity;
     int time;
-    // vector<tuple<musicId, addtime, playcnt, playtime>>
     vector<tuple<int, int, int, int>> vec;
+    // vector<tuple<musicId, addtime, playcnt, playtime>> vec
 
     MusicPlayer(int num)
     {

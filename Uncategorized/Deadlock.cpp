@@ -1,6 +1,10 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
+#include <algorithm>
 
-
-
+using namespace std;
 
 //      Huawei: 死锁
 

@@ -37,4 +37,51 @@ using namespace std;
 //               3 6
 //          输出：0
 
+int generateRandomNum(int low, int high);
+void printVecElement(vector<int> vec);
+vector<int> generateRandomVec(int low, int high, int len);
+
 int PrimeCompanion(vector<int> arr);
+
+int main()
+{
+    int n = generateRandomNum(0, 30);
+    vector<int> arr = generateRandomVec(0, 1, n);
+    printf("arr数组 元素为: ");
+    printVecElement(arr);
+    int ans = PrimeCompanion(arr);
+    printf("能组成“素数伴侣”最多的方案为 %d", ans);
+}
+
+int generateRandomNum(int low, int high)
+{
+    srand((unsigned)time(NULL));
+    return (rand() % (high - low + 1)) + low;
+}
+
+void printVecElement(vector<int> vec)
+{
+    for (int i = 0; i < vec.size(); i++)
+    {
+        printf("%d ", vec[i]);
+    }
+    printf("\n");
+}
+
+vector<int> generateRandomVec(int low, int high, int len)
+{
+    srand((int)time(0));
+    vector<int> vec;
+    for (int i = 0; i < len; i++)
+    {
+        int v = (rand() % (high - low + 1)) + low;
+        vec.push_back(v);
+    }
+    return vec;
+}
+
+int PrimeCompanion(vector<int> arr)
+{
+    int l = arr.size();
+    
+}
