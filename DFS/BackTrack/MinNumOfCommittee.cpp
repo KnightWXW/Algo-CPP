@@ -2,6 +2,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <set>
 #include <unordered_set>
 #include <unordered_map>
 
@@ -35,6 +36,7 @@ using namespace std;
 
 void print2DVecElement(vector<vector<int>> vec);
 
+void DFSMinNumOfCommittee(vector<vector<int>> arr, int i, set<int> set, int minCommitee);
 int MinNumOfCommittee(vector<vector<int>> arr);
 
 int main()
@@ -69,10 +71,22 @@ int MinNumOfCommittee(vector<vector<int>> arr)
     int l = arr.size();
     set<int> s;
     int minCommitee = 13;
-    int tem =
+    DFSMinNumOfCommittee(arr, 0, s, minCommitee);
+    return minCommitee;
 }
 
-int DFSMinNumOfCommittee(vector<vector<int>> arr, int i, set<int> set, int *minCommitee)
+void DFSMinNumOfCommittee(vector<vector<int>> arr, int i, set<int> set, int minCommitee)
 {
-    
+    if(set.size() == minCommitee){
+        return;
+    }
+    if(i = arr.size()){
+        minCommitee = min(minCommitee, (int)set.size());
+    }
+    for(int j = 0; j < arr[i].size(); j++)
+    {
+        set.insert(arr[i][j]);
+        DFSMinNumOfCommittee(arr, i + 1, set, minCommitee);
+        set.erase(set.end());
+    }
 }
