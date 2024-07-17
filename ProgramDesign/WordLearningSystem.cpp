@@ -2,7 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
-#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
 
 using namespace std;
 
@@ -31,44 +32,88 @@ void printVecElement(vector<int> vec)
 
 class WordLearningSystem
 {
+public:
+    int learningCnt;
+    vector<pair<int, int>> dic;
     WordLearningSystem(int wordNum, int learningCnt)
     {
+        this->learningCnt = learningCnt;
+        for (int i = 0; i < wordNum; i++)
+        {
+            this->dic.push_back(make_pair(i, learningCnt));
+        }
     }
+
     vector<int> Learn(int num)
     {
+        vector<int> arr;
+        sort(this->dic.begin(), this->dic.end(), [](pair<int, int> p1, pair<int, int> p2)
+             { if (p1.second == p2.second) {
+                return p1.first < p2.first;
+             }
+             return p1.second > p2.second; });
+        for (int i = 0; i < num; i++)
+        {
+            if (this->dic[i].second > 0)
+            {
+                this->dic[i].second--;
+                arr.push_back(this->dic[i].first);
+            }
+        }
+        return arr;
     }
+
     void Reset(vector<int> wordList)
     {
+        unordered_set<int> s(wordList.begin(), wordList.end());
+        for (int i = 0; i < this->dic.size(); i++)
+        {
+            if (s.count(this->dic[i].first) > 0)
+            {
+                this->dic[i].second = this->learningCnt;
+            }
+        }
+        return;
     }
+
     int Query()
     {
+        int ans = 0;
+        for (int i = 0; i < this->dic.size(); i++)
+        {
+            if (this->dic[i].second > 0)
+            {
+                ans++;
+            }
+        }
+        return ans;
     }
 };
 
-int Main()
+int main()
 {
     WordLearningSystem *wordLearningSystem = new WordLearningSystem(6, 2);
-    int a1 = wordLearningSystem->Query();
+    int a1 = wordLearningSystem->Query(); // 6
     printf("还需要背诵的单词总量 为：%d\n", a1);
     vector<int> a2 = wordLearningSystem->Learn(3);
-    printf("序号数列 为：%d\n");
-    printVecElement(a2);
+    printf("序号数列 为：\n");
+    printVecElement(a2); // 0 1 2
     vector<int> a3 = wordLearningSystem->Learn(5);
-    printf("序号数列 为：%d\n");
-    printVecElement(a3);
+    printf("序号数列 为：\n");
+    printVecElement(a3); // 3 4 5 0 1
     int a4 = wordLearningSystem->Query();
-    printf("还需要背诵的单词总量 为：%d\n", a4);
+    printf("还需要背诵的单词总量 为：%d\n", a4); // 4
     vector<int> a5 = wordLearningSystem->Learn(6);
-    printf("序号数列 为：%d\n");
-    printVecElement(a5);
+    printf("序号数列 为：\n");
+    printVecElement(a5); // 2 3 4 5
     vector<int> a6 = wordLearningSystem->Learn(2);
-    printf("序号数列 为：%d\n");
-    printVecElement(a6);
+    printf("序号数列 为：\n");
+    printVecElement(a6); // 空
     wordLearningSystem->Reset({0, 2});
     vector<int> a7 = wordLearningSystem->Learn(1);
-    printf("序号数列 为：%d\n");
-    printVecElement(a7);
+    printf("序号数列 为：\n");
+    printVecElement(a7); // 0
     wordLearningSystem->Reset({3});
     int a8 = wordLearningSystem->Query();
-    printf("还需要背诵的单词总量 为：%d\n", a8);
+    printf("还需要背诵的单词总量 为：%d\n", a8); // 3
 }

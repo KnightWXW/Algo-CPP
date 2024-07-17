@@ -79,10 +79,10 @@ public:
         sort(vec.begin(), vec.end(), [&](tuple<int, int, int> t1, tuple<int, int, int> t2)
              {
             if (get<2>(t1) == get<2>(t2)){
-                if(date - get<1>(t1) == date - get<1>(t2)){
+                if(get<1>(t1) - date == get<1>(t2) - date){
                     return get<0>(t1) < get<0>(t2);
                 }
-                return (date - get<1>(t1)) < (date - get<1>(t2));
+                return (get<1>(t1) - date) < (get<1>(t2) - date);
             }
             return  get<2>(t1) > get<2>(t2); });
         if (vec.size() == 0)
@@ -99,7 +99,7 @@ public:
     {
         if (date >= get<0>(hmap[activityId]) && date <= get<1>(hmap[activityId]))
         {
-            return get<2>(hmap[activityId]);
+            return get<3>(hmap[activityId]);
         }
         return 0;
     }
