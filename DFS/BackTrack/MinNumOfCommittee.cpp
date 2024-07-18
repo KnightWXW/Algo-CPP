@@ -2,9 +2,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
-#include <set>
 #include <unordered_set>
-#include <unordered_map>
 
 using namespace std;
 
@@ -36,7 +34,7 @@ using namespace std;
 
 void print2DVecElement(vector<vector<int>> vec);
 
-void DFSMinNumOfCommittee(vector<vector<int>> arr, int i, set<int> set, int minCommitee);
+void DFSMinNumOfCommittee(vector<vector<int>> &arr, int i, vector<int> vec, int &minCommitee);
 int MinNumOfCommittee(vector<vector<int>> arr);
 
 int main()
@@ -57,7 +55,7 @@ void print2DVecElement(vector<vector<int>> vec)
 {
     for (int i = 0; i < vec.size(); i++)
     {
-        for (int j = 0; j < vec[0].size(); j++)
+        for (int j = 0; j < vec[i].size(); j++)
         {
             printf("%d\t", vec[i][j]);
         }
@@ -66,27 +64,34 @@ void print2DVecElement(vector<vector<int>> vec)
     printf("\n");
 }
 
+// 回溯：
+// Time: O(2^N)
+// Space: O(N)
 int MinNumOfCommittee(vector<vector<int>> arr)
 {
-    int l = arr.size();
-    set<int> s;
-    int minCommitee = 13;
-    DFSMinNumOfCommittee(arr, 0, s, minCommitee);
+    vector<int> vec;
+    int minCommitee = 12;
+    DFSMinNumOfCommittee(arr, 0, vec, minCommitee);
     return minCommitee;
 }
 
-void DFSMinNumOfCommittee(vector<vector<int>> arr, int i, set<int> set, int minCommitee)
+void DFSMinNumOfCommittee(vector<vector<int>> &arr, int i, vector<int> vec, int &minCommitee)
 {
-    if(set.size() == minCommitee){
+    unordered_set<int> s(vec.begin(), vec.end());
+    if (s.size() == minCommitee)
+    {
         return;
     }
-    if(i = arr.size()){
-        minCommitee = min(minCommitee, (int)set.size());
-    }
-    for(int j = 0; j < arr[i].size(); j++)
+    if (i == arr.size())
     {
-        set.insert(arr[i][j]);
-        DFSMinNumOfCommittee(arr, i + 1, set, minCommitee);
-        set.erase(set.end());
+        minCommitee = min(minCommitee, (int)s.size());
+        return;
     }
+    for (int j = 0; j < arr[i].size(); j++)
+    {
+        vec.push_back(arr[i][j]);
+        DFSMinNumOfCommittee(arr, i + 1, vec, minCommitee);
+        vec.pop_back();
+    }
+    return;
 }

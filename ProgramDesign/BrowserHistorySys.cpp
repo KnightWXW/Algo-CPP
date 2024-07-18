@@ -33,17 +33,51 @@ void printString(string s)
 
 class BrowserHistorySys
 {
+public:
+    int maxCount;
+    int index;
+    vector<string> his;
     BrowserHistorySys(string homepage, int maxCount)
     {
+        this->maxCount = maxCount;
+        this->index = 0;
+        this->his.push_back(homepage);
     }
+
     int Visit(string url)
     {
+        if (this->his[this->index] != url)
+        {
+            while (this->his.size() > this->index + 1)
+            {
+                this->his.pop_back();
+            }
+            this->his.push_back(url);
+            if (this->his.size() > this->maxCount)
+            {
+                this->his.erase(this->his.begin());
+            }
+            this->index = this->his.size() - 1;
+        }
+        return this->his.size();
     }
+
     string Back()
     {
+        if (this->index != 0)
+        {
+            this->index--;
+        }
+        return this->his[this->index];
     }
+
     string Forward()
     {
+        if (this->index != this->his.size() - 1)
+        {
+            this->index++;
+        }
+        return this->his[this->index];
     }
 };
 
