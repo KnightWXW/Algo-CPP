@@ -34,8 +34,8 @@ using namespace std;
 //          若订单 已经预定成功，返回最小的座位编号；
 //          若订单状态为候补/已取消/不存在，返回 -1
 //      [连续优先订票规则]：
-//          若存在连续的num个座位号, 则优先分配num个连续座位给乘客，并且座位号尽可能小
-//          若不存在连续的num个座位号, 则分配座位号尽可能小的num个座位给乘客，
+//          若存在连续的 num 个座位号, 则优先分配 num 个连续座位给乘客，并且座位号尽可能小
+//          若不存在连续的 num 个座位号, 则分配座位号尽可能小的 num 个座位给乘客，
 
 void printBool(bool b)
 {
@@ -58,22 +58,244 @@ void printVecElement(vector<int> &vec)
     printf("\n");
 }
 
+define MAX 1001
+
+    typedef struct
+{
+    int boat;
+    int num;
+    int status;
+    int seat[MAX];
+} bookinfo;
+
+typedef struct
+{
+    int boat[MAX];
+    int reserv[MAX];
+    int hash[MAX][MAX];
+    int waite[MAX][MAX];
+    int waitecnt[MAX];
+    bookinfo book[MAX];
+} TicketSystem;
+
+TicketSystem *TicketSystemCreate(int *cabins, int cabinsSize)
+{
+    TicketSystem *obj = (TicketSystem *)calloc(1, sizeof(TicketSystem));
+    for (int i = 0; i < cabinsSize; i++)
+    {
+        obj->boat[i] = cabins[i];
+        obj->reserv[i] = cabins[i];
+    }
+    return obj;
+}
+
+int find(TicketSystem *obj, int id, int cabinId, int num)
+{
+    obj->book[i].boat = cabinId;
+    obj->book[i].num = num;
+    if ((obj->waitecnt[cabinId] != 0) || (obj->reserv[cabinId] < num))
+    {
+        obj->waite[cabinId][obj->waitecnt[cabinId]] = id;
+        obj->waitecnt[cabinId]++;
+        obj->book[id].status = 2;
+        return false;
+    }
+    else
+    {
+        int cnt = 0;
+        int i = find(obj, cabinId, num);
+        for (; i < obj->boat[cabinId] && cnt < num; i++)
+        {
+            if (obj->hash[cabinId][i] != 1)
+            {
+                obj->book[id].seat[cnt++] = i;
+                obj->hash[cabinId][i] = 1;
+                obj->book[id].status = 1;
+            }
+        }
+        obj->reserv[cabinId] -= num;
+        return true;
+    }
+}
+
+bool TicketSystemBookNew(TicketSystem *obj, int id, int cabinId, int num)
+{
+    if (obj->reserv[cabinId] >= num)
+    {
+        int cnt = 0;
+        int i = find(obj, cabinId, num);
+        for (; i < obj->boat[cabinId] && cnt < num; i++)
+        {
+            if (obj->hash[cabinId][i] != 1)
+            {
+                obj->book[id].seat[cnt++] = i;
+                obj->hash[cabinId][i] = 1;
+                obj->book[id].status = 1;
+            }
+        }
+        obj->reserv[cabinId] -= num;
+        return true;
+    }
+    return false;
+}
+
+bool TicketSystemBookCancel(TicketSystem *obj, int id)
+{
+    if (obj->book[id].status == 0)
+    {
+        return false;
+    }
+    if (obj->book[id].status == 1)
+    {
+        int cabinId = obj->book[id].boat;
+        obj->book[id].status = 0;
+        for (int i = 0; i < obj->book[id].num; i++)
+        {
+            obj->hash[cabinId][obj->book[id].seat[i]] = 0;
+        }
+        obj->reserv[cabinId] += obj->book[id].num;
+        int i;
+        for (i = 0; i < obj->waitecnt[cabinId]; i++)
+        {
+            int newid = obj->waite[cabinId][i];
+            int num = obj->book[newid].num;
+            if (TicketSystemBookNew(obj, newid, cabinId, num) == false)
+            {
+                break;
+            }
+        }
+        for (i = 0; i < obj->waitecnt[cabinId]; i++)
+        {
+            obj->waite[cabinId][j] = obj->waite[cabinId][i + j];
+        }
+        obj->waitecnt[cabinId] -= i;
+        return false;
+    }
+    obj->book[id].status = 0;
+    int cabinId = obj->book[id].boat;
+    int flag = 0;
+    for (i = 0; i < obj->waitecnt[cabinId]; i++)
+    {
+        if (obj->waite[cabinId][i] == id)
+        {
+            flag = 1;
+        }
+        if (flag == 1)
+        {
+            obj->waite[cabinId][i] = obj->waite[cabinId][i + 1];
+        }
+    }
+    obj->waitecnt[cabinId]--;
+    int i = 0;
+    for (i = 0; i < obj->waitecnt[cabinId]; i++)
+    {
+        int newid = obj->waite[cabinId][i];
+        int num = obj->book[newid].num;
+        if (TicketSystemBookNew(obj, newid, cabinId, num) == false)
+        {
+            break;
+        }
+    }
+    for (int j = 0; j < obj->waitecnt[cabinId]; j++)
+    {
+        obj->waite[cabinId][j] = obj->waite[cabinId][i + j];
+    }
+    obj->waitecnt[cabinId] -= i;
+    return true;
+}
+
+int TicketSystemQuery(TicketSystem *obj, int id)
+{
+    if (obj->book[id].status == 1)
+    {
+        return obj->book[id].seat[0];
+    }
+    return -1;
+}
+
+void TicketSystemFree(TicketSystem *obj)
+{
+    free(obj);
+}
+
+// ---------------------------------------------------
 class TicketSystem
 {
 public:
+    map<int, vector<pair<int, vector<int>>>> booked; // k:船舱号  v: 订单id
+    map<int, vector<int>> canibs;                    // k:船舱号  v: 每个座位的编号
+    map<int, vector<pair<int, int>>> wait;           // k:船舱号  v: 候补订单的订单号和定的座位个数
+
     TicketSystem(vector<int> cabins)
     {
+        for (int i = 0; i < cabins.size(); i++)
+        {
+            pair<int, vector<int>> tmp;
+            tmp.first = i;
+            vector<int> temset;
+            for (int j = 0; j < cabins.size(); j++)
+            {
+                tmpset.emplace_back(j);
+            }
+            tmp.second = temset;
+            cabins[i] = temset;
+        }
     }
+
     bool Book(int id, int cabinId, int num)
     {
+        if (wait[cabinId].size() != 0 || cabins[cabinId].size() < num)
+        {
+            wait[cabinId].emplace_back(id, num);
+            return false;
+        }
+        Request(id, canineId, num);
+        return true;
     }
+
+    void Request(int id, int cabinId, int num)
+    {
+        int index = 0;
+        for (int i = 0; i + num - 1 < cabins[cabinId].size(); i++)
+        {
+            if (cabins[cabinId][i + num - 1] - cabins[cabinId][i] == num - 1)
+            {
+                index = i;
+                break;
+            }
+        }
+        vector<int> tmpset;
+        int flag = index;
+        for (int i = 0; i < num; i++)
+        {
+            tmpset.push_back(cabins[cabinId][index]);
+            index++;
+        }
+        cabins[cabinId].erase(cabins[cabinId].begin() + flag, cabins[cabinId].begin() + sort(cabins[cabinId].begin(), cabins[cabinId].end()));
+        booked[cabinId].emplace_back(make_pair(id, tmpset));
+    }
+
     bool Cancel(int id)
     {
     }
+
     int Query(int id)
     {
+        for (int i = 0; i < booked.size(); i++)
+        {
+            for (int j = 0; j < booked[i].size(); j++)
+            {
+                if (booked[i][j].first == id)
+                {
+                    return booked[i][j].second[0];
+                }
+            }
+        }
+        return -1;
     }
 };
+
+// -----------------------------------------
 
 int main()
 {
