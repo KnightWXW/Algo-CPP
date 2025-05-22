@@ -1,11 +1,4 @@
-#include <ctime>
-#include <stdio.h>
-#include <cstdlib>
-#include <vector>
-#include <math.h>
-#include <algorithm>
-
-using namespace std;
+#include "../mybasic.h"
 
 //      Huawei: 参赛排名
 

@@ -38,8 +38,8 @@ long long WaysToBuyPensPencils(int total, int cost1, int cost2);
 int main()
 {
     int total = generateRandomNum(1, 1000);
-    int cost1 = generateRandomNum(1, 1000);
-    int cost2 = generateRandomNum(1, 1000);
+    int cost1 = generateRandomNum(1, 100);
+    int cost2 = generateRandomNum(1, 99);
     long long ans = WaysToBuyPensPencils(total, cost1, cost2);
     printf("总钱数 为 %d, 一支钢笔和一支铅笔的价格 分别为 %d 和 %d, \n购买钢笔和铅笔的 不同方案数目 有 %d。", total, cost1, cost2, ans);
 }
@@ -56,13 +56,14 @@ int generateRandomNum(int low, int high)
 long long WaysToBuyPensPencils(int total, int cost1, int cost2)
 {
     long long ans = 0;
-    int large = max(cost1, cost2);
-    int small = min(cost1, cost2);
-    int largeCnt = total / large;
-    for (int i = 0; i <= largeCnt; i++)
+    int a = max(cost1, cost2);
+    int b = min(cost1, cost2);
+    int k = total / a;
+    int coins = total;
+    for (int i = 0; i <= k; i++)
     {
-        int dif = total - i * large;
-        ans += (dif / small + 1);
+        int tem = coins - i * a;
+        ans += (tem / b + 1);
     }
     return ans;
 }

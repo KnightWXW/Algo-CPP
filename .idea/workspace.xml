@@ -15,6 +15,8 @@
   <component name="ChangeListManager">
     <list default="true" id="631eabfe-c21b-46a6-93b7-8c277ff365e1" name="变更" comment="Algo-CPP">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Imitate/ContestRanking.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Imitate/ContestRanking.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Imitate/WaysToBuyPensPencils.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Imitate/WaysToBuyPensPencils.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +112,8 @@
       <workItem from="1688826429289" duration="640000" />
       <workItem from="1690553546772" duration="21000" />
       <workItem from="1722090351046" duration="15000" />
+      <workItem from="1732110359336" duration="39000" />
+      <workItem from="1736265065203" duration="11000" />
     </task>
     <task id="LOCAL-00001" summary="Algo-CPP">
       <created>1661073639268</created>
